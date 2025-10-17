@@ -1,0 +1,37 @@
+{
+  "name": "eslint-plugin-capo",
+  "version": "0.1.0",
+  "description": "ESLint plugin to validate HTML <head> elements based on capo.js rules",
+  "main": "src/index.js",
+  "type": "module",
+  "keywords": [
+    "eslint",
+    "eslint-plugin",
+    "html",
+    "head",
+    "validation",
+    "capo",
+    "performance",
+    "seo"
+  ],
+  "author": "Rick Viscomi",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rviscomi/eslint-plugin-capo.git"
+  },
+  "peerDependencies": {
+    "eslint": ">=8.0.0",
+    "@html-eslint/parser": ">=0.47.0"
+  },
+  "devDependencies": {
+    "@html-eslint/parser": "^0.47.0",
+    "eslint": "^9.38.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "test": "node test/test-plugin.js"
+  }
+}

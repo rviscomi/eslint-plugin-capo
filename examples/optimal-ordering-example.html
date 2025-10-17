@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ✅ OPTIMAL ORDERING - Following capo.js weight hierarchy -->
+  
+  <!-- 1. META tags first (weight 10) -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Optimally ordered head elements">
+  
+  <!-- 2. TITLE (weight 9) -->
+  <title>Optimal Ordering Example</title>
+  
+  <!-- 3. PRECONNECT (weight 8) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- 4. ASYNC SCRIPTS (weight 7) -->
+  <script src="/analytics.js" async></script>
+  
+  <!-- 5. IMPORT STYLES would go here (weight 6) -->
+  <!-- <style>@import url('/fonts.css');</style> -->
+  
+  <!-- 6. SYNC SCRIPTS (weight 5) -->
+  <!-- <script src="/critical.js"></script> -->
+  
+  <!-- 7. SYNC STYLES (weight 4) -->
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    body { font-family: system-ui, sans-serif; }
+  </style>
+  
+  <!-- 8. PRELOAD (weight 3) -->
+  <link rel="preload" href="/font.woff2" as="font" crossorigin>
+  <link rel="preload" href="/hero.jpg" as="image">
+  
+  <!-- 9. DEFER SCRIPTS (weight 2) -->
+  <script src="/app.js" defer></script>
+  <script type="module" src="/modules.js"></script>
+  
+  <!-- 10. PREFETCH/PRERENDER (weight 1) -->
+  <link rel="dns-prefetch" href="https://api.example.com">
+  <link rel="prefetch" href="/next-page.html">
+  
+  <!-- 11. OTHER (weight 0) -->
+  <link rel="icon" href="/favicon.ico">
+  <meta name="theme-color" content="#ffffff">
+</head>
+<body>
+  <h1>Optimal Ordering Example</h1>
+  <p>The head elements above follow the optimal order defined by capo.js.</p>
+  
+  <h2>Benefits of Proper Ordering:</h2>
+  <ul>
+    <li>Critical metadata parsed first</li>
+    <li>Async resources loaded early</li>
+    <li>Render-blocking resources properly positioned</li>
+    <li>Prefetch/prerender happens last (lowest priority)</li>
+    <li>Improved page load performance</li>
+  </ul>
+  
+  <h2>Weight Hierarchy:</h2>
+  <table>
+    <tr><th>Weight</th><th>Element Type</th><th>Why</th></tr>
+    <tr><td>10</td><td>META</td><td>Critical metadata (charset, viewport, CSP)</td></tr>
+    <tr><td>9</td><td>TITLE</td><td>Important for SEO and browser tabs</td></tr>
+    <tr><td>8</td><td>PRECONNECT</td><td>Start connections early</td></tr>
+    <tr><td>7</td><td>ASYNC_SCRIPT</td><td>Non-blocking scripts</td></tr>
+    <tr><td>6</td><td>IMPORT_STYLES</td><td>CSS @imports block rendering</td></tr>
+    <tr><td>5</td><td>SYNC_SCRIPT</td><td>Blocking scripts</td></tr>
+    <tr><td>4</td><td>SYNC_STYLES</td><td>Blocking stylesheets</td></tr>
+    <tr><td>3</td><td>PRELOAD</td><td>Hint for upcoming resources</td></tr>
+    <tr><td>2</td><td>DEFER_SCRIPT</td><td>Scripts that wait for DOM</td></tr>
+    <tr><td>1</td><td>PREFETCH</td><td>Low priority future resources</td></tr>
+    <tr><td>0</td><td>OTHER</td><td>Everything else</td></tr>
+  </table>
+</body>
+</html>

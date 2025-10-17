@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Missing charset -->
+  <title>Bad Example</title>
+  <title>Duplicate Title</title>
+  
+  <!-- CSP meta tag disables preload scanner -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
+  
+  <!-- Deprecated IE feature -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <!-- Accessibility issue: disables zooming -->
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+  
+  <!-- Wrong attribute type -->
+  <meta http-equiv="description" content="Should use name, not http-equiv">
+  
+  <!-- Invalid elements in head -->
+  <div>This should not be here</div>
+  <span>Neither should this</span>
+  
+  <!-- Multiple base elements -->
+  <base href="https://example.com/">
+  <base href="https://other.com/">
+  
+  <!-- Non-UTF-8 charset -->
+  <meta charset="ISO-8859-1">
+  
+  <!-- Deprecated default-style -->
+  <meta http-equiv="default-style" content="main">
+</head>
+<body>
+  <h1>Bad Example Page</h1>
+  <p>This page has many head validation issues.</p>
+</body>
+</html>
