@@ -3,27 +3,27 @@
   <head>
     <!-- ✅ OPTIMAL ORDERING - Following capo.js weight hierarchy -->
 
-    <!-- 1. META tags first (weight 10) -->
+    <!-- 1. META tags first (weight 11) -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- 2. TITLE (weight 9) -->
+    <!-- 2. TITLE (weight 10) -->
     <title>Optimal Ordering Example</title>
 
-    <!-- 3. PRECONNECT (weight 8) -->
+    <!-- 3. PRECONNECT (weight 9) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <!-- 4. ASYNC SCRIPTS (weight 7) -->
+    <!-- 4. ASYNC SCRIPTS (weight 8) -->
     <script src="/analytics.js" async></script>
 
-    <!-- 5. IMPORT STYLES would go here (weight 6) -->
+    <!-- 5. IMPORT STYLES would go here (weight 7) -->
     <!-- <style>@import url('/fonts.css');</style> -->
 
-    <!-- 6. SYNC SCRIPTS (weight 5) -->
+    <!-- 6. SYNC SCRIPTS (weight 6) -->
     <!-- <script src="/critical.js"></script> -->
 
-    <!-- 7. SYNC STYLES (weight 4) -->
+    <!-- 7. SYNC STYLES (weight 5) -->
     <link rel="stylesheet" href="/styles.css" />
     <style>
       body {
@@ -31,19 +31,19 @@
       }
     </style>
 
-    <!-- 8. PRELOAD (weight 3) -->
+    <!-- 8. PRELOAD (weight 4) -->
     <link rel="preload" href="/font.woff2" as="font" crossorigin />
     <link rel="preload" href="/hero.jpg" as="image" />
 
-    <!-- 9. DEFER SCRIPTS (weight 2) -->
+    <!-- 9. DEFER SCRIPTS (weight 3) -->
     <script src="/app.js" defer></script>
     <script type="module" src="/modules.js"></script>
 
-    <!-- 10. PREFETCH/PRERENDER (weight 1) -->
+    <!-- 10. PREFETCH/PRERENDER (weight 2) -->
     <link rel="dns-prefetch" href="https://api.example.com" />
     <link rel="prefetch" href="/next-page.html" />
 
-    <!-- 11. OTHER (weight 0) -->
+    <!-- 11. OTHER (weight 1) -->
     <link rel="icon" href="/favicon.ico" />
     <meta name="theme-color" content="#ffffff" />
     <meta name="description" content="Optimally ordered head elements" />

@@ -54,6 +54,16 @@ ruleTester.run('no-default-style', rule, {
       errors: [
         {
           messageId: 'noDefaultStyle',
+          suggestions: [
+            {
+              messageId: 'removeTag',
+              output: dedent`
+                <head>
+                  
+                </head>
+              `,
+            },
+          ],
         },
       ],
     },
@@ -67,6 +77,16 @@ ruleTester.run('no-default-style', rule, {
       errors: [
         {
           messageId: 'noDefaultStyle',
+          suggestions: [
+            {
+              messageId: 'removeTag',
+              output: dedent`
+                <head>
+                  
+                </head>
+              `,
+            },
+          ],
         },
       ],
     },

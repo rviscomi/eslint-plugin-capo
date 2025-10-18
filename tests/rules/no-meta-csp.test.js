@@ -54,6 +54,16 @@ ruleTester.run('no-meta-csp', rule, {
       errors: [
         {
           messageId: 'metaCSP',
+          suggestions: [
+            {
+              messageId: 'removeTag',
+              output: dedent`
+                <head>
+                  
+                </head>
+              `,
+            },
+          ],
         },
       ],
     },
@@ -67,6 +77,16 @@ ruleTester.run('no-meta-csp', rule, {
       errors: [
         {
           messageId: 'metaCSP',
+          suggestions: [
+            {
+              messageId: 'removeTag',
+              output: dedent`
+                <head>
+                  
+                </head>
+              `,
+            },
+          ],
         },
       ],
     },
@@ -80,6 +100,16 @@ ruleTester.run('no-meta-csp', rule, {
       errors: [
         {
           messageId: 'metaCSP',
+          suggestions: [
+            {
+              messageId: 'removeTag',
+              output: dedent`
+                <head>
+                  
+                </head>
+              `,
+            },
+          ],
         },
       ],
     },

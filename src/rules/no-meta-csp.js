@@ -13,8 +13,10 @@ export default {
       category: 'Performance',
       recommended: true,
     },
+    hasSuggestions: true,
     messages: {
       metaCSP: '{{message}}',
+      removeTag: 'Remove this CSP meta tag (use HTTP headers instead)',
     },
     schema: [],
   },
@@ -32,6 +34,14 @@ export default {
               data: {
                 message: warning,
               },
+              suggest: [
+                {
+                  messageId: 'removeTag',
+                  fix(fixer) {
+                    return fixer.remove(node);
+                  },
+                },
+              ],
             });
           });
         }
