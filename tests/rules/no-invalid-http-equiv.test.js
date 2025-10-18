@@ -25,6 +25,7 @@ const ruleTester = new RuleTester({
 ruleTester.run('no-invalid-http-equiv', rule, {
   valid: [
     {
+      name: 'valid content-security-policy',
       code: dedent`
         <head>
           <meta http-equiv="content-security-policy" content="default-src 'self'">
@@ -32,6 +33,7 @@ ruleTester.run('no-invalid-http-equiv', rule, {
       `,
     },
     {
+      name: 'valid content-type',
       code: dedent`
         <head>
           <meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -39,6 +41,7 @@ ruleTester.run('no-invalid-http-equiv', rule, {
       `,
     },
     {
+      name: 'valid default-style',
       code: dedent`
         <head>
           <meta http-equiv="default-style" content="preferred">
@@ -46,6 +49,7 @@ ruleTester.run('no-invalid-http-equiv', rule, {
       `,
     },
     {
+      name: 'valid origin-trial',
       code: dedent`
         <head>
           <meta http-equiv="origin-trial" content="token123">
@@ -56,6 +60,7 @@ ruleTester.run('no-invalid-http-equiv', rule, {
 
   invalid: [
     {
+      name: 'invalid imagetoolbar',
       code: dedent`
         <head>
           <meta http-equiv="imagetoolbar" content="no">
@@ -77,6 +82,7 @@ ruleTester.run('no-invalid-http-equiv', rule, {
       ],
     },
     {
+      name: 'invalid description',
       code: dedent`
         <head>
           <meta http-equiv="description" content="My page">
@@ -98,6 +104,7 @@ ruleTester.run('no-invalid-http-equiv', rule, {
       ],
     },
     {
+      name: 'invalid keywords',
       code: dedent`
         <head>
           <meta http-equiv="keywords" content="html, meta">
@@ -119,6 +126,7 @@ ruleTester.run('no-invalid-http-equiv', rule, {
       ],
     },
     {
+      name: 'invalid X-UA-Compatible',
       code: dedent`
         <head>
           <meta http-equiv="X-UA-Compatible" content="IE=edge">

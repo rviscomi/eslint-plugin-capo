@@ -25,6 +25,7 @@ const ruleTester = new RuleTester({
 ruleTester.run('head-element-order', rule, {
   valid: [
     {
+      name: 'optimal order with all element types',
       code: dedent`
         <head>
           <meta charset="utf-8">
@@ -41,6 +42,7 @@ ruleTester.run('head-element-order', rule, {
       `,
     },
     {
+      name: 'simple page with only meta and title',
       code: dedent`
         <head>
           <meta charset="utf-8">
@@ -49,6 +51,7 @@ ruleTester.run('head-element-order', rule, {
       `,
     },
     {
+      name: 'viewport meta before title',
       code: dedent`
         <head>
           <meta name="viewport" content="width=device-width">

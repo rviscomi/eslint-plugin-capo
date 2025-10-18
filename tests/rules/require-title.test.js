@@ -25,6 +25,7 @@ const ruleTester = new RuleTester({
 ruleTester.run('require-title', rule, {
   valid: [
     {
+      name: 'head with title element',
       code: dedent`
         <head>
           <title>My Page</title>
@@ -32,6 +33,7 @@ ruleTester.run('require-title', rule, {
       `,
     },
     {
+      name: 'title with other elements',
       code: dedent`
         <head>
           <meta charset="utf-8">
@@ -41,6 +43,7 @@ ruleTester.run('require-title', rule, {
       `,
     },
     {
+      name: 'multiple titles (handled by no-duplicate-title)',
       code: dedent`
         <head>
           <title>First Title</title>
@@ -53,6 +56,7 @@ ruleTester.run('require-title', rule, {
 
   invalid: [
     {
+      name: 'head without title element',
       code: dedent`
         <head>
           <meta charset="utf-8">

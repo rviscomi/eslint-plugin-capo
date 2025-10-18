@@ -25,6 +25,7 @@ const ruleTester = new RuleTester({
 ruleTester.run('valid-charset', rule, {
   valid: [
     {
+      name: 'lowercase utf-8',
       code: dedent`
         <head>
           <meta charset="utf-8">
@@ -32,6 +33,7 @@ ruleTester.run('valid-charset', rule, {
       `,
     },
     {
+      name: 'uppercase UTF-8',
       code: dedent`
         <head>
           <meta charset="UTF-8">
@@ -39,6 +41,7 @@ ruleTester.run('valid-charset', rule, {
       `,
     },
     {
+      name: 'no charset meta (not enforced by this rule)',
       code: dedent`
         <head>
           <title>No charset is ok for testing</title>
@@ -49,6 +52,7 @@ ruleTester.run('valid-charset', rule, {
 
   invalid: [
     {
+      name: 'iso-8859-1 charset',
       code: dedent`
         <head>
           <meta charset="iso-8859-1">
@@ -71,6 +75,7 @@ ruleTester.run('valid-charset', rule, {
       ],
     },
     {
+      name: 'windows-1252 charset',
       code: dedent`
         <head>
           <meta charset="windows-1252">
@@ -93,6 +98,7 @@ ruleTester.run('valid-charset', rule, {
       ],
     },
     {
+      name: 'latin1 charset',
       code: '<head><meta charset="latin1"></head>',
       errors: [
         {

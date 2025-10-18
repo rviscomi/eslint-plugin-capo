@@ -25,6 +25,7 @@ const ruleTester = new RuleTester({
 ruleTester.run('no-invalid-head-elements', rule, {
   valid: [
     {
+      name: 'valid head elements only',
       code: dedent`
         <head>
           <meta charset="utf-8">
@@ -34,6 +35,7 @@ ruleTester.run('no-invalid-head-elements', rule, {
       `,
     },
     {
+      name: 'valid with script and style',
       code: dedent`
         <head>
           <meta name="description" content="A valid page">
@@ -43,6 +45,7 @@ ruleTester.run('no-invalid-head-elements', rule, {
       `,
     },
     {
+      name: 'valid with base and noscript',
       code: dedent`
         <head>
           <base href="/">
@@ -54,6 +57,7 @@ ruleTester.run('no-invalid-head-elements', rule, {
 
   invalid: [
     {
+      name: 'div element in head',
       code: dedent`
         <head>
           <div>Invalid element</div>
@@ -78,6 +82,7 @@ ruleTester.run('no-invalid-head-elements', rule, {
       ],
     },
     {
+      name: 'span element with valid elements',
       code: dedent`
         <head>
           <meta charset="utf-8">
@@ -104,6 +109,7 @@ ruleTester.run('no-invalid-head-elements', rule, {
       ],
     },
     {
+      name: 'multiple invalid elements (p and button)',
       code: dedent`
         <head>
           <title>Page</title>
@@ -149,6 +155,7 @@ ruleTester.run('no-invalid-head-elements', rule, {
       ],
     },
     {
+      name: 'img element in head',
       code: '<head><img src="logo.png"></head>',
       errors: [
         {

@@ -25,6 +25,7 @@ const ruleTester = new RuleTester({
 ruleTester.run('no-duplicate-base', rule, {
   valid: [
     {
+      name: 'single base element',
       code: dedent`
         <head>
           <base href="/">
@@ -33,6 +34,7 @@ ruleTester.run('no-duplicate-base', rule, {
       `,
     },
     {
+      name: 'no base element',
       code: dedent`
         <head>
           <title>No base element</title>
@@ -43,6 +45,7 @@ ruleTester.run('no-duplicate-base', rule, {
 
   invalid: [
     {
+      name: 'two duplicate base elements',
       code: dedent`
         <head>
           <base href="/">
@@ -69,6 +72,7 @@ ruleTester.run('no-duplicate-base', rule, {
       ],
     },
     {
+      name: 'three duplicate base elements with mixed attributes',
       code: dedent`
         <head>
           <base href="/">
