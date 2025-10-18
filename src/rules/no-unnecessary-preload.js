@@ -14,6 +14,7 @@ export default {
       category: 'Performance',
       recommended: true,
     },
+    hasSuggestions: true,
     messages: {
       unnecessaryPreload:
         'This preload has little to no effect. "{{href}}" is already discoverable by a <{{tagName}}> element.',
@@ -85,6 +86,14 @@ export default {
                 href: preloadHref,
                 tagName: tagName,
               },
+              suggest: [
+                {
+                  messageId: 'removePreload',
+                  fix(fixer) {
+                    return fixer.remove(preloadLink);
+                  },
+                },
+              ],
             });
           }
         }

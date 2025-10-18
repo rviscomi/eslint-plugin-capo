@@ -13,8 +13,10 @@ export default {
       category: 'Best Practices',
       recommended: true,
     },
+    hasSuggestions: true,
     messages: {
       noDefaultStyle: '{{message}}',
+      removeTag: 'Remove this default-style meta tag',
     },
     schema: [],
   },
@@ -32,6 +34,14 @@ export default {
               data: {
                 message: warning,
               },
+              suggest: [
+                {
+                  messageId: 'removeTag',
+                  fix(fixer) {
+                    return fixer.remove(node);
+                  },
+                },
+              ],
             });
           });
         }
