@@ -7,10 +7,10 @@
 // Imports
 //------------------------------------------------------------------------------
 
-import { RuleTester } from "eslint";
-import rule from "../../src/rules/no-invalid-head-elements.js";
-import parser from "@html-eslint/parser";
-import dedent from "dedent";
+import { RuleTester } from 'eslint';
+import rule from '../../src/rules/no-invalid-head-elements.js';
+import parser from '@html-eslint/parser';
+import dedent from 'dedent';
 
 //------------------------------------------------------------------------------
 // Tests
@@ -22,7 +22,7 @@ const ruleTester = new RuleTester({
   },
 });
 
-ruleTester.run("no-invalid-head-elements", rule, {
+ruleTester.run('no-invalid-head-elements', rule, {
   valid: [
     {
       code: dedent`
@@ -61,13 +61,13 @@ ruleTester.run("no-invalid-head-elements", rule, {
       `,
       errors: [
         {
-          messageId: "invalidElement",
+          messageId: 'invalidElement',
           data: {
-            tagName: "div",
+            tagName: 'div',
           },
           suggestions: [
             {
-              messageId: "removeElement",
+              messageId: 'removeElement',
               output: dedent`
                 <head>
                 </head>
@@ -86,13 +86,13 @@ ruleTester.run("no-invalid-head-elements", rule, {
       `,
       errors: [
         {
-          messageId: "invalidElement",
+          messageId: 'invalidElement',
           data: {
-            tagName: "span",
+            tagName: 'span',
           },
           suggestions: [
             {
-              messageId: "removeElement",
+              messageId: 'removeElement',
               output: dedent`
                 <head>
                   <meta charset="utf-8">
@@ -113,13 +113,13 @@ ruleTester.run("no-invalid-head-elements", rule, {
       `,
       errors: [
         {
-          messageId: "invalidElement",
+          messageId: 'invalidElement',
           data: {
-            tagName: "p",
+            tagName: 'p',
           },
           suggestions: [
             {
-              messageId: "removeElement",
+              messageId: 'removeElement',
               output: dedent`
                 <head>
                   <title>Page</title>
@@ -130,13 +130,13 @@ ruleTester.run("no-invalid-head-elements", rule, {
           ],
         },
         {
-          messageId: "invalidElement",
+          messageId: 'invalidElement',
           data: {
-            tagName: "button",
+            tagName: 'button',
           },
           suggestions: [
             {
-              messageId: "removeElement",
+              messageId: 'removeElement',
               output: dedent`
                 <head>
                   <title>Page</title>
@@ -149,17 +149,17 @@ ruleTester.run("no-invalid-head-elements", rule, {
       ],
     },
     {
-      code: "<head><img src=\"logo.png\"></head>",
+      code: '<head><img src="logo.png"></head>',
       errors: [
         {
-          messageId: "invalidElement",
+          messageId: 'invalidElement',
           data: {
-            tagName: "img",
+            tagName: 'img',
           },
           suggestions: [
             {
-              messageId: "removeElement",
-              output: "</head>",
+              messageId: 'removeElement',
+              output: '</head>',
             },
           ],
         },

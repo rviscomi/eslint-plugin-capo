@@ -7,10 +7,10 @@
 // Imports
 //------------------------------------------------------------------------------
 
-import { RuleTester } from "eslint";
-import rule from "../../src/rules/no-meta-csp.js";
-import parser from "@html-eslint/parser";
-import dedent from "dedent";
+import { RuleTester } from 'eslint';
+import rule from '../../src/rules/no-meta-csp.js';
+import parser from '@html-eslint/parser';
+import dedent from 'dedent';
 
 //------------------------------------------------------------------------------
 // Tests
@@ -22,7 +22,7 @@ const ruleTester = new RuleTester({
   },
 });
 
-ruleTester.run("no-meta-csp", rule, {
+ruleTester.run('no-meta-csp', rule, {
   valid: [
     {
       code: dedent`
@@ -50,7 +50,7 @@ ruleTester.run("no-meta-csp", rule, {
       `,
       errors: [
         {
-          messageId: "metaCSP",
+          messageId: 'metaCSP',
         },
       ],
     },
@@ -62,7 +62,7 @@ ruleTester.run("no-meta-csp", rule, {
       `,
       errors: [
         {
-          messageId: "metaCSP",
+          messageId: 'metaCSP',
         },
       ],
     },
@@ -74,7 +74,7 @@ ruleTester.run("no-meta-csp", rule, {
       `,
       errors: [
         {
-          messageId: "metaCSP",
+          messageId: 'metaCSP',
         },
       ],
     },

@@ -7,10 +7,10 @@
 // Imports
 //------------------------------------------------------------------------------
 
-import { RuleTester } from "eslint";
-import rule from "../../src/rules/valid-charset.js";
-import parser from "@html-eslint/parser";
-import dedent from "dedent";
+import { RuleTester } from 'eslint';
+import rule from '../../src/rules/valid-charset.js';
+import parser from '@html-eslint/parser';
+import dedent from 'dedent';
 
 //------------------------------------------------------------------------------
 // Tests
@@ -22,7 +22,7 @@ const ruleTester = new RuleTester({
   },
 });
 
-ruleTester.run("valid-charset", rule, {
+ruleTester.run('valid-charset', rule, {
   valid: [
     {
       code: dedent`
@@ -56,10 +56,10 @@ ruleTester.run("valid-charset", rule, {
       `,
       errors: [
         {
-          messageId: "invalidCharset",
+          messageId: 'invalidCharset',
           suggestions: [
             {
-              messageId: "fixToUtf8",
+              messageId: 'fixToUtf8',
               output: dedent`
                 <head>
                   <meta charset="utf-8">
@@ -78,10 +78,10 @@ ruleTester.run("valid-charset", rule, {
       `,
       errors: [
         {
-          messageId: "invalidCharset",
+          messageId: 'invalidCharset',
           suggestions: [
             {
-              messageId: "fixToUtf8",
+              messageId: 'fixToUtf8',
               output: dedent`
                 <head>
                   <meta charset="utf-8">
@@ -96,10 +96,10 @@ ruleTester.run("valid-charset", rule, {
       code: '<head><meta charset="latin1"></head>',
       errors: [
         {
-          messageId: "invalidCharset",
+          messageId: 'invalidCharset',
           suggestions: [
             {
-              messageId: "fixToUtf8",
+              messageId: 'fixToUtf8',
               output: '<head><meta charset="utf-8"></head>',
             },
           ],

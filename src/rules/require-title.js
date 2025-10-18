@@ -16,22 +16,22 @@ export default {
     },
     schema: [],
   },
-  
+
   create(context) {
     let titleCount = 0;
     let headNode = null;
-    
+
     return {
       'Tag[name="head"]'(node) {
         // Reset counter for each head element
         titleCount = 0;
         headNode = node;
       },
-      
+
       'Tag[parent.name="head"][name="title"]'() {
         titleCount++;
       },
-      
+
       'Tag[name="head"]:exit'(node) {
         if (titleCount === 0) {
           context.report({
@@ -39,7 +39,7 @@ export default {
             messageId: 'missingTitle',
           });
         }
-        
+
         // Reset for next head
         titleCount = 0;
         headNode = null;

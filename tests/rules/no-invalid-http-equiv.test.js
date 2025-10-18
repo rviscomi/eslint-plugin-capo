@@ -7,10 +7,10 @@
 // Imports
 //------------------------------------------------------------------------------
 
-import { RuleTester } from "eslint";
-import rule from "../../src/rules/no-invalid-http-equiv.js";
-import parser from "@html-eslint/parser";
-import dedent from "dedent";
+import { RuleTester } from 'eslint';
+import rule from '../../src/rules/no-invalid-http-equiv.js';
+import parser from '@html-eslint/parser';
+import dedent from 'dedent';
 
 //------------------------------------------------------------------------------
 // Tests
@@ -22,7 +22,7 @@ const ruleTester = new RuleTester({
   },
 });
 
-ruleTester.run("no-invalid-http-equiv", rule, {
+ruleTester.run('no-invalid-http-equiv', rule, {
   valid: [
     {
       code: dedent`
@@ -63,10 +63,10 @@ ruleTester.run("no-invalid-http-equiv", rule, {
       `,
       errors: [
         {
-          messageId: "invalidHttpEquiv",
+          messageId: 'invalidHttpEquiv',
           suggestions: [
             {
-              messageId: "removeTag",
+              messageId: 'removeTag',
               output: dedent`
                 <head>
                 </head>
@@ -84,10 +84,10 @@ ruleTester.run("no-invalid-http-equiv", rule, {
       `,
       errors: [
         {
-          messageId: "invalidHttpEquiv",
+          messageId: 'invalidHttpEquiv',
           suggestions: [
             {
-              messageId: "removeTag",
+              messageId: 'removeTag',
               output: dedent`
                 <head>
                 </head>
@@ -105,10 +105,10 @@ ruleTester.run("no-invalid-http-equiv", rule, {
       `,
       errors: [
         {
-          messageId: "invalidHttpEquiv",
+          messageId: 'invalidHttpEquiv',
           suggestions: [
             {
-              messageId: "removeTag",
+              messageId: 'removeTag',
               output: dedent`
                 <head>
                 </head>
@@ -126,10 +126,10 @@ ruleTester.run("no-invalid-http-equiv", rule, {
       `,
       errors: [
         {
-          messageId: "invalidHttpEquiv",
+          messageId: 'invalidHttpEquiv',
           suggestions: [
             {
-              messageId: "removeTag",
+              messageId: 'removeTag',
               output: dedent`
                 <head>
                 </head>

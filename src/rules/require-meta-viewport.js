@@ -18,24 +18,24 @@ export default {
     },
     schema: [],
   },
-  
+
   create(context) {
     let viewportCount = 0;
     let headNode = null;
-    
+
     return {
       'Tag[name="head"]'(node) {
         // Reset counter for each head element
         viewportCount = 0;
         headNode = node;
       },
-      
+
       'Tag[parent.name="head"][name="meta"]'(node) {
         if (isMetaViewport(node)) {
           viewportCount++;
         }
       },
-      
+
       'Tag[name="head"]:exit'(node) {
         if (viewportCount === 0) {
           context.report({
@@ -43,7 +43,7 @@ export default {
             messageId: 'missingViewport',
           });
         }
-        
+
         // Reset for next head
         viewportCount = 0;
         headNode = null;

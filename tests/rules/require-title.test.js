@@ -7,10 +7,10 @@
 // Imports
 //------------------------------------------------------------------------------
 
-import { RuleTester } from "eslint";
-import rule from "../../src/rules/require-title.js";
-import parser from "@html-eslint/parser";
-import dedent from "dedent";
+import { RuleTester } from 'eslint';
+import rule from '../../src/rules/require-title.js';
+import parser from '@html-eslint/parser';
+import dedent from 'dedent';
 
 //------------------------------------------------------------------------------
 // Tests
@@ -22,7 +22,7 @@ const ruleTester = new RuleTester({
   },
 });
 
-ruleTester.run("require-title", rule, {
+ruleTester.run('require-title', rule, {
   valid: [
     {
       code: dedent`
@@ -60,7 +60,7 @@ ruleTester.run("require-title", rule, {
       `,
       errors: [
         {
-          messageId: "missingTitle",
+          messageId: 'missingTitle',
         },
       ],
     },

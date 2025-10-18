@@ -7,10 +7,10 @@
 // Imports
 //------------------------------------------------------------------------------
 
-import { RuleTester } from "eslint";
-import rule from "../../src/rules/no-default-style.js";
-import parser from "@html-eslint/parser";
-import dedent from "dedent";
+import { RuleTester } from 'eslint';
+import rule from '../../src/rules/no-default-style.js';
+import parser from '@html-eslint/parser';
+import dedent from 'dedent';
 
 //------------------------------------------------------------------------------
 // Tests
@@ -22,7 +22,7 @@ const ruleTester = new RuleTester({
   },
 });
 
-ruleTester.run("no-default-style", rule, {
+ruleTester.run('no-default-style', rule, {
   valid: [
     {
       code: dedent`
@@ -50,7 +50,7 @@ ruleTester.run("no-default-style", rule, {
       `,
       errors: [
         {
-          messageId: "noDefaultStyle",
+          messageId: 'noDefaultStyle',
         },
       ],
     },
@@ -62,7 +62,7 @@ ruleTester.run("no-default-style", rule, {
       `,
       errors: [
         {
-          messageId: "noDefaultStyle",
+          messageId: 'noDefaultStyle',
         },
       ],
     },

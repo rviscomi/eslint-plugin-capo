@@ -7,10 +7,10 @@
 // Imports
 //------------------------------------------------------------------------------
 
-import { RuleTester } from "eslint";
-import rule from "../../src/rules/no-duplicate-base.js";
-import parser from "@html-eslint/parser";
-import dedent from "dedent";
+import { RuleTester } from 'eslint';
+import rule from '../../src/rules/no-duplicate-base.js';
+import parser from '@html-eslint/parser';
+import dedent from 'dedent';
 
 //------------------------------------------------------------------------------
 // Tests
@@ -22,7 +22,7 @@ const ruleTester = new RuleTester({
   },
 });
 
-ruleTester.run("no-duplicate-base", rule, {
+ruleTester.run('no-duplicate-base', rule, {
   valid: [
     {
       code: dedent`
@@ -51,13 +51,13 @@ ruleTester.run("no-duplicate-base", rule, {
       `,
       errors: [
         {
-          messageId: "duplicateBase",
+          messageId: 'duplicateBase',
           data: {
             count: 2,
           },
           suggestions: [
             {
-              messageId: "removeDuplicate",
+              messageId: 'removeDuplicate',
               output: dedent`
                 <head>
                   <base href="/">
@@ -79,13 +79,13 @@ ruleTester.run("no-duplicate-base", rule, {
       `,
       errors: [
         {
-          messageId: "duplicateBase",
+          messageId: 'duplicateBase',
           data: {
             count: 2,
           },
           suggestions: [
             {
-              messageId: "removeDuplicate",
+              messageId: 'removeDuplicate',
               output: dedent`
                 <head>
                   <base href="/">
@@ -97,13 +97,13 @@ ruleTester.run("no-duplicate-base", rule, {
           ],
         },
         {
-          messageId: "duplicateBase",
+          messageId: 'duplicateBase',
           data: {
             count: 3,
           },
           suggestions: [
             {
-              messageId: "removeDuplicate",
+              messageId: 'removeDuplicate',
               output: dedent`
                 <head>
                   <base href="/">

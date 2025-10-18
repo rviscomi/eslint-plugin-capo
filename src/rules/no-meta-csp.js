@@ -18,14 +18,14 @@ export default {
     },
     schema: [],
   },
-  
+
   create(context) {
     return {
       'Tag[parent.name="head"][name="meta"]'(node) {
         if (isMetaCSP(node)) {
           const warnings = validateCSP(node, context);
-          
-          warnings.forEach(warning => {
+
+          warnings.forEach((warning) => {
             context.report({
               node,
               messageId: 'metaCSP',

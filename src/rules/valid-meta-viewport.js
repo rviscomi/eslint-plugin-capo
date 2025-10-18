@@ -21,16 +21,16 @@ export default {
     schema: [],
     hasSuggestions: true,
   },
-  
+
   create(context) {
     let firstViewportSeen = false;
-    
+
     return {
       'Tag[name="head"]'(node) {
         // Reset for each head element
         firstViewportSeen = false;
       },
-      
+
       'Tag[parent.name="head"][name="meta"]'(node) {
         if (isMetaViewport(node)) {
           // Check for redundant viewport
@@ -39,18 +39,19 @@ export default {
               node,
               messageId: 'invalidViewport',
               data: {
-                message: 'Another meta viewport element has already been declared. Having multiple viewport settings can lead to unexpected behavior.',
+                message:
+                  'Another meta viewport element has already been declared. Having multiple viewport settings can lead to unexpected behavior.',
               },
             });
             return;
           }
-          
+
           firstViewportSeen = true;
-          
+
           // Validate the viewport configuration
           const warnings = validateMetaViewport(node);
-          
-          warnings.forEach(warning => {
+
+          warnings.forEach((warning) => {
             const content = getAttributeValue(node, 'content');
             const report = {
               node,
@@ -59,19 +60,19 @@ export default {
                 message: warning,
               },
             };
-            
+
             // Add suggestions for common accessibility issues
             if (content) {
               const suggestions = [];
               const contentLower = content.toLowerCase();
-              
+
               // Suggest removing user-scalable=no
               if (contentLower.includes('user-scalable=no') || contentLower.includes('user-scalable=0')) {
-                const contentAttr = node.attributes?.find(attr => {
+                const contentAttr = node.attributes?.find((attr) => {
                   const keyName = attr.key?.value || attr.key?.name;
                   return keyName?.toLowerCase() === 'content';
                 });
-                
+
                 if (contentAttr && contentAttr.value) {
                   suggestions.push({
                     messageId: 'removeUserScalable',
@@ -87,14 +88,14 @@ export default {
                   });
                 }
               }
-              
+
               // Suggest removing maximum-scale
               if (contentLower.includes('maximum-scale')) {
-                const contentAttr = node.attributes?.find(attr => {
+                const contentAttr = node.attributes?.find((attr) => {
                   const keyName = attr.key?.value || attr.key?.name;
                   return keyName?.toLowerCase() === 'content';
                 });
-                
+
                 if (contentAttr && contentAttr.value) {
                   suggestions.push({
                     messageId: 'removeMaximumScale',
@@ -110,17 +111,17 @@ export default {
                   });
                 }
               }
-              
+
               if (suggestions.length > 0) {
                 report.suggest = suggestions;
               }
             }
-            
+
             context.report(report);
           });
         }
       },
-      
+
       'Tag[name="head"]:exit'() {
         // Reset for next head
         firstViewportSeen = false;

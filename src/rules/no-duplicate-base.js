@@ -18,19 +18,19 @@ export default {
     schema: [],
     hasSuggestions: true,
   },
-  
+
   create(context) {
     let baseCount = 0;
-    
+
     return {
       'Tag[name="head"]'(node) {
         // Reset counter for each head element
         baseCount = 0;
       },
-      
+
       'Tag[parent.name="head"][name="base"]'(node) {
         baseCount++;
-        
+
         if (baseCount > 1) {
           context.report({
             node,
@@ -38,34 +38,36 @@ export default {
             data: {
               count: baseCount,
             },
-            suggest: [{
-              messageId: 'removeDuplicate',
-              fix(fixer) {
-                // Remove this duplicate base element
-                const sourceCode = context.sourceCode || context.getSourceCode();
-                const text = sourceCode.getText();
-                const nodeStart = node.range[0];
-                const nodeEnd = node.range[1];
-                
-                // Find the start of the line (including indentation)
-                let lineStart = nodeStart;
-                while (lineStart > 0 && text[lineStart - 1] !== '\n') {
-                  lineStart--;
-                }
-                
-                // Find the end including the newline
-                let lineEnd = nodeEnd;
-                if (text[lineEnd] === '\n') {
-                  lineEnd++;
-                }
-                
-                return fixer.removeRange([lineStart, lineEnd]);
+            suggest: [
+              {
+                messageId: 'removeDuplicate',
+                fix(fixer) {
+                  // Remove this duplicate base element
+                  const sourceCode = context.sourceCode || context.getSourceCode();
+                  const text = sourceCode.getText();
+                  const nodeStart = node.range[0];
+                  const nodeEnd = node.range[1];
+
+                  // Find the start of the line (including indentation)
+                  let lineStart = nodeStart;
+                  while (lineStart > 0 && text[lineStart - 1] !== '\n') {
+                    lineStart--;
+                  }
+
+                  // Find the end including the newline
+                  let lineEnd = nodeEnd;
+                  if (text[lineEnd] === '\n') {
+                    lineEnd++;
+                  }
+
+                  return fixer.removeRange([lineStart, lineEnd]);
+                },
               },
-            }],
+            ],
           });
         }
       },
-      
+
       'Tag[name="head"]:exit'(node) {
         // Reset for next head
         baseCount = 0;

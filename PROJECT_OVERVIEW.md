@@ -70,12 +70,15 @@ eslint-plugin-capo/
 ## 🎯 Key Design Decisions
 
 ### Modern Flat Config Support
+
 - ESLint 9+ compatible
 - Uses new `plugins` object syntax
 - Named configuration exports
 
 ### Comprehensive Validation + Ordering
+
 Based on capo.js validation.js and rules.js:
+
 - CSP meta tag detection
 - http-equiv validation (20+ cases)
 - Element weight hierarchy (11 types)
@@ -84,7 +87,9 @@ Based on capo.js validation.js and rules.js:
 - Deprecated IE features detection
 
 ### Framework Agnostic
+
 Works with:
+
 - Plain HTML (via eslint-plugin-html)
 - Vue.js (via eslint-plugin-vue)
 - React/Next.js (via custom file patterns)
@@ -93,28 +98,25 @@ Works with:
 ## 🚀 Usage Examples
 
 ### Basic HTML Project
+
 ```javascript
 import capo from 'eslint-plugin-capo';
 import html from 'eslint-plugin-html';
 
-export default [
-  { files: ['**/*.html'], plugins: { html } },
-  capo.configs.recommended,
-];
+export default [{ files: ['**/*.html'], plugins: { html } }, capo.configs.recommended];
 ```
 
 ### Vue.js Project
+
 ```javascript
 import capo from 'eslint-plugin-capo';
 import vue from 'eslint-plugin-vue';
 
-export default [
-  ...vue.configs['flat/recommended'],
-  capo.configs.recommended,
-];
+export default [...vue.configs['flat/recommended'], capo.configs.recommended];
 ```
 
 ### Next.js Project
+
 ```javascript
 import capo from 'eslint-plugin-capo';
 
@@ -129,11 +131,13 @@ export default [
 ## 🧪 Testing
 
 Run the test suite:
+
 ```bash
 npm test
 ```
 
 This will:
+
 1. Lint `bad-example.html` and report all issues found
 2. Lint `good-example.html` and verify no issues
 3. Display results with emoji indicators
@@ -150,22 +154,26 @@ This will:
 The plugin implements validation for:
 
 ### Performance Issues
+
 - CSP meta tags (disable preload scanner)
 - Unnecessary preloads
 - Deprecated cache directives
 
 ### Accessibility Issues
+
 - Viewport zoom restrictions
 - Maximum scale limitations
 - User-scalable disabled
 
 ### Standards Compliance
+
 - Invalid head elements
 - Character encoding (UTF-8 required)
 - Duplicate declarations
 - Deprecated IE features
 
 ### Deprecated Practices
+
 - 20+ deprecated http-equiv values
 - IE-specific meta tags
 - Non-standard directives
@@ -174,18 +182,21 @@ The plugin implements validation for:
 ## 🔗 Integration
 
 ### Build Tools
+
 - Vite - ✅ Supported
 - Webpack - ✅ Supported
 - Parcel - ✅ Supported
 - Any bundler with ESLint integration
 
 ### CI/CD
+
 ```yaml
 - run: npm ci
 - run: npx eslint .
 ```
 
 ### Frameworks
+
 - Vue.js - ✅ Native support
 - React - ✅ Via custom file patterns
 - Next.js - ✅ Via custom file patterns

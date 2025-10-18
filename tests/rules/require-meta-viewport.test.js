@@ -7,10 +7,10 @@
 // Imports
 //------------------------------------------------------------------------------
 
-import { RuleTester } from "eslint";
-import rule from "../../src/rules/require-meta-viewport.js";
-import parser from "@html-eslint/parser";
-import dedent from "dedent";
+import { RuleTester } from 'eslint';
+import rule from '../../src/rules/require-meta-viewport.js';
+import parser from '@html-eslint/parser';
+import dedent from 'dedent';
 
 //------------------------------------------------------------------------------
 // Tests
@@ -22,7 +22,7 @@ const ruleTester = new RuleTester({
   },
 });
 
-ruleTester.run("require-meta-viewport", rule, {
+ruleTester.run('require-meta-viewport', rule, {
   valid: [
     {
       code: dedent`
@@ -52,7 +52,7 @@ ruleTester.run("require-meta-viewport", rule, {
       `,
       errors: [
         {
-          messageId: "missingViewport",
+          messageId: 'missingViewport',
         },
       ],
     },

@@ -7,10 +7,10 @@
 // Imports
 //------------------------------------------------------------------------------
 
-import { RuleTester } from "eslint";
-import rule from "../../src/rules/valid-meta-viewport.js";
-import parser from "@html-eslint/parser";
-import dedent from "dedent";
+import { RuleTester } from 'eslint';
+import rule from '../../src/rules/valid-meta-viewport.js';
+import parser from '@html-eslint/parser';
+import dedent from 'dedent';
 
 //------------------------------------------------------------------------------
 // Tests
@@ -22,7 +22,7 @@ const ruleTester = new RuleTester({
   },
 });
 
-ruleTester.run("valid-meta-viewport", rule, {
+ruleTester.run('valid-meta-viewport', rule, {
   valid: [
     {
       code: dedent`
@@ -56,10 +56,10 @@ ruleTester.run("valid-meta-viewport", rule, {
       `,
       errors: [
         {
-          messageId: "invalidViewport",
+          messageId: 'invalidViewport',
           suggestions: [
             {
-              messageId: "removeUserScalable",
+              messageId: 'removeUserScalable',
               output: dedent`
                 <head>
                   <meta name="viewport" content="">
@@ -78,10 +78,10 @@ ruleTester.run("valid-meta-viewport", rule, {
       `,
       errors: [
         {
-          messageId: "invalidViewport",
+          messageId: 'invalidViewport',
           suggestions: [
             {
-              messageId: "removeUserScalable",
+              messageId: 'removeUserScalable',
               output: dedent`
                 <head>
                   <meta name="viewport" content="width=device-width">
@@ -100,10 +100,10 @@ ruleTester.run("valid-meta-viewport", rule, {
       `,
       errors: [
         {
-          messageId: "invalidViewport",
+          messageId: 'invalidViewport',
           suggestions: [
             {
-              messageId: "removeMaximumScale",
+              messageId: 'removeMaximumScale',
               output: dedent`
                 <head>
                   <meta name="viewport" content="">
@@ -122,10 +122,10 @@ ruleTester.run("valid-meta-viewport", rule, {
       `,
       errors: [
         {
-          messageId: "invalidViewport",
+          messageId: 'invalidViewport',
           suggestions: [
             {
-              messageId: "removeMaximumScale",
+              messageId: 'removeMaximumScale',
               output: dedent`
                 <head>
                   <meta name="viewport" content="width=device-width">
@@ -144,10 +144,10 @@ ruleTester.run("valid-meta-viewport", rule, {
       `,
       errors: [
         {
-          messageId: "invalidViewport",
+          messageId: 'invalidViewport',
           suggestions: [
             {
-              messageId: "removeUserScalable",
+              messageId: 'removeUserScalable',
               output: dedent`
                 <head>
                   <meta name="viewport" content="maximum-scale=1">
@@ -155,7 +155,7 @@ ruleTester.run("valid-meta-viewport", rule, {
               `,
             },
             {
-              messageId: "removeMaximumScale",
+              messageId: 'removeMaximumScale',
               output: dedent`
                 <head>
                   <meta name="viewport" content="user-scalable=no">
@@ -165,10 +165,10 @@ ruleTester.run("valid-meta-viewport", rule, {
           ],
         },
         {
-          messageId: "invalidViewport",
+          messageId: 'invalidViewport',
           suggestions: [
             {
-              messageId: "removeUserScalable",
+              messageId: 'removeUserScalable',
               output: dedent`
                 <head>
                   <meta name="viewport" content="maximum-scale=1">
@@ -176,7 +176,7 @@ ruleTester.run("valid-meta-viewport", rule, {
               `,
             },
             {
-              messageId: "removeMaximumScale",
+              messageId: 'removeMaximumScale',
               output: dedent`
                 <head>
                   <meta name="viewport" content="user-scalable=no">

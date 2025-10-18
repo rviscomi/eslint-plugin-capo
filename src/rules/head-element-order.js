@@ -15,7 +15,8 @@ export default {
       recommended: false, // Can be noisy, so not in recommended by default
     },
     messages: {
-      wrongOrder: 'Element order suboptimal: {{current}} (weight {{currentWeight}}) should come after {{next}} (weight {{nextWeight}}).',
+      wrongOrder:
+        'Element order suboptimal: {{current}} (weight {{currentWeight}}) should come after {{next}} (weight {{nextWeight}}).',
       orderInfo: 'Consider reordering head elements for optimal performance.',
     },
     schema: [
@@ -25,38 +26,39 @@ export default {
           severity: {
             type: 'string',
             enum: ['warning', 'error'],
-            default: 'warning'
-          }
+            default: 'warning',
+          },
         },
-        additionalProperties: false
-      }
+        additionalProperties: false,
+      },
     ],
   },
-  
+
   create(context) {
     return {
       'Tag[name="head"]'(headNode) {
         // Get all direct children of head
         // Note: @html-eslint/parser uses different types: Tag, ScriptTag, StyleTag
-        const children = headNode.children?.filter(child => 
-          child.type === 'Tag' || child.type === 'ScriptTag' || child.type === 'StyleTag'
-        ) || [];
-        
+        const children =
+          headNode.children?.filter(
+            (child) => child.type === 'Tag' || child.type === 'ScriptTag' || child.type === 'StyleTag'
+          ) || [];
+
         if (children.length === 0) return;
-        
+
         // Check each adjacent pair for ordering issues
         for (let i = 0; i < children.length - 1; i++) {
           const current = children[i];
           const next = children[i + 1];
-          
+
           const currentWeight = getWeight(current);
           const nextWeight = getWeight(next);
-          
+
           // If current element has lower weight than next, it's out of order
           if (currentWeight < nextWeight) {
             const currentType = getElementTypeName(current);
             const nextType = getElementTypeName(next);
-            
+
             context.report({
               node: current,
               messageId: 'wrongOrder',

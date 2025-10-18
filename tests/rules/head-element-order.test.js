@@ -7,10 +7,10 @@
 // Imports
 //------------------------------------------------------------------------------
 
-import { RuleTester } from "eslint";
-import rule from "../../src/rules/head-element-order.js";
-import parser from "@html-eslint/parser";
-import dedent from "dedent";
+import { RuleTester } from 'eslint';
+import rule from '../../src/rules/head-element-order.js';
+import parser from '@html-eslint/parser';
+import dedent from 'dedent';
 
 //------------------------------------------------------------------------------
 // Tests
@@ -22,7 +22,7 @@ const ruleTester = new RuleTester({
   },
 });
 
-ruleTester.run("head-element-order", rule, {
+ruleTester.run('head-element-order', rule, {
   valid: [
     {
       code: dedent`
@@ -60,7 +60,7 @@ ruleTester.run("head-element-order", rule, {
 
   invalid: [
     {
-      name: "title before meta",
+      name: 'title before meta',
       code: dedent`
         <head>
           <title>Title First</title>
@@ -69,18 +69,18 @@ ruleTester.run("head-element-order", rule, {
       `,
       errors: [
         {
-          messageId: "wrongOrder",
+          messageId: 'wrongOrder',
           data: {
-            current: "TITLE",
-            currentWeight: "10",
-            next: "META",
-            nextWeight: "11",
+            current: 'TITLE',
+            currentWeight: '10',
+            next: 'META',
+            nextWeight: '11',
           },
         },
       ],
     },
     {
-      name: "defer script before preconnect",
+      name: 'defer script before preconnect',
       code: dedent`
         <head>
           <script defer src="app.js"></script>
@@ -90,7 +90,7 @@ ruleTester.run("head-element-order", rule, {
       errors: 1,
     },
     {
-      name: "prefetch before async script before meta",
+      name: 'prefetch before async script before meta',
       code: dedent`
         <head>
           <link rel="prefetch" href="next.html">
@@ -101,7 +101,7 @@ ruleTester.run("head-element-order", rule, {
       errors: 2,
     },
     {
-      name: "preload before async script",
+      name: 'preload before async script',
       code: dedent`
         <head>
           <link rel="preload" href="font.woff2" as="font">
@@ -111,7 +111,7 @@ ruleTester.run("head-element-order", rule, {
       errors: 1,
     },
     {
-      name: "module script before preconnect",
+      name: 'module script before preconnect',
       code: dedent`
         <head>
           <script type="module" src="module.js"></script>
@@ -121,7 +121,7 @@ ruleTester.run("head-element-order", rule, {
       errors: 1,
     },
     {
-      name: "inline script before meta",
+      name: 'inline script before meta',
       code: dedent`
         <head>
           <script>console.log('inline');</script>
@@ -131,7 +131,7 @@ ruleTester.run("head-element-order", rule, {
       errors: 1,
     },
     {
-      name: "complex head with multiple issues",
+      name: 'complex head with multiple issues',
       code: dedent`
         <head>
           <base href="/">
@@ -144,7 +144,7 @@ ruleTester.run("head-element-order", rule, {
       errors: 1, // defer before meta
     },
     {
-      name: "very complex head with many issues",
+      name: 'very complex head with many issues',
       code: dedent`
         <head>
           <link rel="stylesheet" href="1.css">

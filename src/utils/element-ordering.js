@@ -1,7 +1,7 @@
 /**
  * Element ordering utilities based on capo.js rules
  * https://github.com/rviscomi/capo.js/blob/main/src/lib/rules.js
- * 
+ *
  * Defines the optimal order for elements in the HTML <head>
  */
 
@@ -27,17 +27,17 @@ function isStyleElement(node) {
  * Element weight hierarchy (higher = should come earlier)
  */
 export const ElementWeights = {
-  META: 11,           // Pragma directives (meta charset, meta viewport, base, meta http-equiv)
-  TITLE: 10,          // Title
-  PRECONNECT: 9,      // Preconnect hints
-  ASYNC_SCRIPT: 8,    // Asynchronous scripts
-  IMPORT_STYLES: 7,   // Import styles
-  SYNC_SCRIPT: 6,     // Synchronous scripts
-  SYNC_STYLES: 5,     // Synchronous styles
-  PRELOAD: 4,         // Preload hints
-  DEFER_SCRIPT: 3,    // Deferred scripts
+  META: 11, // Pragma directives (meta charset, meta viewport, base, meta http-equiv)
+  TITLE: 10, // Title
+  PRECONNECT: 9, // Preconnect hints
+  ASYNC_SCRIPT: 8, // Asynchronous scripts
+  IMPORT_STYLES: 7, // Import styles
+  SYNC_SCRIPT: 6, // Synchronous scripts
+  SYNC_STYLES: 5, // Synchronous styles
+  PRELOAD: 4, // Preload hints
+  DEFER_SCRIPT: 3, // Deferred scripts
   PREFETCH_PRERENDER: 2, // Prefetch and prerender hints
-  OTHER: 1            // Everything else
+  OTHER: 1, // Everything else
 };
 
 /**
@@ -50,7 +50,7 @@ export const META_HTTP_EQUIV_KEYWORDS = [
   'default-style',
   'delegate-ch',
   'origin-trial',
-  'x-dns-prefetch-control'
+  'x-dns-prefetch-control',
 ];
 
 /**
@@ -59,28 +59,26 @@ export const META_HTTP_EQUIV_KEYWORDS = [
 export function isMeta(node) {
   if (node.name === 'base') return true;
   if (node.name !== 'meta') return false;
-  
+
   // Check for charset
-  const hasCharset = node.attributes?.some(attr => {
+  const hasCharset = node.attributes?.some((attr) => {
     // Support both @html-eslint/parser (key.value) and vue-eslint-parser (key.name)
     const keyName = attr.key?.value || attr.key?.name;
     return keyName?.toLowerCase() === 'charset';
   });
   if (hasCharset) return true;
-  
+
   // Check for viewport
   const name = getAttributeValue(node, 'name');
   if (name?.toLowerCase() === 'viewport') return true;
-  
+
   // Check for important http-equiv values
   const httpEquiv = getAttributeValue(node, 'http-equiv');
   if (httpEquiv) {
     const httpEquivLower = httpEquiv.toLowerCase();
-    return META_HTTP_EQUIV_KEYWORDS.some(keyword => 
-      httpEquivLower === keyword.toLowerCase()
-    );
+    return META_HTTP_EQUIV_KEYWORDS.some((keyword) => httpEquivLower === keyword.toLowerCase());
   }
-  
+
   return false;
 }
 
@@ -105,16 +103,16 @@ export function isPreconnect(node) {
  */
 export function isAsyncScript(node) {
   if (!isScriptElement(node)) return false;
-  
-  const hasSrc = node.attributes?.some(attr => {
+
+  const hasSrc = node.attributes?.some((attr) => {
     const keyName = attr.key?.value || attr.key?.name;
     return keyName?.toLowerCase() === 'src';
   });
-  const hasAsync = node.attributes?.some(attr => {
+  const hasAsync = node.attributes?.some((attr) => {
     const keyName = attr.key?.value || attr.key?.name;
     return keyName?.toLowerCase() === 'async';
   });
-  
+
   return hasSrc && hasAsync;
 }
 
@@ -123,7 +121,7 @@ export function isAsyncScript(node) {
  */
 export function isImportStyles(node) {
   if (!isStyleElement(node)) return false;
-  
+
   // Check text content for @import
   const content = getTextContent(node);
   return /@import/.test(content);
@@ -134,23 +132,23 @@ export function isImportStyles(node) {
  */
 export function isSyncScript(node) {
   if (!isScriptElement(node)) return false;
-  
-  const hasSrc = node.attributes?.some(attr => {
+
+  const hasSrc = node.attributes?.some((attr) => {
     const keyName = attr.key?.value || attr.key?.name;
     return keyName?.toLowerCase() === 'src';
   });
-  const hasDefer = node.attributes?.some(attr => {
+  const hasDefer = node.attributes?.some((attr) => {
     const keyName = attr.key?.value || attr.key?.name;
     return keyName?.toLowerCase() === 'defer';
   });
-  const hasAsync = node.attributes?.some(attr => {
+  const hasAsync = node.attributes?.some((attr) => {
     const keyName = attr.key?.value || attr.key?.name;
     return keyName?.toLowerCase() === 'async';
   });
   const type = getAttributeValue(node, 'type');
   const isModule = type?.toLowerCase().includes('module');
   const isJson = type?.toLowerCase().includes('json');
-  
+
   // Sync script: has src, but no defer/async/module, and not JSON
   if (!hasSrc) return true; // Inline scripts are sync
   return !hasDefer && !isModule && !hasAsync && !isJson;
@@ -162,7 +160,7 @@ export function isSyncScript(node) {
 export function isSyncStyles(node) {
   if (isStyleElement(node)) return true;
   if (node.name !== 'link') return false;
-  
+
   const rel = getAttributeValue(node, 'rel');
   return rel?.toLowerCase() === 'stylesheet';
 }
@@ -182,24 +180,24 @@ export function isPreload(node) {
  */
 export function isDeferScript(node) {
   if (!isScriptElement(node)) return false;
-  
-  const hasSrc = node.attributes?.some(attr => {
+
+  const hasSrc = node.attributes?.some((attr) => {
     const keyName = attr.key?.value || attr.key?.name;
     return keyName?.toLowerCase() === 'src';
   });
-  const hasDefer = node.attributes?.some(attr => {
+  const hasDefer = node.attributes?.some((attr) => {
     const keyName = attr.key?.value || attr.key?.name;
     return keyName?.toLowerCase() === 'defer';
   });
-  const hasAsync = node.attributes?.some(attr => {
+  const hasAsync = node.attributes?.some((attr) => {
     const keyName = attr.key?.value || attr.key?.name;
     return keyName?.toLowerCase() === 'async';
   });
   const type = getAttributeValue(node, 'type');
   const isModule = type?.toLowerCase() === 'module';
-  
+
   if (!hasSrc) return false;
-  
+
   // Defer script: has src with defer, or is a module without async
   return hasDefer || (isModule && !hasAsync);
 }
@@ -211,9 +209,7 @@ export function isPrefetchPrerender(node) {
   if (node.name !== 'link') return false;
   const rel = getAttributeValue(node, 'rel');
   const relLower = rel?.toLowerCase();
-  return relLower === 'prefetch' || 
-         relLower === 'dns-prefetch' || 
-         relLower === 'prerender';
+  return relLower === 'prefetch' || relLower === 'dns-prefetch' || relLower === 'prerender';
 }
 
 /**
@@ -230,7 +226,7 @@ export function getWeight(node) {
   if (isPreload(node)) return ElementWeights.PRELOAD;
   if (isDeferScript(node)) return ElementWeights.DEFER_SCRIPT;
   if (isPrefetchPrerender(node)) return ElementWeights.PREFETCH_PRERENDER;
-  
+
   return ElementWeights.OTHER;
 }
 
@@ -258,8 +254,8 @@ function getTextContent(node) {
   // For inline elements, try to get text content
   if (node.children) {
     return node.children
-      .filter(child => child.type === 'VText')
-      .map(child => child.value)
+      .filter((child) => child.type === 'VText')
+      .map((child) => child.value)
       .join('');
   }
   return '';
@@ -289,6 +285,6 @@ export function getOptimalOrderDescription() {
     '8. PRELOAD - weight 3',
     '9. DEFER_SCRIPT - weight 2',
     '10. PREFETCH/PRERENDER - weight 1',
-    '11. OTHER - weight 0'
+    '11. OTHER - weight 0',
   ];
 }

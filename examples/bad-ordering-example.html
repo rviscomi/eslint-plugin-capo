@@ -1,63 +1,63 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <!-- ❌ BAD ORDERING - Elements are not in optimal order -->
-  
-  <!-- Defer script too early (weight 2) -->
-  <script src="/app.js" defer></script>
-  
-  <!-- Sync styles should come before defer (weight 4) -->
-  <link rel="stylesheet" href="/main.css">
-  
-  <!-- Title should be near the top (weight 9) -->
-  <title>Bad Ordering Example</title>
-  
-  <!-- Prefetch too early (weight 1) -->
-  <link rel="prefetch" href="/next-page.html">
-  
-  <!-- Preload should come after sync styles (weight 3) -->
-  <link rel="preload" href="/font.woff2" as="font" crossorigin>
-  
-  <!-- Meta charset should be FIRST (weight 10) -->
-  <meta charset="utf-8">
-  
-  <!-- Another defer script (weight 2) -->
-  <script src="/utils.js" defer></script>
-  
-  <!-- Sync styles again (weight 4) -->
-  <link rel="stylesheet" href="/styles.css">
-  
-  <!-- Viewport should be with charset at top (weight 10) -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  <!-- Async script should be early (weight 7) -->
-  <script src="/analytics.js" async></script>
-  
-  <!-- Preconnect should be near top (weight 8) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  
-  <!-- Another preload (weight 3) -->
-  <link rel="preload" href="/image.jpg" as="image">
-  
-  <!-- Description meta (weight 0, should be last) -->
-  <meta name="description" content="This page has terrible element ordering">
-</head>
-<body>
-  <h1>Bad Ordering Example</h1>
-  <p>The head elements above are out of order and will be flagged by the head-element-order rule.</p>
-  
-  <h2>Optimal Order (from capo.js):</h2>
-  <ol>
-    <li>META (charset, viewport, CSP) - weight 10</li>
-    <li>TITLE - weight 9</li>
-    <li>PRECONNECT - weight 8</li>
-    <li>ASYNC_SCRIPT - weight 7</li>
-    <li>IMPORT_STYLES - weight 6</li>
-    <li>SYNC_SCRIPT - weight 5</li>
-    <li>SYNC_STYLES - weight 4</li>
-    <li>PRELOAD - weight 3</li>
-    <li>DEFER_SCRIPT - weight 2</li>
-    <li>PREFETCH/PRERENDER - weight 1</li>
-  </ol>
-</body>
+  <head>
+    <!-- ❌ BAD ORDERING - Elements are not in optimal order -->
+
+    <!-- Defer script too early (weight 2) -->
+    <script src="/app.js" defer></script>
+
+    <!-- Sync styles should come before defer (weight 4) -->
+    <link rel="stylesheet" href="/main.css" />
+
+    <!-- Title should be near the top (weight 9) -->
+    <title>Bad Ordering Example</title>
+
+    <!-- Prefetch too early (weight 1) -->
+    <link rel="prefetch" href="/next-page.html" />
+
+    <!-- Preload should come after sync styles (weight 3) -->
+    <link rel="preload" href="/font.woff2" as="font" crossorigin />
+
+    <!-- Meta charset should be FIRST (weight 10) -->
+    <meta charset="utf-8" />
+
+    <!-- Another defer script (weight 2) -->
+    <script src="/utils.js" defer></script>
+
+    <!-- Sync styles again (weight 4) -->
+    <link rel="stylesheet" href="/styles.css" />
+
+    <!-- Viewport should be with charset at top (weight 10) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Async script should be early (weight 7) -->
+    <script src="/analytics.js" async></script>
+
+    <!-- Preconnect should be near top (weight 8) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <!-- Another preload (weight 3) -->
+    <link rel="preload" href="/image.jpg" as="image" />
+
+    <!-- Description meta (weight 0, should be last) -->
+    <meta name="description" content="This page has terrible element ordering" />
+  </head>
+  <body>
+    <h1>Bad Ordering Example</h1>
+    <p>The head elements above are out of order and will be flagged by the head-element-order rule.</p>
+
+    <h2>Optimal Order (from capo.js):</h2>
+    <ol>
+      <li>META (charset, viewport, CSP) - weight 10</li>
+      <li>TITLE - weight 9</li>
+      <li>PRECONNECT - weight 8</li>
+      <li>ASYNC_SCRIPT - weight 7</li>
+      <li>IMPORT_STYLES - weight 6</li>
+      <li>SYNC_SCRIPT - weight 5</li>
+      <li>SYNC_STYLES - weight 4</li>
+      <li>PRELOAD - weight 3</li>
+      <li>DEFER_SCRIPT - weight 2</li>
+      <li>PREFETCH/PRERENDER - weight 1</li>
+    </ol>
+  </body>
 </html>

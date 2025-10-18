@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - 2025-10-17
 
 ### Added
+
 - Initial release of eslint-plugin-capo
 - Modern flat config support (ESLint 9+)
 - Nine validation rules based on capo.js:
@@ -33,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - VS Code integration support
 
 ### Documentation
+
 - Complete README with usage examples
 - Rule documentation with examples
 - VS Code setup guide

@@ -21,7 +21,7 @@ const plugin = {
     name: 'eslint-plugin-capo',
     version: '1.1.0',
   },
-  
+
   rules: {
     'no-invalid-head-elements': noInvalidHeadElements,
     'require-title': requireTitle,
@@ -35,7 +35,7 @@ const plugin = {
     'no-default-style': noDefaultStyle,
     'head-element-order': headElementOrder,
   },
-  
+
   configs: {},
 };
 

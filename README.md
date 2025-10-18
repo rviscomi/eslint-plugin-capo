@@ -18,6 +18,7 @@ npm install --save-dev eslint-plugin-capo @html-eslint/parser
 ```
 
 **Requirements:**
+
 - ESLint >= 8.0.0
 - Node.js >= 18.0.0
 - `@html-eslint/parser` for parsing HTML files
@@ -49,10 +50,7 @@ export default [
 import capo from 'eslint-plugin-capo';
 import vue from 'eslint-plugin-vue';
 
-export default [
-  ...vue.configs['flat/recommended'],
-  capo.configs.recommended,
-];
+export default [...vue.configs['flat/recommended'], capo.configs.recommended];
 ```
 
 ### With React/Next.js
@@ -79,9 +77,7 @@ Balanced rules for production use:
 ```javascript
 import capo from 'eslint-plugin-capo';
 
-export default [
-  capo.configs.recommended,
-];
+export default [capo.configs.recommended];
 ```
 
 ### `strict`
@@ -91,9 +87,7 @@ All rules as errors:
 ```javascript
 import capo from 'eslint-plugin-capo';
 
-export default [
-  capo.configs.strict,
-];
+export default [capo.configs.strict];
 ```
 
 ### `performance`
@@ -103,9 +97,7 @@ Performance-focused rules only:
 ```javascript
 import capo from 'eslint-plugin-capo';
 
-export default [
-  capo.configs.performance,
-];
+export default [capo.configs.performance];
 ```
 
 ### `accessibility`
@@ -115,9 +107,7 @@ Accessibility-focused rules only:
 ```javascript
 import capo from 'eslint-plugin-capo';
 
-export default [
-  capo.configs.accessibility,
-];
+export default [capo.configs.accessibility];
 ```
 
 ### `ordering`
@@ -127,9 +117,7 @@ Element ordering validation only:
 ```javascript
 import capo from 'eslint-plugin-capo';
 
-export default [
-  capo.configs.ordering,
-];
+export default [capo.configs.ordering];
 ```
 
 ### Custom Configuration
@@ -173,7 +161,7 @@ Disallows invalid elements in the HTML `<head>`. Only allows: `base`, `link`, `m
 <!-- ✅ Good -->
 <head>
   <title>Page Title</title>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
 </head>
 ```
 
@@ -205,13 +193,13 @@ Disallows multiple `<base>` elements.
 ```html
 <!-- ❌ Bad -->
 <head>
-  <base href="https://example.com/">
-  <base href="https://other.com/">
+  <base href="https://example.com/" />
+  <base href="https://other.com/" />
 </head>
 
 <!-- ✅ Good -->
 <head>
-  <base href="https://example.com/">
+  <base href="https://example.com/" />
 </head>
 ```
 
@@ -222,7 +210,7 @@ Disallows CSP meta tags that disable Chrome's preload scanner. Use HTTP headers 
 ```html
 <!-- ❌ Bad -->
 <head>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'" />
 </head>
 
 <!-- ✅ Good -->
@@ -240,19 +228,19 @@ Validates `http-equiv` meta tags and catches deprecated/non-standard values.
 <!-- ❌ Bad -->
 <head>
   <!-- Deprecated IE features -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
   <!-- Should use HTTP headers -->
-  <meta http-equiv="Cache-Control" content="no-cache">
-  
+  <meta http-equiv="Cache-Control" content="no-cache" />
+
   <!-- Wrong attribute (should be name, not http-equiv) -->
-  <meta http-equiv="description" content="Page description">
+  <meta http-equiv="description" content="Page description" />
 </head>
 
 <!-- ✅ Good -->
 <head>
-  <meta name="description" content="Page description">
-  <meta charset="utf-8">
+  <meta name="description" content="Page description" />
+  <meta charset="utf-8" />
 </head>
 ```
 
@@ -264,19 +252,19 @@ Ensures viewport meta tag is properly configured for accessibility.
 <!-- ❌ Bad -->
 <head>
   <!-- Disables zooming (accessibility issue) -->
-  <meta name="viewport" content="width=device-width, user-scalable=no">
-  
+  <meta name="viewport" content="width=device-width, user-scalable=no" />
+
   <!-- Invalid zoom limits -->
-  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
-  
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
   <!-- Multiple viewport tags -->
-  <meta name="viewport" content="width=device-width">
-  <meta name="viewport" content="initial-scale=1">
+  <meta name="viewport" content="width=device-width" />
+  <meta name="viewport" content="initial-scale=1" />
 </head>
 
 <!-- ✅ Good -->
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 ```
 
@@ -287,17 +275,17 @@ Ensures proper UTF-8 character encoding is declared.
 ```html
 <!-- ❌ Bad -->
 <head>
-  <meta charset="ISO-8859-1">
+  <meta charset="ISO-8859-1" />
 </head>
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta charset="utf-8" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 </head>
 
 <!-- ✅ Good -->
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
 </head>
 ```
 
@@ -308,7 +296,7 @@ Discourages `default-style` meta tag (causes flash of unstyled content).
 ```html
 <!-- ❌ Bad -->
 <head>
-  <meta http-equiv="default-style" content="main">
+  <meta http-equiv="default-style" content="main" />
 </head>
 
 <!-- ✅ Good -->
@@ -330,64 +318,72 @@ Validates that head elements are in optimal order for performance based on capo.
 
 #### Element Weight Hierarchy
 
-| Weight | Element Type | Description |
-|--------|--------------|-------------|
-| 10 | META | Critical metadata (charset, viewport, CSP, origin-trial) |
-| 9 | TITLE | Document title |
-| 8 | PRECONNECT | Early connection hints |
-| 7 | ASYNC_SCRIPT | Non-blocking async scripts |
-| 6 | IMPORT_STYLES | CSS @import (blocks rendering) |
-| 5 | SYNC_SCRIPT | Blocking synchronous scripts |
-| 4 | SYNC_STYLES | Blocking stylesheets |
-| 3 | PRELOAD | Resource preload hints |
-| 2 | DEFER_SCRIPT | Deferred scripts and modules |
-| 1 | PREFETCH_PRERENDER | Low priority prefetch/prerender |
-| 0 | OTHER | Everything else |
+| Weight | Element Type       | Description                                              |
+| ------ | ------------------ | -------------------------------------------------------- |
+| 10     | META               | Critical metadata (charset, viewport, CSP, origin-trial) |
+| 9      | TITLE              | Document title                                           |
+| 8      | PRECONNECT         | Early connection hints                                   |
+| 7      | ASYNC_SCRIPT       | Non-blocking async scripts                               |
+| 6      | IMPORT_STYLES      | CSS @import (blocks rendering)                           |
+| 5      | SYNC_SCRIPT        | Blocking synchronous scripts                             |
+| 4      | SYNC_STYLES        | Blocking stylesheets                                     |
+| 3      | PRELOAD            | Resource preload hints                                   |
+| 2      | DEFER_SCRIPT       | Deferred scripts and modules                             |
+| 1      | PREFETCH_PRERENDER | Low priority prefetch/prerender                          |
+| 0      | OTHER              | Everything else                                          |
 
 #### Examples
 
 ❌ **Incorrect (bad ordering):**
+
 ```html
 <head>
-  <script src="/app.js" defer></script>  <!-- weight 2, too early -->
-  <title>Page</title>                   <!-- weight 9, should be earlier -->
-  <link rel="preload" href="/font.woff2" as="font">  <!-- weight 3 -->
-  <meta charset="utf-8">                 <!-- weight 10, should be first -->
-  <link rel="stylesheet" href="/styles.css">  <!-- weight 4 -->
+  <script src="/app.js" defer></script>
+  <!-- weight 2, too early -->
+  <title>Page</title>
+  <!-- weight 9, should be earlier -->
+  <link rel="preload" href="/font.woff2" as="font" />
+  <!-- weight 3 -->
+  <meta charset="utf-8" />
+  <!-- weight 10, should be first -->
+  <link rel="stylesheet" href="/styles.css" />
+  <!-- weight 4 -->
 </head>
 ```
 
 ✅ **Correct (optimal ordering):**
+
 ```html
 <head>
   <!-- 1. META (weight 10) -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <!-- 2. TITLE (weight 9) -->
   <title>Page</title>
-  
+
   <!-- 3. PRECONNECT (weight 8) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+
   <!-- 4. ASYNC_SCRIPT (weight 7) -->
   <script src="/analytics.js" async></script>
-  
+
   <!-- 5. SYNC_STYLES (weight 4) -->
-  <link rel="stylesheet" href="/styles.css">
-  
+  <link rel="stylesheet" href="/styles.css" />
+
   <!-- 6. PRELOAD (weight 3) -->
-  <link rel="preload" href="/font.woff2" as="font">
-  
+  <link rel="preload" href="/font.woff2" as="font" />
+
   <!-- 7. DEFER_SCRIPT (weight 2) -->
   <script src="/app.js" defer></script>
-  
+
   <!-- 8. PREFETCH (weight 1) -->
-  <link rel="prefetch" href="/next.html">
+  <link rel="prefetch" href="/next.html" />
 </head>
 ```
 
 **Why ordering matters:**
+
 - Critical metadata needs to be parsed first
 - Early connection hints improve resource loading
 - Proper ordering of render-blocking resources
@@ -410,26 +406,26 @@ Validates that head elements are in optimal order for performance based on capo.
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <!-- Missing charset -->
-  <title>My Site</title>
-  <title>Duplicate Title</title>
-  
-  <!-- CSP meta tag (disables preload scanner) -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
-  
-  <!-- Deprecated -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  
-  <!-- Accessibility issue -->
-  <meta name="viewport" content="width=device-width, user-scalable=no">
-  
-  <!-- Invalid element -->
-  <div>Content</div>
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
+  <head>
+    <!-- Missing charset -->
+    <title>My Site</title>
+    <title>Duplicate Title</title>
+
+    <!-- CSP meta tag (disables preload scanner) -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'" />
+
+    <!-- Deprecated -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Accessibility issue -->
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+
+    <!-- Invalid element -->
+    <div>Content</div>
+  </head>
+  <body>
+    <h1>Hello World</h1>
+  </body>
 </html>
 ```
 
@@ -438,16 +434,16 @@ Validates that head elements are in optimal order for performance based on capo.
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>My Site</title>
-  <meta name="description" content="A well-structured page">
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>My Site</title>
+    <meta name="description" content="A well-structured page" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>Hello World</h1>
+  </body>
 </html>
 ```
 
@@ -463,6 +459,7 @@ To enable real-time linting in VS Code:
    }
    ```
 3. **Create `eslint.config.js`:**
+
    ```javascript
    import capo from 'eslint-plugin-capo';
    import htmlParser from '@html-eslint/parser';
@@ -477,6 +474,7 @@ To enable real-time linting in VS Code:
      capo.configs.recommended,
    ];
    ```
+
 4. **Install dependencies:**
    ```bash
    npm install --save-dev eslint @html-eslint/parser eslint-plugin-capo

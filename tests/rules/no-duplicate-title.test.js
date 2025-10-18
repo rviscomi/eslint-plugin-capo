@@ -7,10 +7,10 @@
 // Imports
 //------------------------------------------------------------------------------
 
-import { RuleTester } from "eslint";
-import rule from "../../src/rules/no-duplicate-title.js";
-import parser from "@html-eslint/parser";
-import dedent from "dedent";
+import { RuleTester } from 'eslint';
+import rule from '../../src/rules/no-duplicate-title.js';
+import parser from '@html-eslint/parser';
+import dedent from 'dedent';
 
 //------------------------------------------------------------------------------
 // Tests
@@ -22,7 +22,7 @@ const ruleTester = new RuleTester({
   },
 });
 
-ruleTester.run("no-duplicate-title", rule, {
+ruleTester.run('no-duplicate-title', rule, {
   valid: [
     {
       code: dedent`
@@ -60,10 +60,10 @@ ruleTester.run("no-duplicate-title", rule, {
       `,
       errors: [
         {
-          messageId: "duplicateTitle",
+          messageId: 'duplicateTitle',
           suggestions: [
             {
-              messageId: "removeDuplicateTitle",
+              messageId: 'removeDuplicateTitle',
               output: dedent`
                 <head>
                   <title>First Title</title>
@@ -85,10 +85,10 @@ ruleTester.run("no-duplicate-title", rule, {
       `,
       errors: [
         {
-          messageId: "duplicateTitle",
+          messageId: 'duplicateTitle',
           suggestions: [
             {
-              messageId: "removeDuplicateTitle",
+              messageId: 'removeDuplicateTitle',
               output: dedent`
                 <head>
                   <title>First</title>
@@ -100,10 +100,10 @@ ruleTester.run("no-duplicate-title", rule, {
           ],
         },
         {
-          messageId: "duplicateTitle",
+          messageId: 'duplicateTitle',
           suggestions: [
             {
-              messageId: "removeDuplicateTitle",
+              messageId: 'removeDuplicateTitle',
               output: dedent`
                 <head>
                   <title>First</title>

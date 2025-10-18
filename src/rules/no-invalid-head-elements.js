@@ -20,7 +20,7 @@ export default {
     schema: [],
     hasSuggestions: true,
   },
-  
+
   create(context) {
     return {
       'Tag[parent.name="head"]'(node) {
@@ -31,33 +31,35 @@ export default {
             data: {
               tagName: node.name,
             },
-            suggest: [{
-              messageId: 'removeElement',
-              data: {
-                tagName: node.name,
+            suggest: [
+              {
+                messageId: 'removeElement',
+                data: {
+                  tagName: node.name,
+                },
+                fix(fixer) {
+                  // Remove the entire element including surrounding whitespace
+                  const sourceCode = context.sourceCode || context.getSourceCode();
+                  const text = sourceCode.getText();
+                  const nodeStart = node.range[0];
+                  const nodeEnd = node.range[1];
+
+                  // Find the start of the line (including indentation)
+                  let lineStart = nodeStart;
+                  while (lineStart > 0 && text[lineStart - 1] !== '\n') {
+                    lineStart--;
+                  }
+
+                  // Find the end including the newline
+                  let lineEnd = nodeEnd;
+                  if (text[lineEnd] === '\n') {
+                    lineEnd++;
+                  }
+
+                  return fixer.removeRange([lineStart, lineEnd]);
+                },
               },
-              fix(fixer) {
-                // Remove the entire element including surrounding whitespace
-                const sourceCode = context.sourceCode || context.getSourceCode();
-                const text = sourceCode.getText();
-                const nodeStart = node.range[0];
-                const nodeEnd = node.range[1];
-                
-                // Find the start of the line (including indentation)
-                let lineStart = nodeStart;
-                while (lineStart > 0 && text[lineStart - 1] !== '\n') {
-                  lineStart--;
-                }
-                
-                // Find the end including the newline
-                let lineEnd = nodeEnd;
-                if (text[lineEnd] === '\n') {
-                  lineEnd++;
-                }
-                
-                return fixer.removeRange([lineStart, lineEnd]);
-              },
-            }],
+            ],
           });
         }
       },
