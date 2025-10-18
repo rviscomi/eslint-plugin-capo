@@ -112,5 +112,33 @@ ruleTester.run('valid-charset', rule, {
         },
       ],
     },
+    {
+      name: 'duplicate charset declarations',
+      code: dedent`
+        <head>
+          <meta charset="utf-8">
+          <meta charset="utf-8">
+        </head>
+      `,
+      errors: [
+        {
+          messageId: 'duplicateCharset',
+        },
+      ],
+    },
+    {
+      name: 'duplicate charset - second one is invalid',
+      code: dedent`
+        <head>
+          <meta charset="utf-8">
+          <meta charset="iso-8859-1">
+        </head>
+      `,
+      errors: [
+        {
+          messageId: 'duplicateCharset',
+        },
+      ],
+    },
   ],
 });

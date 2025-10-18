@@ -195,5 +195,19 @@ ruleTester.run('valid-meta-viewport', rule, {
         },
       ],
     },
+    {
+      name: 'duplicate viewport declarations',
+      code: dedent`
+        <head>
+          <meta name="viewport" content="width=device-width">
+          <meta name="viewport" content="width=device-width">
+        </head>
+      `,
+      errors: [
+        {
+          messageId: 'invalidViewport',
+        },
+      ],
+    },
   ],
 });

@@ -493,6 +493,42 @@ describe('validation-helpers', () => {
       const warnings = validateCSP(node);
       assert.ok(warnings.some((w) => w.includes('report-uri')));
     });
+
+    it('should warn about frame-ancestors directive', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'http-equiv' },
+            value: { type: 'AttributeValue', value: 'content-security-policy' },
+          },
+          {
+            key: { value: 'content' },
+            value: { type: 'AttributeValue', value: "default-src 'self'; frame-ancestors 'none'" },
+          },
+        ],
+      };
+      const warnings = validateCSP(node);
+      assert.ok(warnings.some((w) => w.includes('frame-ancestors')));
+    });
+
+    it('should warn about sandbox directive', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'http-equiv' },
+            value: { type: 'AttributeValue', value: 'content-security-policy' },
+          },
+          {
+            key: { value: 'content' },
+            value: { type: 'AttributeValue', value: 'sandbox allow-scripts' },
+          },
+        ],
+      };
+      const warnings = validateCSP(node);
+      assert.ok(warnings.some((w) => w.includes('sandbox')));
+    });
   });
 
   describe('validateHttpEquiv', () => {
@@ -562,6 +598,302 @@ describe('validation-helpers', () => {
       };
       const warnings = validateHttpEquiv(node);
       assert.ok(warnings.some((w) => w.includes('meta[name=')));
+    });
+
+    it('should warn about refresh without content', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'http-equiv' },
+            value: { type: 'AttributeValue', value: 'refresh' },
+          },
+        ],
+      };
+      const warnings = validateHttpEquiv(node);
+      assert.ok(warnings.some((w) => w.includes('content attribute must be set')));
+    });
+
+    it('should warn about refresh with URL redirect', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'http-equiv' },
+            value: { type: 'AttributeValue', value: 'refresh' },
+          },
+          {
+            key: { value: 'content' },
+            value: { type: 'AttributeValue', value: '5; url=http://example.com' },
+          },
+        ],
+      };
+      const warnings = validateHttpEquiv(node);
+      assert.ok(warnings.some((w) => w.includes('redirect')));
+    });
+
+    it('should warn about x-dns-prefetch-control with "on"', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'http-equiv' },
+            value: { type: 'AttributeValue', value: 'x-dns-prefetch-control' },
+          },
+          {
+            key: { value: 'content' },
+            value: { type: 'AttributeValue', value: 'on' },
+          },
+        ],
+      };
+      const warnings = validateHttpEquiv(node);
+      assert.ok(warnings.some((w) => w.includes('enabled by default')));
+    });
+
+    it('should warn about x-dns-prefetch-control with invalid value', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'http-equiv' },
+            value: { type: 'AttributeValue', value: 'x-dns-prefetch-control' },
+          },
+          {
+            key: { value: 'content' },
+            value: { type: 'AttributeValue', value: 'invalid' },
+          },
+        ],
+      };
+      const warnings = validateHttpEquiv(node);
+      assert.ok(warnings.some((w) => w.includes('non-standard')));
+    });
+
+    it('should warn about x-dns-prefetch-control with "off"', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'http-equiv' },
+            value: { type: 'AttributeValue', value: 'x-dns-prefetch-control' },
+          },
+          {
+            key: { value: 'content' },
+            value: { type: 'AttributeValue', value: 'off' },
+          },
+        ],
+      };
+      const warnings = validateHttpEquiv(node);
+      assert.ok(warnings.some((w) => w.includes('non-standard')));
+    });
+
+    it('should warn about x-frame-options', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'http-equiv' },
+            value: { type: 'AttributeValue', value: 'x-frame-options' },
+          },
+        ],
+      };
+      const warnings = validateHttpEquiv(node);
+      assert.ok(warnings.some((w) => w.includes('CSP')));
+    });
+
+    it('should warn about content-language', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'http-equiv' },
+            value: { type: 'AttributeValue', value: 'content-language' },
+          },
+        ],
+      };
+      const warnings = validateHttpEquiv(node);
+      assert.ok(warnings.some((w) => w.includes('html[lang]')));
+    });
+
+    it('should warn about set-cookie', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'http-equiv' },
+            value: { type: 'AttributeValue', value: 'set-cookie' },
+          },
+        ],
+      };
+      const warnings = validateHttpEquiv(node);
+      assert.ok(warnings.some((w) => w.includes('Set-Cookie HTTP header')));
+    });
+
+    it('should warn about encoding misuse', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'http-equiv' },
+            value: { type: 'AttributeValue', value: 'encoding' },
+          },
+        ],
+      };
+      const warnings = validateHttpEquiv(node);
+      assert.ok(warnings.some((w) => w.includes('meta[charset]')));
+    });
+
+    it('should warn about title misuse', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'http-equiv' },
+            value: { type: 'AttributeValue', value: 'title' },
+          },
+        ],
+      };
+      const warnings = validateHttpEquiv(node);
+      assert.ok(warnings.some((w) => w.includes('title')));
+    });
+
+    it('should warn about accept-ch', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'http-equiv' },
+            value: { type: 'AttributeValue', value: 'accept-ch' },
+          },
+        ],
+      };
+      const warnings = validateHttpEquiv(node);
+      assert.ok(warnings.some((w) => w.includes('non-standard')));
+    });
+
+    it('should warn about unknown http-equiv values', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'http-equiv' },
+            value: { type: 'AttributeValue', value: 'unknown-value' },
+          },
+        ],
+      };
+      const warnings = validateHttpEquiv(node);
+      assert.ok(warnings.some((w) => w.includes('non-standard')));
+    });
+
+    it('should return empty array when no http-equiv', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'name' },
+            value: { type: 'AttributeValue', value: 'description' },
+          },
+        ],
+      };
+      const warnings = validateHttpEquiv(node);
+      assert.strictEqual(warnings.length, 0);
+    });
+
+    it('should handle more deprecated IE values', () => {
+      const ieValues = [
+        'content-style-type',
+        'content-script-type',
+        'page-enter',
+        'page-exit',
+        'site-enter',
+        'site-exit',
+        'window-target',
+      ];
+      ieValues.forEach((value) => {
+        const node = {
+          name: 'meta',
+          attributes: [
+            {
+              key: { value: 'http-equiv' },
+              value: { type: 'AttributeValue', value },
+            },
+          ],
+        };
+        const warnings = validateHttpEquiv(node);
+        assert.ok(warnings.some((w) => w.includes('Internet Explorer')));
+      });
+    });
+
+    it('should handle more misused name attributes', () => {
+      const nameValues = [
+        'author',
+        'keywords',
+        'referrer',
+        'theme-color',
+        'color-scheme',
+        'viewport',
+        'creator',
+        'googlebot',
+        'publisher',
+        'robots',
+      ];
+      nameValues.forEach((value) => {
+        const node = {
+          name: 'meta',
+          attributes: [
+            {
+              key: { value: 'http-equiv' },
+              value: { type: 'AttributeValue', value },
+            },
+          ],
+        };
+        const warnings = validateHttpEquiv(node);
+        assert.ok(warnings.some((w) => w.includes('meta[name=')));
+      });
+    });
+
+    it('should handle more cache-related values', () => {
+      const cacheValues = ['etag', 'last-modified'];
+      cacheValues.forEach((value) => {
+        const node = {
+          name: 'meta',
+          attributes: [
+            {
+              key: { value: 'http-equiv' },
+              value: { type: 'AttributeValue', value },
+            },
+          ],
+        };
+        const warnings = validateHttpEquiv(node);
+        assert.ok(warnings.some((w) => w.includes('HTTP headers')));
+      });
+    });
+
+    it('should handle language attribute', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'http-equiv' },
+            value: { type: 'AttributeValue', value: 'language' },
+          },
+        ],
+      };
+      const warnings = validateHttpEquiv(node);
+      assert.ok(warnings.some((w) => w.includes('html[lang]')));
+    });
+
+    it('should handle delegate-ch', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'http-equiv' },
+            value: { type: 'AttributeValue', value: 'delegate-ch' },
+          },
+        ],
+      };
+      const warnings = validateHttpEquiv(node);
+      assert.ok(warnings.some((w) => w.includes('non-standard')));
     });
   });
 
@@ -655,6 +987,272 @@ describe('validation-helpers', () => {
       const warnings = validateMetaViewport(node);
       assert.ok(warnings.some((w) => w.includes('obsolete')));
     });
+
+    it('should warn about missing content attribute', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'name' },
+            value: { type: 'AttributeValue', value: 'viewport' },
+          },
+        ],
+      };
+      const warnings = validateMetaViewport(node);
+      assert.ok(warnings.some((w) => w.includes('content attribute must be set')));
+    });
+
+    it('should validate invalid width string', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'name' },
+            value: { type: 'AttributeValue', value: 'viewport' },
+          },
+          {
+            key: { value: 'content' },
+            value: { type: 'AttributeValue', value: 'width=invalid-string' },
+          },
+        ],
+      };
+      const warnings = validateMetaViewport(node);
+      assert.ok(warnings.some((w) => w.includes('Invalid width')));
+    });
+
+    it('should validate width too small', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'name' },
+            value: { type: 'AttributeValue', value: 'viewport' },
+          },
+          {
+            key: { value: 'content' },
+            value: { type: 'AttributeValue', value: 'width=0' },
+          },
+        ],
+      };
+      const warnings = validateMetaViewport(node);
+      assert.ok(warnings.some((w) => w.includes('Invalid width')));
+    });
+
+    it('should validate height values', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'name' },
+            value: { type: 'AttributeValue', value: 'viewport' },
+          },
+          {
+            key: { value: 'content' },
+            value: { type: 'AttributeValue', value: 'height=99999' },
+          },
+        ],
+      };
+      const warnings = validateMetaViewport(node);
+      assert.ok(warnings.some((w) => w.includes('Invalid height')));
+    });
+
+    it('should validate invalid height string', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'name' },
+            value: { type: 'AttributeValue', value: 'viewport' },
+          },
+          {
+            key: { value: 'content' },
+            value: { type: 'AttributeValue', value: 'height=bad-value' },
+          },
+        ],
+      };
+      const warnings = validateMetaViewport(node);
+      assert.ok(warnings.some((w) => w.includes('Invalid height')));
+    });
+
+    it('should validate initial-scale invalid', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'name' },
+            value: { type: 'AttributeValue', value: 'viewport' },
+          },
+          {
+            key: { value: 'content' },
+            value: { type: 'AttributeValue', value: 'initial-scale=not-a-number' },
+          },
+        ],
+      };
+      const warnings = validateMetaViewport(node);
+      assert.ok(warnings.some((w) => w.includes('Invalid initial zoom level')));
+    });
+
+    it('should validate initial-scale out of range', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'name' },
+            value: { type: 'AttributeValue', value: 'viewport' },
+          },
+          {
+            key: { value: 'content' },
+            value: { type: 'AttributeValue', value: 'initial-scale=15' },
+          },
+        ],
+      };
+      const warnings = validateMetaViewport(node);
+      assert.ok(warnings.some((w) => w.includes('Invalid initial zoom level')));
+    });
+
+    it('should validate minimum-scale invalid', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'name' },
+            value: { type: 'AttributeValue', value: 'viewport' },
+          },
+          {
+            key: { value: 'content' },
+            value: { type: 'AttributeValue', value: 'minimum-scale=invalid' },
+          },
+        ],
+      };
+      const warnings = validateMetaViewport(node);
+      assert.ok(warnings.some((w) => w.includes('Invalid minimum zoom level')));
+    });
+
+    it('should validate minimum-scale out of range', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'name' },
+            value: { type: 'AttributeValue', value: 'viewport' },
+          },
+          {
+            key: { value: 'content' },
+            value: { type: 'AttributeValue', value: 'minimum-scale=20' },
+          },
+        ],
+      };
+      const warnings = validateMetaViewport(node);
+      assert.ok(warnings.some((w) => w.includes('Invalid minimum zoom level')));
+    });
+
+    it('should validate maximum-scale invalid', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'name' },
+            value: { type: 'AttributeValue', value: 'viewport' },
+          },
+          {
+            key: { value: 'content' },
+            value: { type: 'AttributeValue', value: 'maximum-scale=bad' },
+          },
+        ],
+      };
+      const warnings = validateMetaViewport(node);
+      assert.ok(warnings.some((w) => w.includes('Invalid maximum zoom level')));
+    });
+
+    it('should validate maximum-scale out of range', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'name' },
+            value: { type: 'AttributeValue', value: 'viewport' },
+          },
+          {
+            key: { value: 'content' },
+            value: { type: 'AttributeValue', value: 'maximum-scale=100' },
+          },
+        ],
+      };
+      const warnings = validateMetaViewport(node);
+      assert.ok(warnings.some((w) => w.includes('Invalid maximum zoom level')));
+    });
+
+    it('should validate user-scalable=0', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'name' },
+            value: { type: 'AttributeValue', value: 'viewport' },
+          },
+          {
+            key: { value: 'content' },
+            value: { type: 'AttributeValue', value: 'user-scalable=0' },
+          },
+        ],
+      };
+      const warnings = validateMetaViewport(node);
+      assert.ok(warnings.some((w) => w.includes('accessibility')));
+    });
+
+    it('should validate invalid user-scalable value', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'name' },
+            value: { type: 'AttributeValue', value: 'viewport' },
+          },
+          {
+            key: { value: 'content' },
+            value: { type: 'AttributeValue', value: 'user-scalable=maybe' },
+          },
+        ],
+      };
+      const warnings = validateMetaViewport(node);
+      assert.ok(warnings.some((w) => w.includes('Unsupported value "maybe"')));
+    });
+
+    it('should validate invalid interactive-widget value', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'name' },
+            value: { type: 'AttributeValue', value: 'viewport' },
+          },
+          {
+            key: { value: 'content' },
+            value: { type: 'AttributeValue', value: 'interactive-widget=invalid' },
+          },
+        ],
+      };
+      const warnings = validateMetaViewport(node);
+      assert.ok(warnings.some((w) => w.includes('Unsupported value "invalid"')));
+    });
+
+    it('should validate invalid viewport-fit value', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'name' },
+            value: { type: 'AttributeValue', value: 'viewport' },
+          },
+          {
+            key: { value: 'content' },
+            value: { type: 'AttributeValue', value: 'viewport-fit=invalid' },
+          },
+        ],
+      };
+      const warnings = validateMetaViewport(node);
+      assert.ok(warnings.some((w) => w.includes('Unsupported value "invalid"')));
+    });
   });
 
   describe('validateContentType', () => {
@@ -693,6 +1291,42 @@ describe('validation-helpers', () => {
           {
             key: { value: 'charset' },
             value: { type: 'AttributeValue', value: 'UTF-8' },
+          },
+        ],
+      };
+      const warnings = validateContentType(node);
+      assert.strictEqual(warnings.length, 0);
+    });
+
+    it('should extract charset from http-equiv content-type', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'http-equiv' },
+            value: { type: 'AttributeValue', value: 'content-type' },
+          },
+          {
+            key: { value: 'content' },
+            value: { type: 'AttributeValue', value: 'text/html; charset=iso-8859-1' },
+          },
+        ],
+      };
+      const warnings = validateContentType(node);
+      assert.ok(warnings.some((w) => w.includes('UTF-8')));
+    });
+
+    it('should handle content-type without charset', () => {
+      const node = {
+        name: 'meta',
+        attributes: [
+          {
+            key: { value: 'http-equiv' },
+            value: { type: 'AttributeValue', value: 'content-type' },
+          },
+          {
+            key: { value: 'content' },
+            value: { type: 'AttributeValue', value: 'text/html' },
           },
         ],
       };
