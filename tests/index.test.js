@@ -30,7 +30,7 @@ describe('eslint-plugin-capo', () => {
         'valid-meta-viewport',
         'valid-charset',
         'no-default-style',
-        'head-element-order',
+        'require-order',
       ];
 
       expectedRules.forEach((ruleName) => {
@@ -82,9 +82,9 @@ describe('eslint-plugin-capo', () => {
         assert.strictEqual(config.rules['capo/no-default-style'], 'warn');
       });
 
-      it('should not enable head-element-order by default', () => {
+      it('should not enable require-order by default', () => {
         const config = plugin.configs.recommended;
-        assert.strictEqual(config.rules['capo/head-element-order'], undefined);
+        assert.strictEqual(config.rules['capo/require-order'], undefined);
       });
     });
 
@@ -114,7 +114,7 @@ describe('eslint-plugin-capo', () => {
           'valid-meta-viewport',
           'valid-charset',
           'no-default-style',
-          'head-element-order',
+          'require-order',
         ];
 
         expectedRules.forEach((ruleName) => {
@@ -143,7 +143,7 @@ describe('eslint-plugin-capo', () => {
         const config = plugin.configs.performance;
         assert.strictEqual(config.rules['capo/no-meta-csp'], 'error');
         assert.strictEqual(config.rules['capo/no-invalid-http-equiv'], 'warn');
-        assert.strictEqual(config.rules['capo/head-element-order'], 'warn');
+        assert.strictEqual(config.rules['capo/require-order'], 'warn');
       });
     });
 
@@ -178,9 +178,9 @@ describe('eslint-plugin-capo', () => {
         assert.ok(config.rules);
       });
 
-      it('should enable only head-element-order rule', () => {
+      it('should enable only require-order rule', () => {
         const config = plugin.configs.ordering;
-        assert.strictEqual(config.rules['capo/head-element-order'], 'warn');
+        assert.strictEqual(config.rules['capo/require-order'], 'warn');
 
         // Ensure no other rules are enabled
         const enabledRules = Object.keys(config.rules);

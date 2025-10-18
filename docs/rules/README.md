@@ -20,7 +20,7 @@ These rules help optimize page load performance:
 
 - [no-meta-csp](./no-meta-csp.md) - Disallow CSP meta tags that disable the preload scanner
 - [no-default-style](./no-default-style.md) - Disallow the default-style meta tag
-- [head-element-order](./head-element-order.md) - Validate that head elements are in optimal order for performance
+- [require-order](./require-order.md) - Validate that head elements are in optimal order for performance
 
 ### Accessibility Rules
 
@@ -56,7 +56,7 @@ These rules are enabled in the `recommended` configuration:
 
 These rules are useful but not enabled by default:
 
-- `head-element-order` - Can be noisy for existing projects; enable explicitly if you want ordering validation
+- `require-order` - Can be noisy for existing projects; enable explicitly if you want ordering validation
 
 ## Documentation Structure
 

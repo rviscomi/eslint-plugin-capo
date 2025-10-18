@@ -1,5 +1,5 @@
 /**
- * @fileoverview Tests for head-element-order rule
+ * @fileoverview Tests for require-order rule
  * @author Rick Viscomi
  */
 
@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 import { RuleTester } from 'eslint';
-import rule from '../../src/rules/head-element-order.js';
+import rule from '../../src/rules/require-order.js';
 import parser from '@html-eslint/parser';
 import dedent from 'dedent';
 
@@ -22,7 +22,7 @@ const ruleTester = new RuleTester({
   },
 });
 
-ruleTester.run('head-element-order', rule, {
+ruleTester.run('require-order', rule, {
   valid: [
     {
       name: 'optimal order with all element types',
