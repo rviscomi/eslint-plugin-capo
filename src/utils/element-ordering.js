@@ -274,16 +274,16 @@ export function shouldComeBefore(nodeA, nodeB) {
  */
 export function getOptimalOrderDescription() {
   return [
-    '1. META (charset, viewport, CSP, etc.) - weight 10',
-    '2. TITLE - weight 9',
-    '3. PRECONNECT - weight 8',
-    '4. ASYNC_SCRIPT - weight 7',
-    '5. IMPORT_STYLES (@import in <style>) - weight 6',
-    '6. SYNC_SCRIPT - weight 5',
-    '7. SYNC_STYLES (<link rel="stylesheet">) - weight 4',
-    '8. PRELOAD - weight 3',
-    '9. DEFER_SCRIPT - weight 2',
-    '10. PREFETCH/PRERENDER - weight 1',
-    '11. OTHER - weight 0',
+    '1. META (charset, viewport, CSP, etc.) - weight 11',
+    '2. TITLE - weight 10',
+    '3. PRECONNECT - weight 9',
+    '4. ASYNC_SCRIPT - weight 8',
+    '5. IMPORT_STYLES (@import in <style>) - weight 7',
+    '6. SYNC_SCRIPT - weight 6',
+    '7. SYNC_STYLES (<link rel="stylesheet">) - weight 5',
+    '8. PRELOAD - weight 4',
+    '9. DEFER_SCRIPT - weight 3',
+    '10. PREFETCH/PRERENDER - weight 2',
+    '11. OTHER - weight 1',
   ];
 }
