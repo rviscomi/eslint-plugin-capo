@@ -10,6 +10,7 @@ import noDuplicateTitle from './rules/no-duplicate-title.js';
 import noDuplicateBase from './rules/no-duplicate-base.js';
 import noMetaCSP from './rules/no-meta-csp.js';
 import noInvalidHttpEquiv from './rules/no-invalid-http-equiv.js';
+import noInvalidOriginTrial from './rules/no-invalid-origin-trial.js';
 import requireMetaViewport from './rules/require-meta-viewport.js';
 import validMetaViewport from './rules/valid-meta-viewport.js';
 import validCharset from './rules/valid-charset.js';
@@ -30,6 +31,7 @@ const plugin = {
     'no-duplicate-base': noDuplicateBase,
     'no-meta-csp': noMetaCSP,
     'no-invalid-http-equiv': noInvalidHttpEquiv,
+    'no-invalid-origin-trial': noInvalidOriginTrial,
     'require-meta-viewport': requireMetaViewport,
     'valid-meta-viewport': validMetaViewport,
     'valid-charset': validCharset,
@@ -54,6 +56,7 @@ plugin.configs.recommended = {
     'capo/no-duplicate-base': 'error',
     'capo/no-meta-csp': 'error',
     'capo/no-invalid-http-equiv': 'warn',
+    'capo/no-invalid-origin-trial': 'error',
     'capo/require-meta-viewport': 'warn',
     'capo/valid-meta-viewport': 'error',
     'capo/valid-charset': 'error',
@@ -75,6 +78,7 @@ plugin.configs.strict = {
     'capo/no-duplicate-base': 'error',
     'capo/no-meta-csp': 'error',
     'capo/no-invalid-http-equiv': 'error',
+    'capo/no-invalid-origin-trial': 'error',
     'capo/require-meta-viewport': 'error',
     'capo/valid-meta-viewport': 'error',
     'capo/valid-charset': 'error',
