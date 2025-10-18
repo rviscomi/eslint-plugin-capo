@@ -23,7 +23,7 @@ export default {
       category: 'Possible Errors',
       recommended: true,
     },
-    fixable: 'code',
+    hasSuggestions: true,
     messages: {
       missingContent: 'Origin trial meta tag is missing the content attribute',
       emptyToken: 'Origin trial token cannot be empty',
@@ -32,6 +32,7 @@ export default {
       invalidOrigin: 'Origin trial token is for {{tokenOrigin}} but expected {{expectedOrigin}}',
       invalidSubdomain: 'Origin trial token requires isSubdomain flag for subdomain usage',
       decodeError: 'Failed to decode origin trial token: {{error}}',
+      removeTag: 'Remove this invalid origin trial meta tag',
     },
     schema: [
       {
@@ -66,9 +67,14 @@ export default {
           context.report({
             node,
             messageId: 'missingContent',
-            fix(fixer) {
-              return fixer.remove(node);
-            },
+            suggest: [
+              {
+                messageId: 'removeTag',
+                fix(fixer) {
+                  return fixer.remove(node);
+                },
+              },
+            ],
           });
           return;
         }
@@ -84,20 +90,28 @@ export default {
         if (!validation.valid) {
           // For expired, empty, or invalid tokens, suggest removing the entire meta tag
           // We never modify the token itself
-          const shouldFix = ['expiredToken', 'emptyToken', 'invalidToken', 'missingContent'].includes(
+          const shouldSuggestRemoval = ['expiredToken', 'emptyToken', 'invalidToken', 'missingContent'].includes(
             validation.messageId
           );
 
-          context.report({
+          const report = {
             node,
             messageId: validation.messageId,
             data: validation.data,
-            fix: shouldFix
-              ? (fixer) => {
+          };
+
+          if (shouldSuggestRemoval) {
+            report.suggest = [
+              {
+                messageId: 'removeTag',
+                fix(fixer) {
                   return fixer.remove(node);
-                }
-              : undefined,
-          });
+                },
+              },
+            ];
+          }
+
+          context.report(report);
         }
       },
     };

@@ -106,14 +106,19 @@ ruleTester.run('no-invalid-origin-trial', rule, {
           <meta http-equiv="origin-trial">
         </head>
       `,
-      output: dedent`
-        <head>
-          
-        </head>
-      `,
       errors: [
         {
           messageId: 'missingContent',
+          suggestions: [
+            {
+              messageId: 'removeTag',
+              output: dedent`
+                <head>
+                  
+                </head>
+              `,
+            },
+          ],
         },
       ],
     },
@@ -124,14 +129,19 @@ ruleTester.run('no-invalid-origin-trial', rule, {
           <meta http-equiv="origin-trial" content="">
         </head>
       `,
-      output: dedent`
-        <head>
-          
-        </head>
-      `,
       errors: [
         {
           messageId: 'emptyToken',
+          suggestions: [
+            {
+              messageId: 'removeTag',
+              output: dedent`
+                <head>
+                  
+                </head>
+              `,
+            },
+          ],
         },
       ],
     },
@@ -142,14 +152,19 @@ ruleTester.run('no-invalid-origin-trial', rule, {
           <meta http-equiv="origin-trial" content="   ">
         </head>
       `,
-      output: dedent`
-        <head>
-          
-        </head>
-      `,
       errors: [
         {
           messageId: 'emptyToken',
+          suggestions: [
+            {
+              messageId: 'removeTag',
+              output: dedent`
+                <head>
+                  
+                </head>
+              `,
+            },
+          ],
         },
       ],
     },
@@ -160,14 +175,19 @@ ruleTester.run('no-invalid-origin-trial', rule, {
           <meta http-equiv="origin-trial" content="${INVALID_TOKEN}">
         </head>
       `,
-      output: dedent`
-        <head>
-          
-        </head>
-      `,
       errors: [
         {
           messageId: 'invalidToken',
+          suggestions: [
+            {
+              messageId: 'removeTag',
+              output: dedent`
+                <head>
+                  
+                </head>
+              `,
+            },
+          ],
         },
       ],
     },
@@ -178,14 +198,19 @@ ruleTester.run('no-invalid-origin-trial', rule, {
           <meta http-equiv="origin-trial" content="${EXPIRED_TOKEN}">
         </head>
       `,
-      output: dedent`
-        <head>
-          
-        </head>
-      `,
       errors: [
         {
           messageId: 'expiredToken',
+          suggestions: [
+            {
+              messageId: 'removeTag',
+              output: dedent`
+                <head>
+                  
+                </head>
+              `,
+            },
+          ],
         },
       ],
     },
@@ -197,18 +222,34 @@ ruleTester.run('no-invalid-origin-trial', rule, {
           <meta http-equiv="origin-trial" content="${EXPIRED_TOKEN}">
         </head>
       `,
-      output: dedent`
-        <head>
-          
-          
-        </head>
-      `,
       errors: [
         {
           messageId: 'emptyToken',
+          suggestions: [
+            {
+              messageId: 'removeTag',
+              output: dedent`
+                <head>
+                  
+                  <meta http-equiv="origin-trial" content="${EXPIRED_TOKEN}">
+                </head>
+              `,
+            },
+          ],
         },
         {
           messageId: 'expiredToken',
+          suggestions: [
+            {
+              messageId: 'removeTag',
+              output: dedent`
+                <head>
+                  <meta http-equiv="origin-trial" content="">
+                  
+                </head>
+              `,
+            },
+          ],
         },
       ],
     },
@@ -219,14 +260,19 @@ ruleTester.run('no-invalid-origin-trial', rule, {
           <meta http-equiv="origin-trial" content="!!!invalid-base64!!!">
         </head>
       `,
-      output: dedent`
-        <head>
-          
-        </head>
-      `,
       errors: [
         {
           messageId: 'invalidToken',
+          suggestions: [
+            {
+              messageId: 'removeTag',
+              output: dedent`
+                <head>
+                  
+                </head>
+              `,
+            },
+          ],
         },
       ],
     },
@@ -237,14 +283,19 @@ ruleTester.run('no-invalid-origin-trial', rule, {
           <meta http-equiv="origin-trial" content="short">
         </head>
       `,
-      output: dedent`
-        <head>
-          
-        </head>
-      `,
       errors: [
         {
           messageId: 'invalidToken',
+          suggestions: [
+            {
+              messageId: 'removeTag',
+              output: dedent`
+                <head>
+                  
+                </head>
+              `,
+            },
+          ],
         },
       ],
     },
