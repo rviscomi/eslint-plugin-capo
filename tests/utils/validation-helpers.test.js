@@ -16,6 +16,7 @@ import {
   isHttpEquiv,
   isPreload,
   getAttributeValue,
+  normalizeUrl,
   validateCSP,
   VALID_HTTP_EQUIV_VALUES,
   isValidHttpEquiv,
@@ -100,6 +101,46 @@ describe('validation-helpers', () => {
         ],
       };
       assert.strictEqual(getAttributeValue(node, 'charset'), null);
+    });
+  });
+
+  describe('normalizeUrl', () => {
+    it('should return null for empty/null URLs', () => {
+      assert.strictEqual(normalizeUrl(null), null);
+      assert.strictEqual(normalizeUrl(''), null);
+    });
+
+    it('should keep absolute HTTP URLs unchanged', () => {
+      assert.strictEqual(normalizeUrl('http://example.com/script.js'), 'http://example.com/script.js');
+      assert.strictEqual(normalizeUrl('https://example.com/style.css'), 'https://example.com/style.css');
+    });
+
+    it('should keep protocol-relative URLs unchanged', () => {
+      assert.strictEqual(normalizeUrl('//cdn.example.com/lib.js'), '//cdn.example.com/lib.js');
+    });
+
+    it('should remove leading ./ from relative URLs', () => {
+      assert.strictEqual(normalizeUrl('./app.js'), 'app.js');
+      assert.strictEqual(normalizeUrl('./styles/main.css'), 'styles/main.css');
+    });
+
+    it('should keep relative URLs without ./ prefix', () => {
+      assert.strictEqual(normalizeUrl('app.js'), 'app.js');
+      assert.strictEqual(normalizeUrl('/assets/script.js'), '/assets/script.js');
+    });
+
+    it('should remove query strings for comparison', () => {
+      assert.strictEqual(normalizeUrl('app.js?v=123'), 'app.js');
+      assert.strictEqual(normalizeUrl('./style.css?cache=bust'), 'style.css');
+    });
+
+    it('should remove hash fragments for comparison', () => {
+      assert.strictEqual(normalizeUrl('app.js#module'), 'app.js');
+      assert.strictEqual(normalizeUrl('./page.html#section'), 'page.html');
+    });
+
+    it('should remove both query strings and hashes', () => {
+      assert.strictEqual(normalizeUrl('app.js?v=1#top'), 'app.js');
     });
   });
 

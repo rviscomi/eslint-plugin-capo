@@ -20,6 +20,7 @@ These rules help optimize page load performance:
 
 - [no-meta-csp](./no-meta-csp.md) - Disallow CSP meta tags that disable the preload scanner
 - [no-default-style](./no-default-style.md) - Disallow the default-style meta tag
+- [no-unnecessary-preload](./no-unnecessary-preload.md) - Disallow preload links for resources already discoverable by other elements
 - [require-order](./require-order.md) - Validate that head elements are in optimal order for performance
 
 ### Accessibility Rules
@@ -50,6 +51,7 @@ These rules are enabled in the `recommended` configuration:
 - `valid-meta-viewport`
 - `valid-charset`
 - `no-default-style`
+- `no-unnecessary-preload`
 - `require-meta-viewport`
 
 ### Optional

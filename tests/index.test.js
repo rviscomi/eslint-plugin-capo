@@ -30,6 +30,7 @@ describe('eslint-plugin-capo', () => {
         'valid-meta-viewport',
         'valid-charset',
         'no-default-style',
+        'no-unnecessary-preload',
         'require-order',
       ];
 
@@ -42,7 +43,7 @@ describe('eslint-plugin-capo', () => {
 
     it('should have correct rule count', () => {
       const ruleCount = Object.keys(plugin.rules).length;
-      assert.strictEqual(ruleCount, 11, 'Should have 11 rules');
+      assert.strictEqual(ruleCount, 12, 'Should have 12 rules');
     });
   });
 

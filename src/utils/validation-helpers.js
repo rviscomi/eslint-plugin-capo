@@ -135,6 +135,34 @@ export function getAttributeValue(node, attrName) {
 }
 
 /**
+ * Normalize a URL to absolute form for comparison
+ * Used to compare URLs that may have different representations but refer to the same resource
+ */
+export function normalizeUrl(url) {
+  try {
+    // If we're in a testing environment, just normalize the path
+    // In real browser environment, this would use document.baseURI
+    if (!url) return null;
+
+    // Handle absolute URLs
+    if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('//')) {
+      return url;
+    }
+
+    // Handle relative URLs - normalize them
+    // Remove leading ./ and normalize path
+    let normalized = url.replace(/^\.\//, '');
+
+    // Remove query strings and hashes for comparison
+    normalized = normalized.split('?')[0].split('#')[0];
+
+    return normalized;
+  } catch {
+    return url;
+  }
+}
+
+/**
  * Validate CSP meta tag
  */
 export function validateCSP(node, context) {

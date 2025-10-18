@@ -139,6 +139,7 @@ export default [
       'capo/valid-meta-viewport': 'error',
       'capo/valid-charset': 'error',
       'capo/no-default-style': 'warn',
+      'capo/no-unnecessary-preload': 'warn',
       'capo/require-order': 'warn', // Optional: validate element ordering
     },
   },

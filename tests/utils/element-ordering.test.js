@@ -88,16 +88,49 @@ describe('element-ordering', () => {
     });
 
     it('should return false for low-priority meta tags', () => {
-      const node = {
-        name: 'meta',
-        attributes: [
-          {
-            key: { value: 'name' },
-            value: { type: 'AttributeValue', value: 'description' },
-          },
-        ],
-      };
-      assert.strictEqual(isMeta(node), false);
+      const lowPriorityMetaTags = [
+        'description',
+        'keywords',
+        'author',
+        'theme-color',
+        'color-scheme',
+        'robots',
+        'og:title',
+        'og:description',
+        'twitter:card',
+        'application-name',
+        'generator',
+      ];
+
+      lowPriorityMetaTags.forEach((metaName) => {
+        const node = {
+          name: 'meta',
+          attributes: [
+            {
+              key: { value: 'name' },
+              value: { type: 'AttributeValue', value: metaName },
+            },
+          ],
+        };
+        assert.strictEqual(isMeta(node), false, `${metaName} should NOT be treated as critical META`);
+      });
+    });
+
+    it('should return false for low-priority http-equiv values', () => {
+      const lowPriorityHttpEquiv = ['refresh', 'x-ua-compatible', 'expires', 'cache-control', 'pragma'];
+
+      lowPriorityHttpEquiv.forEach((httpEquiv) => {
+        const node = {
+          name: 'meta',
+          attributes: [
+            {
+              key: { value: 'http-equiv' },
+              value: { type: 'AttributeValue', value: httpEquiv },
+            },
+          ],
+        };
+        assert.strictEqual(isMeta(node), false, `http-equiv="${httpEquiv}" should NOT be treated as critical META`);
+      });
     });
   });
 
@@ -550,6 +583,70 @@ describe('element-ordering', () => {
         attributes: [{ key: { value: 'name' }, value: { type: 'AttributeValue', value: 'description' } }],
       };
       assert.strictEqual(getWeight(otherNode), ElementWeights.OTHER);
+    });
+
+    it('should assign OTHER weight to non-critical meta tags', () => {
+      const nonCriticalMetaTags = [
+        'description',
+        'keywords',
+        'author',
+        'theme-color',
+        'robots',
+        'og:title',
+        'twitter:card',
+      ];
+
+      nonCriticalMetaTags.forEach((metaName) => {
+        const node = {
+          name: 'meta',
+          attributes: [
+            {
+              key: { value: 'name' },
+              value: { type: 'AttributeValue', value: metaName },
+            },
+          ],
+        };
+        assert.strictEqual(
+          getWeight(node),
+          ElementWeights.OTHER,
+          `${metaName} should have OTHER weight, not META weight`
+        );
+      });
+    });
+
+    it('should assign META weight only to critical meta tags', () => {
+      const criticalMetaTags = [
+        { name: 'base' },
+        {
+          name: 'meta',
+          attributes: [{ key: { value: 'charset' }, value: { type: 'AttributeValue', value: 'utf-8' } }],
+        },
+        {
+          name: 'meta',
+          attributes: [{ key: { value: 'name' }, value: { type: 'AttributeValue', value: 'viewport' } }],
+        },
+        {
+          name: 'meta',
+          attributes: [
+            {
+              key: { value: 'http-equiv' },
+              value: { type: 'AttributeValue', value: 'content-security-policy' },
+            },
+          ],
+        },
+        {
+          name: 'meta',
+          attributes: [{ key: { value: 'http-equiv' }, value: { type: 'AttributeValue', value: 'origin-trial' } }],
+        },
+      ];
+
+      criticalMetaTags.forEach((node) => {
+        assert.strictEqual(
+          getWeight(node),
+          ElementWeights.META,
+          `Critical meta tag should have META weight: ${JSON.stringify(node)}`
+        );
+      });
     });
   });
 

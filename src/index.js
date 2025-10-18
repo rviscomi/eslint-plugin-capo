@@ -14,6 +14,7 @@ import requireMetaViewport from './rules/require-meta-viewport.js';
 import validMetaViewport from './rules/valid-meta-viewport.js';
 import validCharset from './rules/valid-charset.js';
 import noDefaultStyle from './rules/no-default-style.js';
+import noUnnecessaryPreload from './rules/no-unnecessary-preload.js';
 import requireOrder from './rules/require-order.js';
 
 const plugin = {
@@ -33,6 +34,7 @@ const plugin = {
     'valid-meta-viewport': validMetaViewport,
     'valid-charset': validCharset,
     'no-default-style': noDefaultStyle,
+    'no-unnecessary-preload': noUnnecessaryPreload,
     'require-order': requireOrder,
   },
 
@@ -56,6 +58,7 @@ plugin.configs.recommended = {
     'capo/valid-meta-viewport': 'error',
     'capo/valid-charset': 'error',
     'capo/no-default-style': 'warn',
+    'capo/no-unnecessary-preload': 'warn',
   },
 };
 
@@ -76,6 +79,7 @@ plugin.configs.strict = {
     'capo/valid-meta-viewport': 'error',
     'capo/valid-charset': 'error',
     'capo/no-default-style': 'error',
+    'capo/no-unnecessary-preload': 'error',
     'capo/require-order': 'error',
   },
 };
@@ -89,6 +93,7 @@ plugin.configs.performance = {
   rules: {
     'capo/no-meta-csp': 'error',
     'capo/no-invalid-http-equiv': 'warn',
+    'capo/no-unnecessary-preload': 'warn',
     'capo/require-order': 'warn',
   },
 };
