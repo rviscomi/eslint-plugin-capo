@@ -60,7 +60,7 @@ export default {
             // Add suggestion to fix charset if it's the wrong value
             if (isWrongCharset) {
               const charsetAttr = node.attributes?.find((attr) => {
-                const keyName = attr.key?.value || attr.key?.name;
+                const keyName = attr.key?.value;
                 return keyName?.toLowerCase() === 'charset';
               });
 

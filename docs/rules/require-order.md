@@ -1,4 +1,4 @@
-# head-element-order
+# require-order
 
 Validate that head elements are in optimal order for performance.
 
@@ -27,7 +27,7 @@ This rule warns when head elements are not in optimal order according to the wei
 Examples of **incorrect** code:
 
 ```html
-<!-- eslint capo/head-element-order: "warn" -->
+<!-- eslint capo/require-order: "warn" -->
 
 <!DOCTYPE html>
 <html>
@@ -51,7 +51,7 @@ Examples of **incorrect** code:
 ```
 
 ```html
-<!-- eslint capo/head-element-order: "warn" -->
+<!-- eslint capo/require-order: "warn" -->
 
 <!DOCTYPE html>
 <html>

@@ -81,8 +81,7 @@ export function isContentType(node) {
 
   const httpEquiv = getAttributeValue(node, 'http-equiv');
   const hasCharset = node.attributes?.some((attr) => {
-    // Support both @html-eslint/parser (key.value) and vue-eslint-parser (key.name)
-    const keyName = attr.key?.value || attr.key?.name;
+    const keyName = attr.key?.value;
     return keyName?.toLowerCase() === 'charset';
   });
 
@@ -95,8 +94,7 @@ export function isContentType(node) {
 export function isHttpEquiv(node) {
   if (node.name !== 'meta') return false;
   return node.attributes?.some((attr) => {
-    // Support both @html-eslint/parser (key.value) and vue-eslint-parser (key.name)
-    const keyName = attr.key?.value || attr.key?.name;
+    const keyName = attr.key?.value;
     return keyName?.toLowerCase() === 'http-equiv';
   });
 }
@@ -116,29 +114,52 @@ export function isPreload(node) {
 
 /**
  * Get attribute value from an AST node
+ * Works with @html-eslint/parser
  */
 export function getAttributeValue(node, attrName) {
   if (!node.attributes) return null;
 
   const attr = node.attributes.find((a) => {
-    // Support both @html-eslint/parser (key.value) and vue-eslint-parser (key.name)
-    const keyName = a.key?.value || a.key?.name;
+    const keyName = a.key?.value;
     return keyName?.toLowerCase() === attrName.toLowerCase();
   });
 
   if (!attr?.value) return null;
 
-  // Handle different value types
   // @html-eslint/parser uses AttributeValue
   if (attr.value.type === 'AttributeValue') {
     return attr.value.value;
   }
-  // vue-eslint-parser uses Literal or VLiteral
-  if (attr.value.type === 'Literal' || attr.value.type === 'VLiteral') {
-    return attr.value.value;
-  }
 
   return null;
+}
+
+/**
+ * Normalize a URL to absolute form for comparison
+ * Used to compare URLs that may have different representations but refer to the same resource
+ */
+export function normalizeUrl(url) {
+  try {
+    // If we're in a testing environment, just normalize the path
+    // In real browser environment, this would use document.baseURI
+    if (!url) return null;
+
+    // Handle absolute URLs
+    if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('//')) {
+      return url;
+    }
+
+    // Handle relative URLs - normalize them
+    // Remove leading ./ and normalize path
+    let normalized = url.replace(/^\.\//, '');
+
+    // Remove query strings and hashes for comparison
+    normalized = normalized.split('?')[0].split('#')[0];
+
+    return normalized;
+  } catch {
+    return url;
+  }
 }
 
 /**

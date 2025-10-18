@@ -25,6 +25,7 @@ const ruleTester = new RuleTester({
 ruleTester.run('no-default-style', rule, {
   valid: [
     {
+      name: 'no http-equiv meta tags',
       code: dedent`
         <head>
           <meta charset="utf-8">
@@ -33,6 +34,7 @@ ruleTester.run('no-default-style', rule, {
       `,
     },
     {
+      name: 'http-equiv with different value',
       code: dedent`
         <head>
           <meta http-equiv="refresh" content="5">
@@ -43,6 +45,7 @@ ruleTester.run('no-default-style', rule, {
 
   invalid: [
     {
+      name: 'http-equiv with default-style lowercase',
       code: dedent`
         <head>
           <meta http-equiv="default-style" content="my-style">
@@ -55,6 +58,7 @@ ruleTester.run('no-default-style', rule, {
       ],
     },
     {
+      name: 'http-equiv with Default-Style mixed case',
       code: dedent`
         <head>
           <meta http-equiv="Default-Style" content="theme">

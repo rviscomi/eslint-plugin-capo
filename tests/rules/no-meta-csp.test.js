@@ -25,6 +25,7 @@ const ruleTester = new RuleTester({
 ruleTester.run('no-meta-csp', rule, {
   valid: [
     {
+      name: 'no CSP meta tags',
       code: dedent`
         <head>
           <meta charset="utf-8">
@@ -33,6 +34,7 @@ ruleTester.run('no-meta-csp', rule, {
       `,
     },
     {
+      name: 'different http-equiv value',
       code: dedent`
         <head>
           <meta http-equiv="refresh" content="5">
@@ -43,6 +45,7 @@ ruleTester.run('no-meta-csp', rule, {
 
   invalid: [
     {
+      name: 'Content-Security-Policy with mixed case',
       code: dedent`
         <head>
           <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
@@ -55,6 +58,7 @@ ruleTester.run('no-meta-csp', rule, {
       ],
     },
     {
+      name: 'content-security-policy lowercase',
       code: dedent`
         <head>
           <meta http-equiv="content-security-policy" content="script-src 'none'">
@@ -67,6 +71,7 @@ ruleTester.run('no-meta-csp', rule, {
       ],
     },
     {
+      name: 'Content-Security-Policy-Report-Only',
       code: dedent`
         <head>
           <meta http-equiv="Content-Security-Policy-Report-Only" content="default-src 'self'">

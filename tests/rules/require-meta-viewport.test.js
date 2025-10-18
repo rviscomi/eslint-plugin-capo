@@ -25,6 +25,7 @@ const ruleTester = new RuleTester({
 ruleTester.run('require-meta-viewport', rule, {
   valid: [
     {
+      name: 'viewport meta with full content',
       code: dedent`
         <head>
           <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,6 +33,7 @@ ruleTester.run('require-meta-viewport', rule, {
       `,
     },
     {
+      name: 'viewport meta with other elements',
       code: dedent`
         <head>
           <meta charset="utf-8">
@@ -44,6 +46,7 @@ ruleTester.run('require-meta-viewport', rule, {
 
   invalid: [
     {
+      name: 'head without viewport meta',
       code: dedent`
         <head>
           <meta charset="utf-8">

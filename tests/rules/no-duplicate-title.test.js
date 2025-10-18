@@ -25,6 +25,7 @@ const ruleTester = new RuleTester({
 ruleTester.run('no-duplicate-title', rule, {
   valid: [
     {
+      name: 'single title element',
       code: dedent`
         <head>
           <title>My Page</title>
@@ -32,6 +33,7 @@ ruleTester.run('no-duplicate-title', rule, {
       `,
     },
     {
+      name: 'single title with other elements',
       code: dedent`
         <head>
           <meta charset="utf-8">
@@ -41,6 +43,7 @@ ruleTester.run('no-duplicate-title', rule, {
       `,
     },
     {
+      name: 'no title element',
       code: dedent`
         <head>
           <meta charset="utf-8">
@@ -52,6 +55,7 @@ ruleTester.run('no-duplicate-title', rule, {
 
   invalid: [
     {
+      name: 'two duplicate title elements',
       code: dedent`
         <head>
           <title>First Title</title>
@@ -75,6 +79,7 @@ ruleTester.run('no-duplicate-title', rule, {
       ],
     },
     {
+      name: 'three duplicate title elements',
       code: dedent`
         <head>
           <title>First</title>

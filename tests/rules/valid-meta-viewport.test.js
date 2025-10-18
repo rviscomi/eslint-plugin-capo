@@ -25,6 +25,7 @@ const ruleTester = new RuleTester({
 ruleTester.run('valid-meta-viewport', rule, {
   valid: [
     {
+      name: 'viewport with width and initial-scale',
       code: dedent`
         <head>
           <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,6 +33,7 @@ ruleTester.run('valid-meta-viewport', rule, {
       `,
     },
     {
+      name: 'viewport with only width',
       code: dedent`
         <head>
           <meta name="viewport" content="width=device-width">
@@ -39,6 +41,7 @@ ruleTester.run('valid-meta-viewport', rule, {
       `,
     },
     {
+      name: 'viewport with minimum-scale allowed',
       code: dedent`
         <head>
           <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5">
@@ -49,6 +52,7 @@ ruleTester.run('valid-meta-viewport', rule, {
 
   invalid: [
     {
+      name: 'user-scalable=no only',
       code: dedent`
         <head>
           <meta name="viewport" content="user-scalable=no">
@@ -71,6 +75,7 @@ ruleTester.run('valid-meta-viewport', rule, {
       ],
     },
     {
+      name: 'user-scalable=0 with width',
       code: dedent`
         <head>
           <meta name="viewport" content="width=device-width, user-scalable=0">
@@ -93,6 +98,7 @@ ruleTester.run('valid-meta-viewport', rule, {
       ],
     },
     {
+      name: 'maximum-scale=1 only',
       code: dedent`
         <head>
           <meta name="viewport" content="maximum-scale=1">
@@ -115,6 +121,7 @@ ruleTester.run('valid-meta-viewport', rule, {
       ],
     },
     {
+      name: 'maximum-scale=1.5 with width',
       code: dedent`
         <head>
           <meta name="viewport" content="width=device-width, maximum-scale=1.5">
@@ -137,6 +144,7 @@ ruleTester.run('valid-meta-viewport', rule, {
       ],
     },
     {
+      name: 'both user-scalable=no and maximum-scale=1',
       code: dedent`
         <head>
           <meta name="viewport" content="user-scalable=no, maximum-scale=1">
@@ -184,6 +192,20 @@ ruleTester.run('valid-meta-viewport', rule, {
               `,
             },
           ],
+        },
+      ],
+    },
+    {
+      name: 'duplicate viewport declarations',
+      code: dedent`
+        <head>
+          <meta name="viewport" content="width=device-width">
+          <meta name="viewport" content="width=device-width">
+        </head>
+      `,
+      errors: [
+        {
+          messageId: 'invalidViewport',
         },
       ],
     },

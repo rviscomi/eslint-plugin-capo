@@ -1,5 +1,5 @@
 /**
- * Rule: head-element-order
+ * Rule: require-order
  * Validates that head elements are in optimal order based on capo.js rules
  * https://github.com/rviscomi/capo.js
  */

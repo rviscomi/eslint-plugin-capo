@@ -62,8 +62,7 @@ export function isMeta(node) {
 
   // Check for charset
   const hasCharset = node.attributes?.some((attr) => {
-    // Support both @html-eslint/parser (key.value) and vue-eslint-parser (key.name)
-    const keyName = attr.key?.value || attr.key?.name;
+    const keyName = attr.key?.value;
     return keyName?.toLowerCase() === 'charset';
   });
   if (hasCharset) return true;
@@ -105,11 +104,11 @@ export function isAsyncScript(node) {
   if (!isScriptElement(node)) return false;
 
   const hasSrc = node.attributes?.some((attr) => {
-    const keyName = attr.key?.value || attr.key?.name;
+    const keyName = attr.key?.value;
     return keyName?.toLowerCase() === 'src';
   });
   const hasAsync = node.attributes?.some((attr) => {
-    const keyName = attr.key?.value || attr.key?.name;
+    const keyName = attr.key?.value;
     return keyName?.toLowerCase() === 'async';
   });
 
@@ -134,15 +133,15 @@ export function isSyncScript(node) {
   if (!isScriptElement(node)) return false;
 
   const hasSrc = node.attributes?.some((attr) => {
-    const keyName = attr.key?.value || attr.key?.name;
+    const keyName = attr.key?.value;
     return keyName?.toLowerCase() === 'src';
   });
   const hasDefer = node.attributes?.some((attr) => {
-    const keyName = attr.key?.value || attr.key?.name;
+    const keyName = attr.key?.value;
     return keyName?.toLowerCase() === 'defer';
   });
   const hasAsync = node.attributes?.some((attr) => {
-    const keyName = attr.key?.value || attr.key?.name;
+    const keyName = attr.key?.value;
     return keyName?.toLowerCase() === 'async';
   });
   const type = getAttributeValue(node, 'type');
@@ -182,15 +181,15 @@ export function isDeferScript(node) {
   if (!isScriptElement(node)) return false;
 
   const hasSrc = node.attributes?.some((attr) => {
-    const keyName = attr.key?.value || attr.key?.name;
+    const keyName = attr.key?.value;
     return keyName?.toLowerCase() === 'src';
   });
   const hasDefer = node.attributes?.some((attr) => {
-    const keyName = attr.key?.value || attr.key?.name;
+    const keyName = attr.key?.value;
     return keyName?.toLowerCase() === 'defer';
   });
   const hasAsync = node.attributes?.some((attr) => {
-    const keyName = attr.key?.value || attr.key?.name;
+    const keyName = attr.key?.value;
     return keyName?.toLowerCase() === 'async';
   });
   const type = getAttributeValue(node, 'type');
