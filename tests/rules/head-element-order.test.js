@@ -90,7 +90,17 @@ ruleTester.run('head-element-order', rule, {
           <link rel="preconnect" href="https://api.example.com">
         </head>
       `,
-      errors: 1,
+      errors: [
+        {
+          messageId: 'wrongOrder',
+          data: {
+            current: 'DEFER_SCRIPT',
+            currentWeight: '3',
+            next: 'PRECONNECT',
+            nextWeight: '9',
+          },
+        },
+      ],
     },
     {
       name: 'prefetch before async script before meta',
@@ -101,7 +111,26 @@ ruleTester.run('head-element-order', rule, {
           <meta charset="utf-8">
         </head>
       `,
-      errors: 2,
+      errors: [
+        {
+          messageId: 'wrongOrder',
+          data: {
+            current: 'PREFETCH_PRERENDER',
+            currentWeight: '2',
+            next: 'ASYNC_SCRIPT',
+            nextWeight: '8',
+          },
+        },
+        {
+          messageId: 'wrongOrder',
+          data: {
+            current: 'ASYNC_SCRIPT',
+            currentWeight: '8',
+            next: 'META',
+            nextWeight: '11',
+          },
+        },
+      ],
     },
     {
       name: 'preload before async script',
@@ -111,7 +140,17 @@ ruleTester.run('head-element-order', rule, {
           <script async src="analytics.js"></script>
         </head>
       `,
-      errors: 1,
+      errors: [
+        {
+          messageId: 'wrongOrder',
+          data: {
+            current: 'PRELOAD',
+            currentWeight: '4',
+            next: 'ASYNC_SCRIPT',
+            nextWeight: '8',
+          },
+        },
+      ],
     },
     {
       name: 'module script before preconnect',
@@ -121,7 +160,17 @@ ruleTester.run('head-element-order', rule, {
           <link rel="preconnect" href="https://example.com">
         </head>
       `,
-      errors: 1,
+      errors: [
+        {
+          messageId: 'wrongOrder',
+          data: {
+            current: 'DEFER_SCRIPT',
+            currentWeight: '3',
+            next: 'PRECONNECT',
+            nextWeight: '9',
+          },
+        },
+      ],
     },
     {
       name: 'inline script before meta',
@@ -131,7 +180,17 @@ ruleTester.run('head-element-order', rule, {
           <meta charset="utf-8">
         </head>
       `,
-      errors: 1,
+      errors: [
+        {
+          messageId: 'wrongOrder',
+          data: {
+            current: 'SYNC_SCRIPT',
+            currentWeight: '6',
+            next: 'META',
+            nextWeight: '11',
+          },
+        },
+      ],
     },
     {
       name: 'complex head with multiple issues',
@@ -144,7 +203,17 @@ ruleTester.run('head-element-order', rule, {
           <link rel="stylesheet" href="styles.css">
         </head>
       `,
-      errors: 1, // defer before meta
+      errors: [
+        {
+          messageId: 'wrongOrder',
+          data: {
+            current: 'DEFER_SCRIPT',
+            currentWeight: '3',
+            next: 'META',
+            nextWeight: '11',
+          },
+        },
+      ],
     },
     {
       name: 'very complex head with many issues',
@@ -158,7 +227,35 @@ ruleTester.run('head-element-order', rule, {
           <link rel="preconnect" href="https://example.com">
         </head>
       `,
-      errors: 3, // Checking actual count
+      errors: [
+        {
+          messageId: 'wrongOrder',
+          data: {
+            current: 'SYNC_STYLES',
+            currentWeight: '5',
+            next: 'TITLE',
+            nextWeight: '10',
+          },
+        },
+        {
+          messageId: 'wrongOrder',
+          data: {
+            current: 'TITLE',
+            currentWeight: '10',
+            next: 'META',
+            nextWeight: '11',
+          },
+        },
+        {
+          messageId: 'wrongOrder',
+          data: {
+            current: 'ASYNC_SCRIPT',
+            currentWeight: '8',
+            next: 'META',
+            nextWeight: '11',
+          },
+        },
+      ],
     },
   ],
 });
