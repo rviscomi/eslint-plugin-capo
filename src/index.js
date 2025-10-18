@@ -6,9 +6,11 @@
 
 import noInvalidHeadElements from './rules/no-invalid-head-elements.js';
 import requireTitle from './rules/require-title.js';
+import noDuplicateTitle from './rules/no-duplicate-title.js';
 import noDuplicateBase from './rules/no-duplicate-base.js';
 import noMetaCSP from './rules/no-meta-csp.js';
 import noInvalidHttpEquiv from './rules/no-invalid-http-equiv.js';
+import requireMetaViewport from './rules/require-meta-viewport.js';
 import validMetaViewport from './rules/valid-meta-viewport.js';
 import validCharset from './rules/valid-charset.js';
 import noDefaultStyle from './rules/no-default-style.js';
@@ -23,9 +25,11 @@ const plugin = {
   rules: {
     'no-invalid-head-elements': noInvalidHeadElements,
     'require-title': requireTitle,
+    'no-duplicate-title': noDuplicateTitle,
     'no-duplicate-base': noDuplicateBase,
     'no-meta-csp': noMetaCSP,
     'no-invalid-http-equiv': noInvalidHttpEquiv,
+    'require-meta-viewport': requireMetaViewport,
     'valid-meta-viewport': validMetaViewport,
     'valid-charset': validCharset,
     'no-default-style': noDefaultStyle,
@@ -44,9 +48,11 @@ plugin.configs.recommended = {
   rules: {
     'capo/no-invalid-head-elements': 'error',
     'capo/require-title': 'error',
+    'capo/no-duplicate-title': 'error',
     'capo/no-duplicate-base': 'error',
     'capo/no-meta-csp': 'error',
     'capo/no-invalid-http-equiv': 'warn',
+    'capo/require-meta-viewport': 'warn',
     'capo/valid-meta-viewport': 'error',
     'capo/valid-charset': 'error',
     'capo/no-default-style': 'warn',
@@ -62,9 +68,11 @@ plugin.configs.strict = {
   rules: {
     'capo/no-invalid-head-elements': 'error',
     'capo/require-title': 'error',
+    'capo/no-duplicate-title': 'error',
     'capo/no-duplicate-base': 'error',
     'capo/no-meta-csp': 'error',
     'capo/no-invalid-http-equiv': 'error',
+    'capo/require-meta-viewport': 'error',
     'capo/valid-meta-viewport': 'error',
     'capo/valid-charset': 'error',
     'capo/no-default-style': 'error',
@@ -92,6 +100,7 @@ plugin.configs.accessibility = {
     capo: plugin,
   },
   rules: {
+    'capo/require-meta-viewport': 'error',
     'capo/valid-meta-viewport': 'error',
   },
 };

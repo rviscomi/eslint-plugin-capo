@@ -15,7 +15,6 @@ export default {
     },
     messages: {
       invalidViewport: '{{message}}',
-      missingViewport: 'Expected exactly 1 <meta name=viewport> element, found {{count}}',
       removeUserScalable: 'Remove "user-scalable=no" to allow zooming',
       removeMaximumScale: 'Remove "maximum-scale" to allow zooming',
     },
@@ -24,20 +23,16 @@ export default {
   },
   
   create(context) {
-    let viewportCount = 0;
     let firstViewportSeen = false;
     
     return {
       'Tag[name="head"]'(node) {
-        // Reset counter for each head element
-        viewportCount = 0;
+        // Reset for each head element
         firstViewportSeen = false;
       },
       
       'Tag[parent.name="head"][name="meta"]'(node) {
         if (isMetaViewport(node)) {
-          viewportCount++;
-          
           // Check for redundant viewport
           if (firstViewportSeen) {
             context.report({
@@ -126,19 +121,8 @@ export default {
         }
       },
       
-      'Tag[name="head"]:exit'(node) {
-        if (viewportCount !== 1) {
-          context.report({
-            node,
-            messageId: 'missingViewport',
-            data: {
-              count: viewportCount,
-            },
-          });
-        }
-        
+      'Tag[name="head"]:exit'() {
         // Reset for next head
-        viewportCount = 0;
         firstViewportSeen = false;
       },
     };

@@ -8,20 +8,36 @@
 import { getAttributeValue } from './validation-helpers.js';
 
 /**
+ * Helper to check if node is a script element
+ * @html-eslint/parser uses 'ScriptTag' type for script elements
+ */
+function isScriptElement(node) {
+  return node.type === 'ScriptTag' || node.name === 'script';
+}
+
+/**
+ * Helper to check if node is a style element
+ * @html-eslint/parser uses 'StyleTag' type for style elements
+ */
+function isStyleElement(node) {
+  return node.type === 'StyleTag' || node.name === 'style';
+}
+
+/**
  * Element weight hierarchy (higher = should come earlier)
  */
 export const ElementWeights = {
-  META: 10,
-  TITLE: 9,
-  PRECONNECT: 8,
-  ASYNC_SCRIPT: 7,
-  IMPORT_STYLES: 6,
-  SYNC_SCRIPT: 5,
-  SYNC_STYLES: 4,
-  PRELOAD: 3,
-  DEFER_SCRIPT: 2,
-  PREFETCH_PRERENDER: 1,
-  OTHER: 0
+  META: 11,           // Pragma directives (meta charset, meta viewport, base, meta http-equiv)
+  TITLE: 10,          // Title
+  PRECONNECT: 9,      // Preconnect hints
+  ASYNC_SCRIPT: 8,    // Asynchronous scripts
+  IMPORT_STYLES: 7,   // Import styles
+  SYNC_SCRIPT: 6,     // Synchronous scripts
+  SYNC_STYLES: 5,     // Synchronous styles
+  PRELOAD: 4,         // Preload hints
+  DEFER_SCRIPT: 3,    // Deferred scripts
+  PREFETCH_PRERENDER: 2, // Prefetch and prerender hints
+  OTHER: 1            // Everything else
 };
 
 /**
@@ -88,7 +104,7 @@ export function isPreconnect(node) {
  * Check if element is an async script
  */
 export function isAsyncScript(node) {
-  if (node.name !== 'script') return false;
+  if (!isScriptElement(node)) return false;
   
   const hasSrc = node.attributes?.some(attr => {
     const keyName = attr.key?.value || attr.key?.name;
@@ -106,7 +122,7 @@ export function isAsyncScript(node) {
  * Check if element is a style with @import
  */
 export function isImportStyles(node) {
-  if (node.name !== 'style') return false;
+  if (!isStyleElement(node)) return false;
   
   // Check text content for @import
   const content = getTextContent(node);
@@ -117,7 +133,7 @@ export function isImportStyles(node) {
  * Check if element is a synchronous script
  */
 export function isSyncScript(node) {
-  if (node.name !== 'script') return false;
+  if (!isScriptElement(node)) return false;
   
   const hasSrc = node.attributes?.some(attr => {
     const keyName = attr.key?.value || attr.key?.name;
@@ -144,7 +160,7 @@ export function isSyncScript(node) {
  * Check if element is synchronous styles
  */
 export function isSyncStyles(node) {
-  if (node.name === 'style') return true;
+  if (isStyleElement(node)) return true;
   if (node.name !== 'link') return false;
   
   const rel = getAttributeValue(node, 'rel');
@@ -165,7 +181,7 @@ export function isPreload(node) {
  * Check if element is a deferred script
  */
 export function isDeferScript(node) {
-  if (node.name !== 'script') return false;
+  if (!isScriptElement(node)) return false;
   
   const hasSrc = node.attributes?.some(attr => {
     const keyName = attr.key?.value || attr.key?.name;

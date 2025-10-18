@@ -1,0 +1,82 @@
+/**
+ * @fileoverview Tests for no-meta-csp rule
+ * @author Rick Viscomi
+ */
+
+//------------------------------------------------------------------------------
+// Imports
+//------------------------------------------------------------------------------
+
+import { RuleTester } from "eslint";
+import rule from "../../src/rules/no-meta-csp.js";
+import parser from "@html-eslint/parser";
+import dedent from "dedent";
+
+//------------------------------------------------------------------------------
+// Tests
+//------------------------------------------------------------------------------
+
+const ruleTester = new RuleTester({
+  languageOptions: {
+    parser,
+  },
+});
+
+ruleTester.run("no-meta-csp", rule, {
+  valid: [
+    {
+      code: dedent`
+        <head>
+          <meta charset="utf-8">
+          <title>No CSP</title>
+        </head>
+      `,
+    },
+    {
+      code: dedent`
+        <head>
+          <meta http-equiv="refresh" content="5">
+        </head>
+      `,
+    },
+  ],
+
+  invalid: [
+    {
+      code: dedent`
+        <head>
+          <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
+        </head>
+      `,
+      errors: [
+        {
+          messageId: "metaCSP",
+        },
+      ],
+    },
+    {
+      code: dedent`
+        <head>
+          <meta http-equiv="content-security-policy" content="script-src 'none'">
+        </head>
+      `,
+      errors: [
+        {
+          messageId: "metaCSP",
+        },
+      ],
+    },
+    {
+      code: dedent`
+        <head>
+          <meta http-equiv="Content-Security-Policy-Report-Only" content="default-src 'self'">
+        </head>
+      `,
+      errors: [
+        {
+          messageId: "metaCSP",
+        },
+      ],
+    },
+  ],
+});

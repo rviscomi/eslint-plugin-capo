@@ -21,17 +21,21 @@
     "url": "https://github.com/rviscomi/eslint-plugin-capo.git"
   },
   "peerDependencies": {
-    "eslint": ">=8.0.0",
-    "@html-eslint/parser": ">=0.47.0"
+    "@html-eslint/parser": ">=0.47.0",
+    "eslint": ">=8.21.0"
   },
   "devDependencies": {
     "@html-eslint/parser": "^0.47.0",
-    "eslint": "^9.38.0"
+    "dedent": "^1.7.0",
+    "eslint": "^9.38.0",
+    "prettier": "^3.6.2"
   },
   "engines": {
     "node": ">=18.0.0"
   },
   "scripts": {
-    "test": "node test/test-plugin.js"
+    "test": "node --test tests/rules/*.test.js",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   }
 }

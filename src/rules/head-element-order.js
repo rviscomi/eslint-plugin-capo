@@ -37,8 +37,9 @@ export default {
     return {
       'Tag[name="head"]'(headNode) {
         // Get all direct children of head
+        // Note: @html-eslint/parser uses different types: Tag, ScriptTag, StyleTag
         const children = headNode.children?.filter(child => 
-          child.type === 'Tag'
+          child.type === 'Tag' || child.type === 'ScriptTag' || child.type === 'StyleTag'
         ) || [];
         
         if (children.length === 0) return;
