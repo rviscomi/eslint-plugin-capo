@@ -81,8 +81,7 @@ export function isContentType(node) {
 
   const httpEquiv = getAttributeValue(node, 'http-equiv');
   const hasCharset = node.attributes?.some((attr) => {
-    // Support both @html-eslint/parser (key.value) and vue-eslint-parser (key.name)
-    const keyName = attr.key?.value || attr.key?.name;
+    const keyName = attr.key?.value;
     return keyName?.toLowerCase() === 'charset';
   });
 
@@ -95,8 +94,7 @@ export function isContentType(node) {
 export function isHttpEquiv(node) {
   if (node.name !== 'meta') return false;
   return node.attributes?.some((attr) => {
-    // Support both @html-eslint/parser (key.value) and vue-eslint-parser (key.name)
-    const keyName = attr.key?.value || attr.key?.name;
+    const keyName = attr.key?.value;
     return keyName?.toLowerCase() === 'http-equiv';
   });
 }
@@ -116,25 +114,20 @@ export function isPreload(node) {
 
 /**
  * Get attribute value from an AST node
+ * Works with @html-eslint/parser
  */
 export function getAttributeValue(node, attrName) {
   if (!node.attributes) return null;
 
   const attr = node.attributes.find((a) => {
-    // Support both @html-eslint/parser (key.value) and vue-eslint-parser (key.name)
-    const keyName = a.key?.value || a.key?.name;
+    const keyName = a.key?.value;
     return keyName?.toLowerCase() === attrName.toLowerCase();
   });
 
   if (!attr?.value) return null;
 
-  // Handle different value types
   // @html-eslint/parser uses AttributeValue
   if (attr.value.type === 'AttributeValue') {
-    return attr.value.value;
-  }
-  // vue-eslint-parser uses Literal or VLiteral
-  if (attr.value.type === 'Literal' || attr.value.type === 'VLiteral') {
     return attr.value.value;
   }
 

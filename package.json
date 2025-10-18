@@ -36,7 +36,10 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "test": "node --test tests/rules/*.test.js",
+    "test": "node --test tests/**/*.test.js tests/*.test.js",
+    "test:rules": "node --test tests/rules/*.test.js",
+    "test:utils": "node --test tests/utils/*.test.js",
+    "test:coverage": "node --test --experimental-test-coverage tests/**/*.test.js tests/*.test.js",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "prepare": "husky"

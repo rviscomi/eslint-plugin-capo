@@ -62,8 +62,7 @@ export function isMeta(node) {
 
   // Check for charset
   const hasCharset = node.attributes?.some((attr) => {
-    // Support both @html-eslint/parser (key.value) and vue-eslint-parser (key.name)
-    const keyName = attr.key?.value || attr.key?.name;
+    const keyName = attr.key?.value;
     return keyName?.toLowerCase() === 'charset';
   });
   if (hasCharset) return true;
