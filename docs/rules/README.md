@@ -13,6 +13,7 @@ These rules catch common mistakes and invalid HTML in the `<head>` element:
 - [no-duplicate-title](./no-duplicate-title.md) - Disallow multiple title elements in the head
 - [no-duplicate-base](./no-duplicate-base.md) - Disallow multiple base elements in the head
 - [valid-charset](./valid-charset.md) - Ensure proper UTF-8 character encoding is declared
+- [no-invalid-origin-trial](./no-invalid-origin-trial.md) - Disallow invalid or expired origin trial tokens
 
 ### Performance Rules
 
@@ -48,6 +49,7 @@ These rules are enabled in the `recommended` configuration:
 - `no-duplicate-base`
 - `no-meta-csp`
 - `no-invalid-http-equiv`
+- `no-invalid-origin-trial`
 - `valid-meta-viewport`
 - `valid-charset`
 - `no-default-style`

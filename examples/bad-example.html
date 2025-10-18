@@ -17,6 +17,17 @@
     <!-- Wrong attribute type -->
     <meta http-equiv="description" content="Should use name, not http-equiv" />
 
+    <!-- Invalid origin trial tokens -->
+    <meta http-equiv="origin-trial" content="" />
+    <!-- Empty token -->
+    <meta http-equiv="origin-trial" content="invalid-token" />
+    <!-- Malformed token -->
+    <meta
+      http-equiv="origin-trial"
+      content="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQeyJvcmlnaW4iOiJodHRwczovL2V4YW1wbGUuY29tOjQ0MyIsImZlYXR1cmUiOiJUZXN0RmVhdHVyZSIsImV4cGlyeSI6MTU3NzgzNjgwMH0="
+    />
+    <!-- Expired token -->
+
     <!-- Invalid elements in head -->
     <div>This should not be here</div>
     <span>Neither should this</span>
