@@ -895,6 +895,31 @@ describe('validation-helpers', () => {
       const warnings = validateHttpEquiv(node);
       assert.ok(warnings.some((w) => w.includes('non-standard')));
     });
+
+    it('should return no warnings for http-equiv values with dedicated validation', () => {
+      // These values have their own validation functions (validateCSP, validateContentType, validateDefaultStyle)
+      // so validateHttpEquiv should return no warnings for them
+      const valuesWithDedicatedValidation = [
+        'content-security-policy',
+        'content-security-policy-report-only',
+        'origin-trial',
+        'content-type',
+        'default-style',
+      ];
+      valuesWithDedicatedValidation.forEach((value) => {
+        const node = {
+          name: 'meta',
+          attributes: [
+            {
+              key: { value: 'http-equiv' },
+              value: { type: 'AttributeValue', value },
+            },
+          ],
+        };
+        const warnings = validateHttpEquiv(node);
+        assert.strictEqual(warnings.length, 0, `${value} should return no warnings from validateHttpEquiv`);
+      });
+    });
   });
 
   describe('validateMetaViewport', () => {
