@@ -15,7 +15,7 @@ The viewport meta tag is essential for responsive web design on mobile devices. 
 The viewport meta tag tells the browser to use the device's actual screen width and provides proper scaling:
 
 ```html
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 ```
 
 This is considered a fundamental requirement for mobile-friendly websites.
@@ -31,14 +31,14 @@ Examples of **incorrect** code:
 
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>My Page</title>
-  <!-- Missing viewport meta tag -->
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>My Page</title>
+    <!-- Missing viewport meta tag -->
+  </head>
+  <body>
+    <h1>Hello World</h1>
+  </body>
 </html>
 ```
 
@@ -49,14 +49,14 @@ Examples of **correct** code:
 
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>My Page</title>
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>My Page</title>
+  </head>
+  <body>
+    <h1>Hello World</h1>
+  </body>
 </html>
 ```
 

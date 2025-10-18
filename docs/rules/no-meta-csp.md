@@ -27,13 +27,13 @@ Examples of **incorrect** code:
 
 <!DOCTYPE html>
 <html>
-<head>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
-  <title>My Page</title>
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'" />
+    <title>My Page</title>
+  </head>
+  <body>
+    <h1>Hello World</h1>
+  </body>
 </html>
 ```
 
@@ -44,14 +44,14 @@ Examples of **correct** code:
 
 <!DOCTYPE html>
 <html>
-<head>
-  <!-- Use HTTP headers instead -->
-  <!-- Content-Security-Policy: default-src 'self' -->
-  <title>My Page</title>
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
+  <head>
+    <!-- Use HTTP headers instead -->
+    <!-- Content-Security-Policy: default-src 'self' -->
+    <title>My Page</title>
+  </head>
+  <body>
+    <h1>Hello World</h1>
+  </body>
 </html>
 ```
 

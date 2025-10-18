@@ -20,7 +20,7 @@ Common issues include:
 The modern, recommended way to declare charset is:
 
 ```html
-<meta charset="utf-8">
+<meta charset="utf-8" />
 ```
 
 ## Rule Details
@@ -38,14 +38,14 @@ Examples of **incorrect** code:
 
 <!DOCTYPE html>
 <html>
-<head>
-  <!-- Outdated encoding -->
-  <meta charset="ISO-8859-1">
-  <title>My Page</title>
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
+  <head>
+    <!-- Outdated encoding -->
+    <meta charset="ISO-8859-1" />
+    <title>My Page</title>
+  </head>
+  <body>
+    <h1>Hello World</h1>
+  </body>
 </html>
 ```
 
@@ -54,15 +54,15 @@ Examples of **incorrect** code:
 
 <!DOCTYPE html>
 <html>
-<head>
-  <!-- Duplicate charset declarations -->
-  <meta charset="utf-8">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <title>My Page</title>
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
+  <head>
+    <!-- Duplicate charset declarations -->
+    <meta charset="utf-8" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>My Page</title>
+  </head>
+  <body>
+    <h1>Hello World</h1>
+  </body>
 </html>
 ```
 
@@ -73,13 +73,13 @@ Examples of **correct** code:
 
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>My Page</title>
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>My Page</title>
+  </head>
+  <body>
+    <h1>Hello World</h1>
+  </body>
 </html>
 ```
 

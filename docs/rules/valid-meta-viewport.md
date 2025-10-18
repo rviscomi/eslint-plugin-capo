@@ -27,13 +27,13 @@ Examples of **incorrect** code:
 
 <!DOCTYPE html>
 <html>
-<head>
-  <!-- Disables zooming (accessibility issue) -->
-  <meta name="viewport" content="width=device-width, user-scalable=no">
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
+  <head>
+    <!-- Disables zooming (accessibility issue) -->
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+  </head>
+  <body>
+    <h1>Hello World</h1>
+  </body>
 </html>
 ```
 
@@ -42,13 +42,13 @@ Examples of **incorrect** code:
 
 <!DOCTYPE html>
 <html>
-<head>
-  <!-- Restricts zoom too much -->
-  <meta name="viewport" content="width=device-width, maximum-scale=1.0">
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
+  <head>
+    <!-- Restricts zoom too much -->
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+  </head>
+  <body>
+    <h1>Hello World</h1>
+  </body>
 </html>
 ```
 
@@ -57,14 +57,14 @@ Examples of **incorrect** code:
 
 <!DOCTYPE html>
 <html>
-<head>
-  <!-- Multiple viewport tags -->
-  <meta name="viewport" content="width=device-width">
-  <meta name="viewport" content="initial-scale=1">
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
+  <head>
+    <!-- Multiple viewport tags -->
+    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="initial-scale=1" />
+  </head>
+  <body>
+    <h1>Hello World</h1>
+  </body>
 </html>
 ```
 
@@ -75,12 +75,12 @@ Examples of **correct** code:
 
 <!DOCTYPE html>
 <html>
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <h1>Hello World</h1>
+  </body>
 </html>
 ```
 
@@ -89,13 +89,13 @@ Examples of **correct** code:
 
 <!DOCTYPE html>
 <html>
-<head>
-  <!-- Allows sufficient zooming -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
+  <head>
+    <!-- Allows sufficient zooming -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+  </head>
+  <body>
+    <h1>Hello World</h1>
+  </body>
 </html>
 ```
 

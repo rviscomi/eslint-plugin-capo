@@ -33,15 +33,15 @@ Examples of **incorrect** code:
 
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>My Page</title>
-  <div>This shouldn't be here</div>
-  <span>Neither should this</span>
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>My Page</title>
+    <div>This shouldn't be here</div>
+    <span>Neither should this</span>
+  </head>
+  <body>
+    <h1>Hello World</h1>
+  </body>
 </html>
 ```
 
@@ -50,14 +50,14 @@ Examples of **incorrect** code:
 
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <p>Invalid paragraph in head</p>
-  <h1>Invalid heading in head</h1>
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <p>Invalid paragraph in head</p>
+    <h1>Invalid heading in head</h1>
+  </head>
+  <body>
+    <h1>Hello World</h1>
+  </body>
 </html>
 ```
 
@@ -68,26 +68,28 @@ Examples of **correct** code:
 
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>My Page</title>
-  <base href="https://example.com/">
-  <link rel="stylesheet" href="styles.css">
-  <script src="app.js" defer></script>
-  <style>
-    body { margin: 0; }
-  </style>
-  <noscript>
-    <link rel="stylesheet" href="noscript.css">
-  </noscript>
-  <template id="my-template">
-    <div>Template content</div>
-  </template>
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>My Page</title>
+    <base href="https://example.com/" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+    <style>
+      body {
+        margin: 0;
+      }
+    </style>
+    <noscript>
+      <link rel="stylesheet" href="noscript.css" />
+    </noscript>
+    <template id="my-template">
+      <div>Template content</div>
+    </template>
+  </head>
+  <body>
+    <h1>Hello World</h1>
+  </body>
 </html>
 ```
 

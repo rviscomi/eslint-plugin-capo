@@ -22,13 +22,13 @@ Examples of **incorrect** code:
 
 <!DOCTYPE html>
 <html>
-<head>
-  <base href="https://example.com/">
-  <base href="https://other.com/">
-</head>
-<body>
-  <a href="page">Link</a>
-</body>
+  <head>
+    <base href="https://example.com/" />
+    <base href="https://other.com/" />
+  </head>
+  <body>
+    <a href="page">Link</a>
+  </body>
 </html>
 ```
 
@@ -39,12 +39,12 @@ Examples of **correct** code:
 
 <!DOCTYPE html>
 <html>
-<head>
-  <base href="https://example.com/">
-</head>
-<body>
-  <a href="page">Link</a>
-</body>
+  <head>
+    <base href="https://example.com/" />
+  </head>
+  <body>
+    <a href="page">Link</a>
+  </body>
 </html>
 ```
 
@@ -53,12 +53,12 @@ Examples of **correct** code:
 
 <!DOCTYPE html>
 <html>
-<head>
-  <!-- No base element is also valid -->
-</head>
-<body>
-  <a href="https://example.com/page">Link</a>
-</body>
+  <head>
+    <!-- No base element is also valid -->
+  </head>
+  <body>
+    <a href="https://example.com/page">Link</a>
+  </body>
 </html>
 ```
 

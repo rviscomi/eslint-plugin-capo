@@ -28,20 +28,20 @@ Examples of **incorrect** code:
 
 <!DOCTYPE html>
 <html>
-<head>
-  <!-- Deprecated IE feature -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  
-  <!-- Should use HTTP headers -->
-  <meta http-equiv="Cache-Control" content="no-cache">
-  
-  <!-- Wrong attribute (should be name, not http-equiv) -->
-  <meta http-equiv="description" content="Page description">
-  <meta http-equiv="keywords" content="html, meta, tags">
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
+  <head>
+    <!-- Deprecated IE feature -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Should use HTTP headers -->
+    <meta http-equiv="Cache-Control" content="no-cache" />
+
+    <!-- Wrong attribute (should be name, not http-equiv) -->
+    <meta http-equiv="description" content="Page description" />
+    <meta http-equiv="keywords" content="html, meta, tags" />
+  </head>
+  <body>
+    <h1>Hello World</h1>
+  </body>
 </html>
 ```
 
@@ -52,17 +52,17 @@ Examples of **correct** code:
 
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta name="description" content="Page description">
-  <meta name="keywords" content="html, meta, tags">
-  
-  <!-- Use HTTP headers for cache control instead -->
-  <!-- Cache-Control: no-cache -->
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content="Page description" />
+    <meta name="keywords" content="html, meta, tags" />
+
+    <!-- Use HTTP headers for cache control instead -->
+    <!-- Cache-Control: no-cache -->
+  </head>
+  <body>
+    <h1>Hello World</h1>
+  </body>
 </html>
 ```
 
@@ -73,14 +73,14 @@ Valid `http-equiv` values (when needed):
 
 <!DOCTYPE html>
 <html>
-<head>
-  <meta http-equiv="refresh" content="30">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta http-equiv="default-style" content="main">
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
+  <head>
+    <meta http-equiv="refresh" content="30" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="default-style" content="main" />
+  </head>
+  <body>
+    <h1>Hello World</h1>
+  </body>
 </html>
 ```
 

@@ -22,14 +22,14 @@ Examples of **incorrect** code:
 
 <!DOCTYPE html>
 <html>
-<head>
-  <meta http-equiv="default-style" content="main">
-  <link rel="stylesheet" href="default.css" title="main">
-  <link rel="alternate stylesheet" href="alt.css" title="alt">
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
+  <head>
+    <meta http-equiv="default-style" content="main" />
+    <link rel="stylesheet" href="default.css" title="main" />
+    <link rel="alternate stylesheet" href="alt.css" title="alt" />
+  </head>
+  <body>
+    <h1>Hello World</h1>
+  </body>
 </html>
 ```
 
@@ -40,13 +40,13 @@ Examples of **correct** code:
 
 <!DOCTYPE html>
 <html>
-<head>
-  <!-- Use standard stylesheet without default-style meta -->
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
+  <head>
+    <!-- Use standard stylesheet without default-style meta -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>Hello World</h1>
+  </body>
 </html>
 ```
 
@@ -55,14 +55,14 @@ Examples of **correct** code:
 
 <!DOCTYPE html>
 <html>
-<head>
-  <!-- Use CSS features for conditional styling -->
-  <link rel="stylesheet" href="light.css" media="(prefers-color-scheme: light)">
-  <link rel="stylesheet" href="dark.css" media="(prefers-color-scheme: dark)">
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
+  <head>
+    <!-- Use CSS features for conditional styling -->
+    <link rel="stylesheet" href="light.css" media="(prefers-color-scheme: light)" />
+    <link rel="stylesheet" href="dark.css" media="(prefers-color-scheme: dark)" />
+  </head>
+  <body>
+    <h1>Hello World</h1>
+  </body>
 </html>
 ```
 
