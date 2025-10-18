@@ -1,4 +1,4 @@
-import capo from 'eslint-plugin-capo';
+import capo from './src/index.js';
 import htmlParser from '@html-eslint/parser';
 
 export default [
