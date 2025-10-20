@@ -268,22 +268,3 @@ export function shouldComeBefore(nodeA, nodeB) {
   const weightB = getWeight(nodeB);
   return weightA > weightB;
 }
-
-/**
- * Get optimal order description
- */
-export function getOptimalOrderDescription() {
-  return [
-    '1. META (charset, viewport, CSP, etc.) - weight 11',
-    '2. TITLE - weight 10',
-    '3. PRECONNECT - weight 9',
-    '4. ASYNC_SCRIPT - weight 8',
-    '5. IMPORT_STYLES (@import in <style>) - weight 7',
-    '6. SYNC_SCRIPT - weight 6',
-    '7. SYNC_STYLES (<link rel="stylesheet">) - weight 5',
-    '8. PRELOAD - weight 4',
-    '9. DEFER_SCRIPT - weight 3',
-    '10. PREFETCH/PRERENDER - weight 2',
-    '11. OTHER - weight 1',
-  ];
-}
