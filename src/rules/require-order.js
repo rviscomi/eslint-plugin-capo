@@ -4,7 +4,7 @@
  * https://github.com/rviscomi/capo.js
  */
 
-import { getWeight, getElementTypeName, getOptimalOrderDescription } from '../utils/element-ordering.js';
+import { getWeight, getElementTypeName } from '../utils/element-ordering.js';
 
 export default {
   meta: {

@@ -21,7 +21,6 @@ import {
   getWeight,
   getElementTypeName,
   shouldComeBefore,
-  getOptimalOrderDescription,
 } from '../../src/utils/element-ordering.js';
 
 describe('element-ordering', () => {
@@ -685,15 +684,6 @@ describe('element-ordering', () => {
       assert.strictEqual(shouldComeBefore(titleNode, metaNode), false);
       assert.strictEqual(shouldComeBefore(metaNode, otherNode), true);
       assert.strictEqual(shouldComeBefore(otherNode, metaNode), false);
-    });
-  });
-
-  describe('getOptimalOrderDescription', () => {
-    it('should return array of ordering descriptions', () => {
-      const descriptions = getOptimalOrderDescription();
-      assert.ok(Array.isArray(descriptions));
-      assert.ok(descriptions.length > 0);
-      assert.ok(descriptions[0].includes('META'));
     });
   });
 });
