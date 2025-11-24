@@ -20,6 +20,11 @@ const ruleTester = new RuleTester({
   languageOptions: {
     parser,
   },
+  settings: {
+    capo: {
+      rules: ['no-invalid-http-equiv'],
+    },
+  },
 });
 
 ruleTester.run('no-invalid-http-equiv', rule, {
@@ -71,7 +76,7 @@ ruleTester.run('no-invalid-http-equiv', rule, {
           messageId: 'invalidHttpEquiv',
           suggestions: [
             {
-              messageId: 'removeTag',
+              messageId: 'removeMetaTag',
               output: dedent`
                 <head>
                 </head>
@@ -93,7 +98,7 @@ ruleTester.run('no-invalid-http-equiv', rule, {
           messageId: 'invalidHttpEquiv',
           suggestions: [
             {
-              messageId: 'removeTag',
+              messageId: 'removeMetaTag',
               output: dedent`
                 <head>
                 </head>
@@ -115,7 +120,7 @@ ruleTester.run('no-invalid-http-equiv', rule, {
           messageId: 'invalidHttpEquiv',
           suggestions: [
             {
-              messageId: 'removeTag',
+              messageId: 'removeMetaTag',
               output: dedent`
                 <head>
                 </head>
@@ -137,7 +142,7 @@ ruleTester.run('no-invalid-http-equiv', rule, {
           messageId: 'invalidHttpEquiv',
           suggestions: [
             {
-              messageId: 'removeTag',
+              messageId: 'removeMetaTag',
               output: dedent`
                 <head>
                 </head>

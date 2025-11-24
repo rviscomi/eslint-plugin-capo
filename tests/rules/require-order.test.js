@@ -20,6 +20,11 @@ const ruleTester = new RuleTester({
   languageOptions: {
     parser,
   },
+  settings: {
+    capo: {
+      rules: ['require-order'],
+    },
+  },
 });
 
 ruleTester.run('require-order', rule, {
@@ -75,9 +80,9 @@ ruleTester.run('require-order', rule, {
           messageId: 'wrongOrder',
           data: {
             current: 'TITLE',
-            currentWeight: '10',
+            currentWeight: '9',
             next: 'META',
-            nextWeight: '11',
+            nextWeight: '10',
           },
         },
       ],
@@ -95,9 +100,9 @@ ruleTester.run('require-order', rule, {
           messageId: 'wrongOrder',
           data: {
             current: 'DEFER_SCRIPT',
-            currentWeight: '3',
+            currentWeight: '2',
             next: 'PRECONNECT',
-            nextWeight: '9',
+            nextWeight: '8',
           },
         },
       ],
@@ -116,18 +121,18 @@ ruleTester.run('require-order', rule, {
           messageId: 'wrongOrder',
           data: {
             current: 'PREFETCH_PRERENDER',
-            currentWeight: '2',
+            currentWeight: '1',
             next: 'ASYNC_SCRIPT',
-            nextWeight: '8',
+            nextWeight: '7',
           },
         },
         {
           messageId: 'wrongOrder',
           data: {
             current: 'ASYNC_SCRIPT',
-            currentWeight: '8',
+            currentWeight: '7',
             next: 'META',
-            nextWeight: '11',
+            nextWeight: '10',
           },
         },
       ],
@@ -145,9 +150,9 @@ ruleTester.run('require-order', rule, {
           messageId: 'wrongOrder',
           data: {
             current: 'PRELOAD',
-            currentWeight: '4',
+            currentWeight: '3',
             next: 'ASYNC_SCRIPT',
-            nextWeight: '8',
+            nextWeight: '7',
           },
         },
       ],
@@ -165,9 +170,9 @@ ruleTester.run('require-order', rule, {
           messageId: 'wrongOrder',
           data: {
             current: 'DEFER_SCRIPT',
-            currentWeight: '3',
+            currentWeight: '2',
             next: 'PRECONNECT',
-            nextWeight: '9',
+            nextWeight: '8',
           },
         },
       ],
@@ -185,9 +190,9 @@ ruleTester.run('require-order', rule, {
           messageId: 'wrongOrder',
           data: {
             current: 'SYNC_SCRIPT',
-            currentWeight: '6',
+            currentWeight: '5',
             next: 'META',
-            nextWeight: '11',
+            nextWeight: '10',
           },
         },
       ],
@@ -208,9 +213,9 @@ ruleTester.run('require-order', rule, {
           messageId: 'wrongOrder',
           data: {
             current: 'DEFER_SCRIPT',
-            currentWeight: '3',
+            currentWeight: '2',
             next: 'META',
-            nextWeight: '11',
+            nextWeight: '10',
           },
         },
       ],
@@ -232,27 +237,27 @@ ruleTester.run('require-order', rule, {
           messageId: 'wrongOrder',
           data: {
             current: 'SYNC_STYLES',
-            currentWeight: '5',
+            currentWeight: '4',
             next: 'TITLE',
-            nextWeight: '10',
+            nextWeight: '9',
           },
         },
         {
           messageId: 'wrongOrder',
           data: {
             current: 'TITLE',
-            currentWeight: '10',
+            currentWeight: '9',
             next: 'META',
-            nextWeight: '11',
+            nextWeight: '10',
           },
         },
         {
           messageId: 'wrongOrder',
           data: {
             current: 'ASYNC_SCRIPT',
-            currentWeight: '8',
+            currentWeight: '7',
             next: 'META',
-            nextWeight: '11',
+            nextWeight: '10',
           },
         },
       ],

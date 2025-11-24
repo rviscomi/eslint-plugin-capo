@@ -3,6 +3,8 @@
  * Ensures at most one <base> element exists in the <head>
  */
 
+import { getFindingsForRule, removeNodeWithWhitespace } from '../utils/capo-analyzer.js';
+
 export default {
   meta: {
     type: 'problem',
@@ -10,67 +12,40 @@ export default {
       description: 'Disallow multiple base elements in the head',
       category: 'Best Practices',
       recommended: true,
+      url: 'https://github.com/rviscomi/eslint-plugin-capo#no-duplicate-base',
     },
     messages: {
-      duplicateBase: 'Expected at most 1 <base> element, found {{count}}',
-      removeDuplicate: 'Remove this duplicate <base> element',
+      duplicateBase: '{{message}}',
+      removeDuplicateBase: 'Remove duplicate base',
     },
-    schema: [],
     hasSuggestions: true,
+    schema: [],
+    fixable: 'code',
   },
 
   create(context) {
-    let baseCount = 0;
-
     return {
       'Tag[name="head"]'(node) {
-        // Reset counter for each head element
-        baseCount = 0;
-      },
+        const findings = getFindingsForRule(context, node, 'no-duplicate-base');
 
-      'Tag[parent.name="head"][name="base"]'(node) {
-        baseCount++;
-
-        if (baseCount > 1) {
+        findings.forEach((finding) => {
           context.report({
-            node,
+            node: finding.node || node,
             messageId: 'duplicateBase',
             data: {
-              count: baseCount,
+              message: finding.message,
             },
+
             suggest: [
               {
-                messageId: 'removeDuplicate',
+                messageId: 'removeDuplicateBase',
                 fix(fixer) {
-                  // Remove this duplicate base element
-                  const sourceCode = context.sourceCode || context.getSourceCode();
-                  const text = sourceCode.getText();
-                  const nodeStart = node.range[0];
-                  const nodeEnd = node.range[1];
-
-                  // Find the start of the line (including indentation)
-                  let lineStart = nodeStart;
-                  while (lineStart > 0 && text[lineStart - 1] !== '\n') {
-                    lineStart--;
-                  }
-
-                  // Find the end including the newline
-                  let lineEnd = nodeEnd;
-                  if (text[lineEnd] === '\n') {
-                    lineEnd++;
-                  }
-
-                  return fixer.removeRange([lineStart, lineEnd]);
+                  return removeNodeWithWhitespace(fixer, context, finding.node);
                 },
               },
             ],
           });
-        }
-      },
-
-      'Tag[name="head"]:exit'(node) {
-        // Reset for next head
-        baseCount = 0;
+        });
       },
     };
   },

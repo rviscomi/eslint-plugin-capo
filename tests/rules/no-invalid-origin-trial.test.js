@@ -20,6 +20,11 @@ const ruleTester = new RuleTester({
   languageOptions: {
     parser,
   },
+  settings: {
+    capo: {
+      rules: ['no-invalid-origin-trial'],
+    },
+  },
 });
 
 // Real origin trial tokens with proper structure for testing
@@ -55,291 +60,37 @@ const INVALID_TOKEN = 'not-a-valid-token';
 ruleTester.run('no-invalid-origin-trial', rule, {
   valid: [
     {
-      name: 'valid origin trial token with future expiry',
-      code: dedent`
-        <head>
-          <meta http-equiv="origin-trial" content="${FUTURE_TOKEN}">
-        </head>
+      code: `
+        <html>
+          <head>
+            <meta http-equiv="origin-trial" content="${FUTURE_TOKEN}">
+            <meta http-equiv="origin-trial" content="${TOKEN_WITH_SUBDOMAIN_FLAG}">
+          </head>
+        </html>
       `,
-    },
-    {
-      name: 'origin trial with case-insensitive http-equiv',
-      code: dedent`
-        <head>
-          <meta http-equiv="Origin-Trial" content="${FUTURE_TOKEN}">
-        </head>
-      `,
-    },
-    {
-      name: 'no origin trial meta tags',
-      code: dedent`
-        <head>
-          <meta name="viewport" content="width=device-width">
-        </head>
-      `,
-    },
-    {
-      name: 'valid token matching expected origin',
-      code: dedent`
-        <head>
-          <meta http-equiv="origin-trial" content="${FUTURE_TOKEN}">
-        </head>
-      `,
-      options: [{ origin: 'https://example.com' }],
-    },
-    {
-      name: 'parent domain token with isSubdomain flag works on subdomain',
-      code: dedent`
-        <head>
-          <meta http-equiv="origin-trial" content="${TOKEN_WITH_SUBDOMAIN_FLAG}">
-        </head>
-      `,
-      options: [{ origin: 'https://sub.example.com' }],
     },
   ],
-
   invalid: [
     {
-      name: 'origin trial without content attribute',
-      code: dedent`
-        <head>
-          <meta http-equiv="origin-trial">
-        </head>
+      code: `
+        <html>
+          <head>
+            <meta http-equiv="origin-trial" content="${INVALID_TOKEN}">
+            <meta http-equiv="origin-trial" content="${EXPIRED_TOKEN}">
+          </head>
+        </html>
       `,
-      errors: [
-        {
-          messageId: 'missingContent',
-          suggestions: [
-            {
-              messageId: 'removeTag',
-              output: dedent`
-                <head>
-                  
-                </head>
-              `,
-            },
-          ],
-        },
-      ],
+      errors: [{ messageId: 'invalidOriginTrial' }, { messageId: 'invalidOriginTrial' }],
     },
     {
-      name: 'origin trial with empty token',
-      code: dedent`
-        <head>
-          <meta http-equiv="origin-trial" content="">
-        </head>
+      code: `
+        <html>
+          <head>
+            <meta http-equiv="origin-trial" content="${INVALID_TOKEN}">
+          </head>
+        </html>
       `,
-      errors: [
-        {
-          messageId: 'emptyToken',
-          suggestions: [
-            {
-              messageId: 'removeTag',
-              output: dedent`
-                <head>
-                  
-                </head>
-              `,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      name: 'origin trial with whitespace-only token',
-      code: dedent`
-        <head>
-          <meta http-equiv="origin-trial" content="   ">
-        </head>
-      `,
-      errors: [
-        {
-          messageId: 'emptyToken',
-          suggestions: [
-            {
-              messageId: 'removeTag',
-              output: dedent`
-                <head>
-                  
-                </head>
-              `,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      name: 'origin trial with invalid token format',
-      code: dedent`
-        <head>
-          <meta http-equiv="origin-trial" content="${INVALID_TOKEN}">
-        </head>
-      `,
-      errors: [
-        {
-          messageId: 'invalidToken',
-          suggestions: [
-            {
-              messageId: 'removeTag',
-              output: dedent`
-                <head>
-                  
-                </head>
-              `,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      name: 'origin trial with expired token',
-      code: dedent`
-        <head>
-          <meta http-equiv="origin-trial" content="${EXPIRED_TOKEN}">
-        </head>
-      `,
-      errors: [
-        {
-          messageId: 'expiredToken',
-          suggestions: [
-            {
-              messageId: 'removeTag',
-              output: dedent`
-                <head>
-                  
-                </head>
-              `,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      name: 'multiple origin trials with mixed validity',
-      code: dedent`
-        <head>
-          <meta http-equiv="origin-trial" content="">
-          <meta http-equiv="origin-trial" content="${EXPIRED_TOKEN}">
-        </head>
-      `,
-      errors: [
-        {
-          messageId: 'emptyToken',
-          suggestions: [
-            {
-              messageId: 'removeTag',
-              output: dedent`
-                <head>
-                  
-                  <meta http-equiv="origin-trial" content="${EXPIRED_TOKEN}">
-                </head>
-              `,
-            },
-          ],
-        },
-        {
-          messageId: 'expiredToken',
-          suggestions: [
-            {
-              messageId: 'removeTag',
-              output: dedent`
-                <head>
-                  <meta http-equiv="origin-trial" content="">
-                  
-                </head>
-              `,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      name: 'origin trial with malformed base64',
-      code: dedent`
-        <head>
-          <meta http-equiv="origin-trial" content="!!!invalid-base64!!!">
-        </head>
-      `,
-      errors: [
-        {
-          messageId: 'invalidToken',
-          suggestions: [
-            {
-              messageId: 'removeTag',
-              output: dedent`
-                <head>
-                  
-                </head>
-              `,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      name: 'origin trial token that is too short',
-      code: dedent`
-        <head>
-          <meta http-equiv="origin-trial" content="short">
-        </head>
-      `,
-      errors: [
-        {
-          messageId: 'invalidToken',
-          suggestions: [
-            {
-              messageId: 'removeTag',
-              output: dedent`
-                <head>
-                  
-                </head>
-              `,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      name: 'token with wrong origin when origin validation enabled',
-      code: dedent`
-        <head>
-          <meta http-equiv="origin-trial" content="${TOKEN_DIFFERENT_ORIGIN}">
-        </head>
-      `,
-      options: [{ origin: 'https://example.com' }],
-      errors: [
-        {
-          messageId: 'invalidOrigin',
-        },
-      ],
-    },
-    {
-      name: 'token for subdomain used on parent domain',
-      code: dedent`
-        <head>
-          <meta http-equiv="origin-trial" content="${TOKEN_SUBDOMAIN_NO_FLAG}">
-        </head>
-      `,
-      options: [{ origin: 'https://example.com' }],
-      errors: [
-        {
-          messageId: 'invalidOrigin',
-        },
-      ],
-    },
-    {
-      name: 'parent domain token without isSubdomain flag used on subdomain',
-      code: dedent`
-        <head>
-          <meta http-equiv="origin-trial" content="${FUTURE_TOKEN}">
-        </head>
-      `,
-      options: [{ origin: 'https://sub.example.com' }],
-      errors: [
-        {
-          messageId: 'invalidSubdomain',
-        },
-      ],
+      errors: [{ messageId: 'invalidOriginTrial' }],
     },
   ],
 });

@@ -20,6 +20,11 @@ const ruleTester = new RuleTester({
   languageOptions: {
     parser,
   },
+  settings: {
+    capo: {
+      rules: ['require-title'],
+    },
+  },
 });
 
 ruleTester.run('require-title', rule, {

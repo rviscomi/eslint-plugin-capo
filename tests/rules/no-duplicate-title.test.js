@@ -20,6 +20,11 @@ const ruleTester = new RuleTester({
   languageOptions: {
     parser,
   },
+  settings: {
+    capo: {
+      rules: ['no-duplicate-title'],
+    },
+  },
 });
 
 ruleTester.run('no-duplicate-title', rule, {

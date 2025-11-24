@@ -20,6 +20,11 @@ const ruleTester = new RuleTester({
   languageOptions: {
     parser,
   },
+  settings: {
+    capo: {
+      rules: ['require-meta-viewport'],
+    },
+  },
 });
 
 ruleTester.run('require-meta-viewport', rule, {

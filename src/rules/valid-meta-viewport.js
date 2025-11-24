@@ -1,9 +1,4 @@
-/**
- * Rule: valid-meta-viewport
- * Validates meta viewport configuration
- */
-
-import { isMetaViewport, validateMetaViewport, getAttributeValue } from '../utils/validation-helpers.js';
+import { getFindingsForRule, removeNodeWithWhitespace } from '../utils/capo-analyzer.js';
 
 export default {
   meta: {
@@ -15,116 +10,40 @@ export default {
     },
     messages: {
       invalidViewport: '{{message}}',
-      removeUserScalable: 'Remove "user-scalable=no" to allow zooming',
-      removeMaximumScale: 'Remove "maximum-scale" to allow zooming',
+      fixViewport: 'Fix viewport configuration',
     },
-    schema: [],
     hasSuggestions: true,
+    schema: [],
+    fixable: 'code',
   },
 
   create(context) {
-    let firstViewportSeen = false;
-
     return {
       'Tag[name="head"]'(node) {
-        // Reset for each head element
-        firstViewportSeen = false;
-      },
+        const findings = getFindingsForRule(context, node, 'valid-meta-viewport');
 
-      'Tag[parent.name="head"][name="meta"]'(node) {
-        if (isMetaViewport(node)) {
-          // Check for redundant viewport
-          if (firstViewportSeen) {
-            context.report({
-              node,
-              messageId: 'invalidViewport',
-              data: {
-                message:
-                  'Another meta viewport element has already been declared. Having multiple viewport settings can lead to unexpected behavior.',
+        findings.forEach((finding) => {
+          context.report({
+            node: finding.node,
+            messageId: 'invalidViewport',
+            data: {
+              message: finding.message,
+            },
+            suggest: [
+              {
+                messageId: 'fixViewport',
+                fix(fixer) {
+                  if (finding.suggestion === 'remove') {
+                    return removeNodeWithWhitespace(fixer, context, finding.node);
+                  }
+                  // Replace the problematic viewport meta tag with a valid one
+                  const validMetaViewport = '<meta name="viewport" content="width=device-width, initial-scale=1">';
+                  return fixer.replaceText(finding.node, validMetaViewport);
+                },
               },
-            });
-            return;
-          }
-
-          firstViewportSeen = true;
-
-          // Validate the viewport configuration
-          const warnings = validateMetaViewport(node);
-
-          warnings.forEach((warning) => {
-            const content = getAttributeValue(node, 'content');
-            const report = {
-              node,
-              messageId: 'invalidViewport',
-              data: {
-                message: warning,
-              },
-            };
-
-            // Add suggestions for common accessibility issues
-            if (content) {
-              const suggestions = [];
-              const contentLower = content.toLowerCase();
-
-              // Suggest removing user-scalable=no
-              if (contentLower.includes('user-scalable=no') || contentLower.includes('user-scalable=0')) {
-                const contentAttr = node.attributes?.find((attr) => {
-                  const keyName = attr.key?.value || attr.key?.name;
-                  return keyName?.toLowerCase() === 'content';
-                });
-
-                if (contentAttr && contentAttr.value) {
-                  suggestions.push({
-                    messageId: 'removeUserScalable',
-                    fix(fixer) {
-                      // Remove user-scalable=no and any surrounding commas/spaces
-                      let newContent = content
-                        .replace(/,?\s*user-scalable\s*=\s*(no|0)\s*,?/gi, '')
-                        .replace(/,\s*,/g, ',') // Remove double commas
-                        .replace(/^,\s*|,\s*$/g, '') // Remove leading/trailing commas
-                        .trim();
-                      return fixer.replaceTextRange(contentAttr.value.range, newContent);
-                    },
-                  });
-                }
-              }
-
-              // Suggest removing maximum-scale
-              if (contentLower.includes('maximum-scale')) {
-                const contentAttr = node.attributes?.find((attr) => {
-                  const keyName = attr.key?.value || attr.key?.name;
-                  return keyName?.toLowerCase() === 'content';
-                });
-
-                if (contentAttr && contentAttr.value) {
-                  suggestions.push({
-                    messageId: 'removeMaximumScale',
-                    fix(fixer) {
-                      // Remove maximum-scale and any surrounding commas/spaces
-                      let newContent = content
-                        .replace(/,?\s*maximum-scale\s*=\s*[\d.]+\s*,?/gi, '')
-                        .replace(/,\s*,/g, ',')
-                        .replace(/^,\s*|,\s*$/g, '')
-                        .trim();
-                      return fixer.replaceTextRange(contentAttr.value.range, newContent);
-                    },
-                  });
-                }
-              }
-
-              if (suggestions.length > 0) {
-                report.suggest = suggestions;
-              }
-            }
-
-            context.report(report);
+            ],
           });
-        }
-      },
-
-      'Tag[name="head"]:exit'() {
-        // Reset for next head
-        firstViewportSeen = false;
+        });
       },
     };
   },

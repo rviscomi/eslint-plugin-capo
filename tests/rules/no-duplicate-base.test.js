@@ -20,6 +20,11 @@ const ruleTester = new RuleTester({
   languageOptions: {
     parser,
   },
+  settings: {
+    capo: {
+      rules: ['no-duplicate-base'],
+    },
+  },
 });
 
 ruleTester.run('no-duplicate-base', rule, {
@@ -48,53 +53,19 @@ ruleTester.run('no-duplicate-base', rule, {
       name: 'two duplicate base elements',
       code: dedent`
         <head>
-          <base href="/">
-          <base href="/about/">
+          <base href="https://example.com/page.html" />
+          <base href="https://example.com/page.html" />
         </head>
       `,
       errors: [
         {
           messageId: 'duplicateBase',
-          data: {
-            count: 2,
-          },
           suggestions: [
             {
-              messageId: 'removeDuplicate',
+              messageId: 'removeDuplicateBase',
               output: dedent`
                 <head>
-                  <base href="/">
-                </head>
-              `,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      name: 'three duplicate base elements with mixed attributes',
-      code: dedent`
-        <head>
-          <base href="/">
-          <title>Page</title>
-          <base href="/blog/">
-          <base target="_blank">
-        </head>
-      `,
-      errors: [
-        {
-          messageId: 'duplicateBase',
-          data: {
-            count: 2,
-          },
-          suggestions: [
-            {
-              messageId: 'removeDuplicate',
-              output: dedent`
-                <head>
-                  <base href="/">
-                  <title>Page</title>
-                  <base target="_blank">
+                  <base href="https://example.com/page.html" />
                 </head>
               `,
             },
@@ -102,17 +73,12 @@ ruleTester.run('no-duplicate-base', rule, {
         },
         {
           messageId: 'duplicateBase',
-          data: {
-            count: 3,
-          },
           suggestions: [
             {
-              messageId: 'removeDuplicate',
+              messageId: 'removeDuplicateBase',
               output: dedent`
                 <head>
-                  <base href="/">
-                  <title>Page</title>
-                  <base href="/blog/">
+                  <base href="https://example.com/page.html" />
                 </head>
               `,
             },

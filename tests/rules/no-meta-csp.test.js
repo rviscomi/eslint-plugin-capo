@@ -20,6 +20,11 @@ const ruleTester = new RuleTester({
   languageOptions: {
     parser,
   },
+  settings: {
+    capo: {
+      rules: ['no-meta-csp'],
+    },
+  },
 });
 
 ruleTester.run('no-meta-csp', rule, {
@@ -56,10 +61,9 @@ ruleTester.run('no-meta-csp', rule, {
           messageId: 'metaCSP',
           suggestions: [
             {
-              messageId: 'removeTag',
+              messageId: 'removeMetaCSP',
               output: dedent`
                 <head>
-                  
                 </head>
               `,
             },
@@ -79,10 +83,9 @@ ruleTester.run('no-meta-csp', rule, {
           messageId: 'metaCSP',
           suggestions: [
             {
-              messageId: 'removeTag',
+              messageId: 'removeMetaCSP',
               output: dedent`
                 <head>
-                  
                 </head>
               `,
             },
@@ -102,10 +105,9 @@ ruleTester.run('no-meta-csp', rule, {
           messageId: 'metaCSP',
           suggestions: [
             {
-              messageId: 'removeTag',
+              messageId: 'removeMetaCSP',
               output: dedent`
                 <head>
-                  
                 </head>
               `,
             },

@@ -3,46 +3,34 @@
  * Ensures at least one <title> element exists in the <head>
  */
 
+import { getFindingsForRule } from '../utils/capo-analyzer.js';
+
 export default {
   meta: {
     type: 'problem',
     docs: {
-      description: 'Require a title element in the head',
+      description: 'Require title tag in head.',
       category: 'Best Practices',
       recommended: true,
+      url: 'https://github.com/rviscomi/eslint-plugin-capo#require-title',
     },
     messages: {
-      missingTitle: 'The <head> element must contain a <title> element',
+      requireTitle: '{{message}}',
+      missingTitle: 'Expected at least 1 <title> element, found 0',
     },
-    schema: [],
   },
 
   create(context) {
-    let titleCount = 0;
-    let headNode = null;
-
     return {
       'Tag[name="head"]'(node) {
-        // Reset counter for each head element
-        titleCount = 0;
-        headNode = node;
-      },
+        const findings = getFindingsForRule(context, node, 'require-title');
 
-      'Tag[parent.name="head"][name="title"]'() {
-        titleCount++;
-      },
-
-      'Tag[name="head"]:exit'(node) {
-        if (titleCount === 0) {
+        findings.forEach((finding) => {
           context.report({
-            node: headNode?.openStart || headNode || node,
+            node,
             messageId: 'missingTitle',
           });
-        }
-
-        // Reset for next head
-        titleCount = 0;
-        headNode = null;
+        });
       },
     };
   },

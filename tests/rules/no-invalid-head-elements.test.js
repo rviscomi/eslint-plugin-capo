@@ -20,6 +20,11 @@ const ruleTester = new RuleTester({
   languageOptions: {
     parser,
   },
+  settings: {
+    capo: {
+      rules: ['no-invalid-head-elements'],
+    },
+  },
 });
 
 ruleTester.run('no-invalid-head-elements', rule, {
@@ -166,7 +171,7 @@ ruleTester.run('no-invalid-head-elements', rule, {
           suggestions: [
             {
               messageId: 'removeElement',
-              output: '</head>',
+              output: '<head></head>',
             },
           ],
         },
