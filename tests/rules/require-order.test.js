@@ -86,6 +86,12 @@ ruleTester.run('require-order', rule, {
           },
         },
       ],
+      output: dedent`
+        <head>
+          <meta charset="utf-8">
+          <title>Title First</title>
+        </head>
+      `,
     },
     {
       name: 'defer script before preconnect',
@@ -106,6 +112,12 @@ ruleTester.run('require-order', rule, {
           },
         },
       ],
+      output: dedent`
+        <head>
+          <link rel="preconnect" href="https://api.example.com">
+          <script defer src="app.js"></script>
+        </head>
+      `,
     },
     {
       name: 'prefetch before async script before meta',
@@ -136,6 +148,13 @@ ruleTester.run('require-order', rule, {
           },
         },
       ],
+      output: dedent`
+        <head>
+          <meta charset="utf-8">
+          <script async src="analytics.js"></script>
+          <link rel="prefetch" href="next.html">
+        </head>
+      `,
     },
     {
       name: 'preload before async script',
@@ -156,6 +175,12 @@ ruleTester.run('require-order', rule, {
           },
         },
       ],
+      output: dedent`
+        <head>
+          <script async src="analytics.js"></script>
+          <link rel="preload" href="font.woff2" as="font">
+        </head>
+      `,
     },
     {
       name: 'module script before preconnect',
@@ -176,6 +201,12 @@ ruleTester.run('require-order', rule, {
           },
         },
       ],
+      output: dedent`
+        <head>
+          <link rel="preconnect" href="https://example.com">
+          <script type="module" src="module.js"></script>
+        </head>
+      `,
     },
     {
       name: 'inline script before meta',
@@ -196,6 +227,12 @@ ruleTester.run('require-order', rule, {
           },
         },
       ],
+      output: dedent`
+        <head>
+          <meta charset="utf-8">
+          <script>console.log('inline');</script>
+        </head>
+      `,
     },
     {
       name: 'complex head with multiple issues',
@@ -219,6 +256,15 @@ ruleTester.run('require-order', rule, {
           },
         },
       ],
+      output: dedent`
+        <head>
+          <base href="/">
+          <meta name="viewport" content="width=device-width">
+          <title>Page</title>
+          <link rel="stylesheet" href="styles.css">
+          <script defer src="app.js"></script>
+        </head>
+      `,
     },
     {
       name: 'very complex head with many issues',
@@ -261,6 +307,84 @@ ruleTester.run('require-order', rule, {
           },
         },
       ],
+      output: dedent`
+        <head>
+          <meta name="viewport" content="width=device-width">
+          <meta charset="utf-8">
+          <title>Late Title</title>
+          <link rel="preconnect" href="https://example.com">
+          <script async src="async.js"></script>
+          <link rel="stylesheet" href="1.css">
+        </head>
+      `,
+    },
+    {
+      name: 'with comments',
+      code: dedent`
+        <head>
+          <!-- Comment for title -->
+          <title>Title</title>
+          <!-- Comment for meta -->
+          <meta charset="utf-8">
+        </head>
+      `,
+      errors: [
+        {
+          messageId: 'wrongOrder',
+          data: {
+            current: 'TITLE',
+            currentWeight: '9',
+            next: 'META',
+            nextWeight: '10',
+          },
+        },
+      ],
+      output: dedent`
+        <head>
+          <!-- Comment for meta -->
+          <meta charset="utf-8">
+          <!-- Comment for title -->
+          <title>Title</title>
+        </head>
+      `,
+    },
+    {
+      name: 'with multiline and multiple comments',
+      code: dedent`
+        <head>
+          <!--
+            Multiline comment
+            for title
+          -->
+          <title>Title</title>
+          <!-- Comment 1 -->
+          <!-- Comment 2 -->
+          <meta charset="utf-8">
+        </head>
+      `,
+      errors: [
+        {
+          messageId: 'wrongOrder',
+          data: {
+            current: 'TITLE',
+            currentWeight: '9',
+            next: 'META',
+            nextWeight: '10',
+          },
+        },
+      ],
+      output: dedent`
+        <head>
+          <!-- Comment 1 -->
+          <!-- Comment 2 -->
+          <meta charset="utf-8">
+          <!--
+            Multiline comment
+            for title
+          -->
+          <title>Title</title>
+        </head>
+      `,
     },
   ],
 });

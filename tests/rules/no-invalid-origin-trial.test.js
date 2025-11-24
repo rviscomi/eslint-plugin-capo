@@ -81,6 +81,13 @@ ruleTester.run('no-invalid-origin-trial', rule, {
         </html>
       `,
       errors: [{ messageId: 'invalidOriginTrial' }, { messageId: 'invalidOriginTrial' }],
+      output: `
+        <html>
+          <head>
+            <meta http-equiv="origin-trial" content="${EXPIRED_TOKEN}">
+          </head>
+        </html>
+      `,
     },
     {
       code: `
@@ -91,6 +98,12 @@ ruleTester.run('no-invalid-origin-trial', rule, {
         </html>
       `,
       errors: [{ messageId: 'invalidOriginTrial' }],
+      output: `
+        <html>
+          <head>
+          </head>
+        </html>
+      `,
     },
   ],
 });

@@ -92,7 +92,7 @@ export function mapFindingsToRule(analysis, ruleId) {
 
 const analysisCache = new WeakMap();
 
-function analyzeHead(context, headNode) {
+export function analyzeHead(context, headNode) {
   if (analysisCache.has(headNode)) {
     return analysisCache.get(headNode);
   }
@@ -102,13 +102,11 @@ function analyzeHead(context, headNode) {
   return analysis;
 }
 
-function getFindingsForRule(context, headNode, rule) {
+export function getFindingsForRule(context, headNode, rule) {
   const analysis = analyzeHead(context, headNode);
   const findings = mapFindingsToRule(analysis, rule);
   return findings;
 }
-
-export { getFindingsForRule };
 
 /**
  * Helper to remove a node including its surrounding whitespace
