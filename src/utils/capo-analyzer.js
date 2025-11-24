@@ -6,7 +6,6 @@
 import { analyzeHead as analyzeHeadCore, checkOrdering } from '@rviscomi/capo.js';
 import { HtmlEslintAdapter } from '../adapters/html-eslint-adapter.js';
 
-const analysisCache = new Map();
 // Create a singleton adapter instance - it's stateless
 const adapter = new HtmlEslintAdapter();
 
@@ -91,16 +90,17 @@ export function mapFindingsToRule(analysis, ruleId) {
   return findings;
 }
 
-const analyzeHead = (() => {
-  const cache = new Map();
-  return (context, headNode) => {
-    // Call analyzeHead with correct signature: (headNode, adapter, options)
-    // Note: Caching disabled due to issues with ESLint RuleTester
-    // (suggestions' output code gets cached and pollutes subsequent test runs)
-    const analysis = analyzeHeadCore(headNode, adapter, context.settings.capo || {});
-    return analysis;
-  };
-})();
+const analysisCache = new WeakMap();
+
+function analyzeHead(context, headNode) {
+  if (analysisCache.has(headNode)) {
+    return analysisCache.get(headNode);
+  }
+
+  const analysis = analyzeHeadCore(headNode, adapter, context.settings.capo || {});
+  analysisCache.set(headNode, analysis);
+  return analysis;
+}
 
 function getFindingsForRule(context, headNode, rule) {
   const analysis = analyzeHead(context, headNode);
