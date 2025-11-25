@@ -3,7 +3,7 @@
  * Ensures only valid elements are used in the <head>
  */
 
-import { getFindingsForRule, removeNodeWithWhitespace } from '../utils/capo-analyzer.js';
+import { getFindingsForRule, removeNodeWithWhitespace } from '../analyzer.js';
 
 export default {
   meta: {

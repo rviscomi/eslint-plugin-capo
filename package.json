@@ -49,7 +49,7 @@
     "*.{js,md,json,html}": "prettier --write"
   },
   "dependencies": {
-    "@rviscomi/capo.js": "file:../capo.js"
+    "@rviscomi/capo.js": "beta"
   },
   "files": [
     "src",

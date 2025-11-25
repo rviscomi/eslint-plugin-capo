@@ -1,9 +1,4 @@
-/**
- * Rule: no-invalid-http-equiv
- * Validates http-equiv meta tags
- */
-
-import { getFindingsForRule, removeNodeWithWhitespace } from '../utils/capo-analyzer.js';
+import { getFindingsForRule, removeNodeWithWhitespace } from '../analyzer.js';
 
 export default {
   meta: {

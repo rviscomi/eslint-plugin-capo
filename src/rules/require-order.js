@@ -1,10 +1,4 @@
-/**
- * Rule: require-order
- * Validates that head elements are in optimal order based on capo.js rules
- * https://github.com/rviscomi/capo.js
- */
-
-import { getFindingsForRule, analyzeHead } from '../utils/capo-analyzer.js';
+import { getFindingsForRule, analyzeHead } from '../analyzer.js';
 
 export default {
   meta: {

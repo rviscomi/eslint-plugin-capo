@@ -3,7 +3,7 @@
  * Disallows CSP meta tags (recommends using HTTP headers instead)
  */
 
-import { getFindingsForRule, removeNodeWithWhitespace } from '../utils/capo-analyzer.js';
+import { getFindingsForRule, removeNodeWithWhitespace } from '../analyzer.js';
 
 export default {
   meta: {

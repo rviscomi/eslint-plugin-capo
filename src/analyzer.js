@@ -4,7 +4,7 @@
  */
 
 import { analyzeHead as analyzeHeadCore, checkOrdering } from '@rviscomi/capo.js';
-import { HtmlEslintAdapter } from '../adapters/html-eslint-adapter.js';
+import { HtmlEslintAdapter } from './adapters/html-eslint-adapter.js';
 
 // Create a singleton adapter instance - it's stateless
 const adapter = new HtmlEslintAdapter();

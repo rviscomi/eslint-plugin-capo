@@ -3,7 +3,7 @@
  * Discourages use of default-style meta tag
  */
 
-import { getFindingsForRule } from '../utils/capo-analyzer.js';
+import { getFindingsForRule } from '../analyzer.js';
 
 export default {
   meta: {

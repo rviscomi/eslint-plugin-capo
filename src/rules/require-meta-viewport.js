@@ -3,7 +3,7 @@
  * Ensures a meta viewport element exists in the <head>
  */
 
-import { getFindingsForRule } from '../utils/capo-analyzer.js';
+import { getFindingsForRule } from '../analyzer.js';
 
 export default {
   meta: {
