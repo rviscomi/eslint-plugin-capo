@@ -4,6 +4,7 @@
  * https://github.com/rviscomi/capo.js
  */
 
+import pkg from '../package.json' with { type: 'json' };
 import noDefaultStyle from './rules/no-default-style.js';
 import noDuplicateBase from './rules/no-duplicate-base.js';
 import noDuplicateTitle from './rules/no-duplicate-title.js';
@@ -99,7 +100,7 @@ const configs = {
 const plugin = {
   meta: {
     name: 'eslint-plugin-capo',
-    version: '0.1.0',
+    version: pkg.version,
   },
   rules,
   configs,
