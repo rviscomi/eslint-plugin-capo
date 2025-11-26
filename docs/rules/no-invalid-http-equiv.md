@@ -17,7 +17,7 @@ Common issues include:
 - Using deprecated IE-specific values like `X-UA-Compatible`
 - Using values better suited for HTTP headers (e.g., `Cache-Control`, `Expires`)
 
-## Rule Details
+## Rule details
 
 This rule warns when it detects invalid, deprecated, or misused `http-equiv` values in meta tags.
 
@@ -84,12 +84,12 @@ Valid `http-equiv` values (when needed):
 </html>
 ```
 
-## When Not to Use It
+## When not to use it
 
 You might disable this rule if you're maintaining legacy code that requires specific deprecated meta tags for compatibility with older browsers.
 
-## Prior Art
+## Prior art
 
 - [MDN - http-equiv](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta#http-equiv)
 - [WHATWG HTML Standard - Pragma directives](https://html.spec.whatwg.org/multipage/semantics.html#pragma-directives)
-- [capo.js validation rules](https://github.com/rviscomi/capo.js)
+- [Rick Viscomi - You probably don't need http-equiv meta tags](https://rviscomi.dev/2023/07/you-probably-dont-need-http-equiv-meta-tags/)

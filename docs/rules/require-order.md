@@ -20,7 +20,7 @@ Based on research from [capo.js](https://github.com/rviscomi/capo.js), elements 
 10. **Prefetch/Prerender** (weight 1): Low-priority hints
 11. **Other** (weight 0): Everything else
 
-## Rule Details
+## Rule details
 
 This rule warns when head elements are not in optimal order according to the weight hierarchy. Elements with higher weights should appear before elements with lower weights.
 
@@ -72,7 +72,7 @@ Examples of **incorrect** code:
 Examples of **correct** code:
 
 ```html
-<!-- eslint capo/head-element-order: "warn" -->
+<!-- eslint capo/require-order: "warn" -->
 
 <!DOCTYPE html>
 <html>
@@ -108,7 +108,7 @@ Examples of **correct** code:
 </html>
 ```
 
-## Element Weight Reference
+## Element weight reference
 
 | Weight | Element Type       | Examples                                                                                                                      |
 | ------ | ------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
@@ -124,7 +124,7 @@ Examples of **correct** code:
 | 1      | PREFETCH_PRERENDER | `<link rel="prefetch">`, `<link rel="prerender">`                                                                             |
 | 0      | OTHER              | All other elements                                                                                                            |
 
-## Performance Impact
+## Performance impact
 
 Proper element ordering provides several benefits:
 
@@ -134,7 +134,7 @@ Proper element ordering provides several benefits:
 - **Optimized Critical Path**: Render-blocking resources load in correct order
 - **Better User Experience**: Content appears faster and more smoothly
 
-## When Not to Use It
+## When not to use it
 
 This rule is advisory and may be noisy for existing projects. You might disable it if:
 
@@ -145,8 +145,7 @@ This rule is advisory and may be noisy for existing projects. You might disable 
 
 However, following these ordering guidelines can provide measurable performance improvements.
 
-## Prior Art
+## Prior art
 
-- [capo.js - Get your `<head>` in order](https://github.com/rviscomi/capo.js)
-- [Harry Roberts - CSS Wizardry - The Importance of `@import`](https://csswizardry.com/2018/11/css-and-network-performance/)
+- [Harry Roberts - CSS Wizardry - CSS and Network Performance](https://csswizardry.com/2018/11/css-and-network-performance/)
 - [MDN - Optimizing your pages for speculative parsing](https://developer.mozilla.org/en-US/docs/Web/HTML/Optimizing_your_pages_for_speculative_parsing)

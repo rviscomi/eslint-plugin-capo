@@ -16,7 +16,7 @@ The recommended approach is to use HTTP headers to set CSP instead:
 Content-Security-Policy: default-src 'self'
 ```
 
-## Rule Details
+## Rule details
 
 This rule warns when it detects `<meta>` tags with `http-equiv="Content-Security-Policy"`.
 
@@ -55,7 +55,7 @@ Examples of **correct** code:
 </html>
 ```
 
-## When Not to Use It
+## When not to use it
 
 You might disable this rule if:
 
@@ -65,8 +65,7 @@ You might disable this rule if:
 
 However, in most cases, it's recommended to use HTTP headers for CSP.
 
-## Prior Art
+## Prior art
 
 - [Chrome Bug #1458493 - CSP meta tags disable preload scanner](https://crbug.com/1458493)
 - [MDN - Content-Security-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy)
-- [capo.js validation rules](https://github.com/rviscomi/capo.js)

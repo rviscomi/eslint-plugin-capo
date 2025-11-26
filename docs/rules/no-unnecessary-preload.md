@@ -13,7 +13,7 @@ Preloading resources that are already discoverable by other elements in the `<he
 - They consume bandwidth without providing any performance benefit
 - They add unnecessary complexity to your HTML
 
-## When Preload is Useful
+## When preload is useful
 
 Preload is beneficial for resources that are:
 
@@ -21,7 +21,7 @@ Preload is beneficial for resources that are:
 - **Dynamically loaded**: Injected by JavaScript at runtime
 - **Critical but hidden**: Important resources not immediately visible in the HTML
 
-## When Preload is NOT Useful
+## When preload is not useful
 
 Preload should NOT be used for:
 
@@ -29,7 +29,7 @@ Preload should NOT be used for:
 - Stylesheets already referenced with `<link rel="stylesheet">` in the same document
 - Resources the browser can discover through its preload scanner
 
-## Rule Details
+## Rule details
 
 This rule warns when it detects a `<link rel="preload">` or `<link rel="modulepreload">` that references the same resource as a `<script>` or `<link rel="stylesheet">` element in the same `<head>`.
 
@@ -133,7 +133,7 @@ Examples of **correct** code:
 </html>
 ```
 
-## When Not to Use It
+## When not to use it
 
 You might disable this rule if:
 
@@ -142,7 +142,7 @@ You might disable this rule if:
 
 However, in most cases, this rule helps prevent common performance anti-patterns.
 
-## Performance Impact
+## Performance impact
 
 Unnecessary preloads can:
 
@@ -150,13 +150,12 @@ Unnecessary preloads can:
 - **Consume preload budget**: Browsers limit concurrent preload requests
 - **Delay other resources**: Unnecessary preloads compete with critical resources for bandwidth
 
-## Prior Art
+## Prior art
 
 - [MDN - Preloading content](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/preload)
 - [web.dev - Preload critical assets](https://web.dev/preload-critical-assets/)
-- [capo.js validation rules](https://github.com/rviscomi/capo.js)
 - [Resource Hints Spec](https://www.w3.org/TR/resource-hints/)
 
-## Related Rules
+## Related rules
 
 - `require-order` - Validates optimal ordering of head elements including preload hints

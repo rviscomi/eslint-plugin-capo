@@ -11,7 +11,7 @@ According to the HTML specification, a document must have exactly one `<title>` 
 - May confuse search engines and assistive technologies
 - Only the first title is typically used, making subsequent titles misleading
 
-## Rule Details
+## Rule details
 
 This rule warns when multiple `<title>` elements are found within the same `<head>` element.
 
@@ -50,10 +50,10 @@ Examples of **correct** code:
 </html>
 ```
 
-## When Not to Use It
+## When not to use it
 
 There is no valid reason to disable this rule as multiple title elements violate the HTML specification.
 
-## Prior Art
+## Prior art
 
 - [WHATWG HTML Standard - The title element](https://html.spec.whatwg.org/multipage/semantics.html#the-title-element)

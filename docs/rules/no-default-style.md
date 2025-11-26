@@ -11,7 +11,7 @@ The `default-style` meta tag (using `http-equiv="default-style"`) was designed t
 - Modern CSS features like `@media` queries, CSS custom properties, and `@layer` provide better alternatives
 - The feature is considered legacy and rarely used in modern web development
 
-## Rule Details
+## Rule details
 
 This rule warns when it detects a meta tag with `http-equiv="default-style"`.
 
@@ -66,12 +66,11 @@ Examples of **correct** code:
 </html>
 ```
 
-## When Not to Use It
+## When not to use it
 
 You might disable this rule if you're maintaining legacy code that relies on the `default-style` feature for alternate stylesheets. However, you should consider migrating to modern CSS approaches.
 
-## Prior Art
+## Prior art
 
 - [MDN - default-style](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta#http-equiv)
 - [WHATWG HTML Standard - Pragma directives](https://html.spec.whatwg.org/multipage/semantics.html#pragma-directives)
-- [capo.js validation rules](https://github.com/rviscomi/capo.js)

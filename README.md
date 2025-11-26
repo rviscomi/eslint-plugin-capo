@@ -2,15 +2,6 @@
 
 ESLint plugin to validate HTML `<head>` elements based on [capo.js](https://github.com/rviscomi/capo.js) validation rules. This plugin helps catch common issues with metadata, performance problems, accessibility concerns, and deprecated practices in HTML head sections.
 
-## Features
-
-- ✅ **Modern Flat Config Support** - Works with ESLint 9+ flat config format
-- 🚀 **Performance** - Detects CSP meta tags that disable the preload scanner and validates optimal element ordering
-- ♿ **Accessibility** - Validates viewport settings for proper zooming behavior
-- 📱 **Best Practices** - Catches deprecated and non-standard meta tags
-- 🎯 **Comprehensive** - Based on battle-tested capo.js validation rules
-- 📊 **Element Ordering** - Ensures head elements are in optimal order for performance
-
 ## Installation
 
 ```bash
@@ -19,9 +10,9 @@ npm install --save-dev eslint-plugin-capo @html-eslint/parser
 
 **Requirements:**
 
-- ESLint >= 8.0.0
-- Node.js >= 18.0.0
-- `@html-eslint/parser` for parsing HTML files
+- ESLint >= 8.21.0
+- Node.js >= 18.18.0
+- `@html-eslint/parser` >= 0.47.0
 
 ## Usage
 
@@ -44,31 +35,9 @@ export default [
 ];
 ```
 
-### With Vue
-
-```javascript
-import capo from 'eslint-plugin-capo';
-import vue from 'eslint-plugin-vue';
-
-export default [...vue.configs['flat/recommended'], capo.configs.recommended];
-```
-
-### With React/Next.js
-
-```javascript
-import capo from 'eslint-plugin-capo';
-import react from 'eslint-plugin-react';
-
-export default [
-  react.configs.flat.recommended,
-  {
-    files: ['**/head.tsx', '**/layout.tsx', '**/_document.tsx'],
-    ...capo.configs.recommended,
-  },
-];
-```
-
 ## Configuration Presets
+
+See the [rules documentation](docs/rules/README.md) for more information.
 
 ### `recommended` (Default)
 
@@ -80,45 +49,14 @@ import capo from 'eslint-plugin-capo';
 export default [capo.configs.recommended];
 ```
 
-### `strict`
+### Other presets
 
-All rules as errors:
+Besides than the recommended preset, there are other presets available:
 
-```javascript
-import capo from 'eslint-plugin-capo';
-
-export default [capo.configs.strict];
-```
-
-### `performance`
-
-Performance-focused rules only:
-
-```javascript
-import capo from 'eslint-plugin-capo';
-
-export default [capo.configs.performance];
-```
-
-### `accessibility`
-
-Accessibility-focused rules only:
-
-```javascript
-import capo from 'eslint-plugin-capo';
-
-export default [capo.configs.accessibility];
-```
-
-### `ordering`
-
-Element ordering validation only:
-
-```javascript
-import capo from 'eslint-plugin-capo';
-
-export default [capo.configs.ordering];
-```
+- `strict` - All rules as errors
+- `performance` - Performance-focused rules only
+- `accessibility` - Accessibility-focused rules only
+- `ordering` - Element ordering validation only
 
 ### Custom Configuration
 
@@ -148,7 +86,7 @@ export default [
 
 ## Background
 
-This plugin implements the validation rules from [capo.js](https://github.com/rviscomi/capo.js), a tool for determining the optimal order of elements in the HTML `<head>`. While capo.js focuses on ordering, this ESLint plugin focuses on validating that head elements are correct, accessible, and performant.
+This plugin implements the validation rules from [capo.js](https://github.com/rviscomi/capo.js), a tool for determining the optimal order of elements in the HTML `<head>`.
 
 ## Contributing
 

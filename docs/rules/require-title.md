@@ -13,7 +13,7 @@ The `<title>` element is essential for HTML documents as it:
 
 Every HTML document should have exactly one `<title>` element within the `<head>` section.
 
-## Rule Details
+## Rule details
 
 This rule warns when a `<head>` element is missing a `<title>` element.
 
@@ -51,11 +51,11 @@ Examples of **correct** code:
 </html>
 ```
 
-## When Not to Use It
+## When not to use it
 
 You should not disable this rule as the `<title>` element is essential for accessibility, SEO, and valid HTML. However, you might disable it for partial HTML fragments that are not complete documents.
 
-## Prior Art
+## Prior art
 
-- [htmlhint `title-require`](https://htmlhint.com/docs/user-guide/rules/title-require)
+- [htmlhint `title-require`](https://htmlhint.com/rules/title-require/)
 - [WHATWG HTML Standard - The title element](https://html.spec.whatwg.org/multipage/semantics.html#the-title-element)
