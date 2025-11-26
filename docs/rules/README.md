@@ -2,9 +2,9 @@
 
 This directory contains detailed documentation for each rule in eslint-plugin-capo.
 
-## Available Rules
+## Available rules
 
-### Validity Rules
+### Validity rules
 
 These rules catch common mistakes and invalid HTML in the `<head>` element:
 
@@ -15,7 +15,7 @@ These rules catch common mistakes and invalid HTML in the `<head>` element:
 - [valid-charset](./valid-charset.md) - Ensure proper UTF-8 character encoding is declared
 - [no-invalid-origin-trial](./no-invalid-origin-trial.md) - Disallow invalid or expired origin trial tokens
 
-### Performance Rules
+### Performance rules
 
 These rules help optimize page load performance:
 
@@ -24,20 +24,20 @@ These rules help optimize page load performance:
 - [no-unnecessary-preload](./no-unnecessary-preload.md) - Disallow preload links for resources already discoverable by other elements
 - [require-order](./require-order.md) - Validate that head elements are in optimal order for performance
 
-### Accessibility Rules
+### Accessibility rules
 
 These rules ensure your pages are accessible to all users:
 
 - [valid-meta-viewport](./valid-meta-viewport.md) - Ensure viewport meta tag is properly configured for accessibility
 - [require-meta-viewport](./require-meta-viewport.md) - Require a viewport meta tag in the head
 
-### Best Practices
+### Best practices
 
 These rules help you follow modern web standards:
 
 - [no-invalid-http-equiv](./no-invalid-http-equiv.md) - Disallow invalid or deprecated http-equiv meta tags
 
-## Rule Categories
+## Rule categories
 
 ### Recommended (✅)
 
@@ -49,11 +49,9 @@ These rules are enabled in the `recommended` configuration:
 - `no-duplicate-base`
 - `no-meta-csp`
 - `no-invalid-http-equiv`
-- `no-invalid-origin-trial`
 - `valid-meta-viewport`
 - `valid-charset`
 - `no-default-style`
-- `no-unnecessary-preload`
 - `require-meta-viewport`
 
 ### Optional
@@ -61,8 +59,10 @@ These rules are enabled in the `recommended` configuration:
 These rules are useful but not enabled by default:
 
 - `require-order` - Can be noisy for existing projects; enable explicitly if you want ordering validation
+- `no-invalid-origin-trial` - Validates origin trial tokens; requires configuration for origin validation
+- `no-unnecessary-preload` - Can be noisy; enable if you want to catch redundant preloads
 
-## Documentation Structure
+## Documentation structure
 
 Each rule documentation follows this structure:
 

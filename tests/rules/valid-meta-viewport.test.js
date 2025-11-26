@@ -20,6 +20,11 @@ const ruleTester = new RuleTester({
   languageOptions: {
     parser,
   },
+  settings: {
+    capo: {
+      rules: ['valid-meta-viewport'],
+    },
+  },
 });
 
 ruleTester.run('valid-meta-viewport', rule, {
@@ -63,10 +68,10 @@ ruleTester.run('valid-meta-viewport', rule, {
           messageId: 'invalidViewport',
           suggestions: [
             {
-              messageId: 'removeUserScalable',
+              messageId: 'fixViewport',
               output: dedent`
                 <head>
-                  <meta name="viewport" content="">
+                  <meta name="viewport" content="width=device-width, initial-scale=1">
                 </head>
               `,
             },
@@ -86,10 +91,10 @@ ruleTester.run('valid-meta-viewport', rule, {
           messageId: 'invalidViewport',
           suggestions: [
             {
-              messageId: 'removeUserScalable',
+              messageId: 'fixViewport',
               output: dedent`
                 <head>
-                  <meta name="viewport" content="width=device-width">
+                  <meta name="viewport" content="width=device-width, initial-scale=1">
                 </head>
               `,
             },
@@ -109,10 +114,10 @@ ruleTester.run('valid-meta-viewport', rule, {
           messageId: 'invalidViewport',
           suggestions: [
             {
-              messageId: 'removeMaximumScale',
+              messageId: 'fixViewport',
               output: dedent`
                 <head>
-                  <meta name="viewport" content="">
+                  <meta name="viewport" content="width=device-width, initial-scale=1">
                 </head>
               `,
             },
@@ -132,10 +137,10 @@ ruleTester.run('valid-meta-viewport', rule, {
           messageId: 'invalidViewport',
           suggestions: [
             {
-              messageId: 'removeMaximumScale',
+              messageId: 'fixViewport',
               output: dedent`
                 <head>
-                  <meta name="viewport" content="width=device-width">
+                  <meta name="viewport" content="width=device-width, initial-scale=1">
                 </head>
               `,
             },
@@ -155,18 +160,10 @@ ruleTester.run('valid-meta-viewport', rule, {
           messageId: 'invalidViewport',
           suggestions: [
             {
-              messageId: 'removeUserScalable',
+              messageId: 'fixViewport',
               output: dedent`
                 <head>
-                  <meta name="viewport" content="maximum-scale=1">
-                </head>
-              `,
-            },
-            {
-              messageId: 'removeMaximumScale',
-              output: dedent`
-                <head>
-                  <meta name="viewport" content="user-scalable=no">
+                  <meta name="viewport" content="width=device-width, initial-scale=1">
                 </head>
               `,
             },
@@ -176,18 +173,10 @@ ruleTester.run('valid-meta-viewport', rule, {
           messageId: 'invalidViewport',
           suggestions: [
             {
-              messageId: 'removeUserScalable',
+              messageId: 'fixViewport',
               output: dedent`
                 <head>
-                  <meta name="viewport" content="maximum-scale=1">
-                </head>
-              `,
-            },
-            {
-              messageId: 'removeMaximumScale',
-              output: dedent`
-                <head>
-                  <meta name="viewport" content="user-scalable=no">
+                  <meta name="viewport" content="width=device-width, initial-scale=1">
                 </head>
               `,
             },
@@ -206,6 +195,29 @@ ruleTester.run('valid-meta-viewport', rule, {
       errors: [
         {
           messageId: 'invalidViewport',
+          suggestions: [
+            {
+              messageId: 'fixViewport',
+              output: dedent`
+                <head>
+                  <meta name="viewport" content="width=device-width">
+                </head>
+              `,
+            },
+          ],
+        },
+        {
+          messageId: 'invalidViewport',
+          suggestions: [
+            {
+              messageId: 'fixViewport',
+              output: dedent`
+                <head>
+                  <meta name="viewport" content="width=device-width">
+                </head>
+              `,
+            },
+          ],
         },
       ],
     },

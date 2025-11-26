@@ -20,6 +20,11 @@ const ruleTester = new RuleTester({
   languageOptions: {
     parser,
   },
+  settings: {
+    capo: {
+      rules: ['no-default-style'],
+    },
+  },
 });
 
 ruleTester.run('no-default-style', rule, {

@@ -3,7 +3,7 @@
  * Validates character encoding declaration
  */
 
-import { isContentType, validateContentType, getAttributeValue } from '../utils/validation-helpers.js';
+import { getFindingsForRule, removeNodeWithWhitespace } from '../analyzer.js';
 
 export default {
   meta: {
@@ -15,77 +15,73 @@ export default {
     },
     messages: {
       invalidCharset: '{{message}}',
-      duplicateCharset: 'There can only be one meta-based character encoding declaration per document.',
-      fixToUtf8: 'Change charset to "utf-8"',
+      duplicateCharset: '{{message}}',
+      fixToUtf8: 'Fix character encoding to UTF-8',
+      removeCharset: 'Remove duplicate charset declaration',
     },
-    schema: [],
     hasSuggestions: true,
+    schema: [],
+    fixable: 'code',
   },
 
   create(context) {
-    let charsetCount = 0;
-
     return {
       'Tag[name="head"]'(node) {
-        // Reset counter for each head element
-        charsetCount = 0;
-      },
+        const findings = getFindingsForRule(context, node, 'valid-charset');
 
-      'Tag[parent.name="head"][name="meta"]'(node) {
-        if (isContentType(node)) {
-          charsetCount++;
+        // Group findings by node to handle multiple warnings for the same element
+        const findingsByNode = new Map();
+        findings.forEach((finding, index) => {
+          const isDuplicate =
+            finding.message && finding.message.includes('There can only be one meta-based character encoding');
 
-          if (charsetCount > 1) {
-            context.report({
-              node,
-              messageId: 'duplicateCharset',
-            });
+          if (!findingsByNode.has(finding.node)) {
+            findingsByNode.set(finding.node, { finding, index, isDuplicate });
+          } else {
+            // If we already have this node, prefer duplicate message over invalid
+            const existing = findingsByNode.get(finding.node);
+            if (isDuplicate && !existing.isDuplicate) {
+              findingsByNode.set(finding.node, { finding, index, isDuplicate });
+            }
+          }
+        });
+
+        // Report each unique node once
+        findingsByNode.forEach(({ finding, index, isDuplicate }) => {
+          // For duplicates, only report on 2nd+ occurrences (skip the first)
+          if (isDuplicate && index === 0) {
             return;
           }
 
-          const warnings = validateContentType(node);
-
-          warnings.forEach((warning) => {
-            const charset = getAttributeValue(node, 'charset');
-            const isWrongCharset = charset && charset.toLowerCase() !== 'utf-8';
-
-            const report = {
-              node,
-              messageId: 'invalidCharset',
-              data: {
-                message: warning,
-              },
-            };
-
-            // Add suggestion to fix charset if it's the wrong value
-            if (isWrongCharset) {
-              const charsetAttr = node.attributes?.find((attr) => {
-                const keyName = attr.key?.value;
-                return keyName?.toLowerCase() === 'charset';
-              });
-
-              if (charsetAttr && charsetAttr.value) {
-                report.suggest = [
+          context.report({
+            node: finding.node,
+            messageId: isDuplicate ? 'duplicateCharset' : 'invalidCharset',
+            data: {
+              message: finding.message,
+            },
+            suggest: isDuplicate
+              ? [
+                  {
+                    messageId: 'removeCharset',
+                    fix(fixer) {
+                      return removeNodeWithWhitespace(fixer, context, finding.node);
+                    },
+                  },
+                ]
+              : [
                   {
                     messageId: 'fixToUtf8',
                     fix(fixer) {
-                      // Replace just the value text (not including the quotes)
-                      const valueNode = charsetAttr.value;
-                      return fixer.replaceTextRange(valueNode.range, 'utf-8');
+                      // Try to fix the charset attribute to utf-8
+                      const sourceCode = context.getSourceCode();
+                      const text = sourceCode.getText(finding.node);
+                      const fixed = text.replace(/charset\s*=\s*["']?[^"'\s>]+["']?/gi, 'charset="utf-8"');
+                      return fixer.replaceText(finding.node, fixed);
                     },
                   },
-                ];
-              }
-            }
-
-            context.report(report);
+                ],
           });
-        }
-      },
-
-      'Tag[name="head"]:exit'(node) {
-        // Reset for next head
-        charsetCount = 0;
+        });
       },
     };
   },

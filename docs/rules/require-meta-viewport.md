@@ -20,7 +20,7 @@ The viewport meta tag tells the browser to use the device's actual screen width 
 
 This is considered a fundamental requirement for mobile-friendly websites.
 
-## Rule Details
+## Rule details
 
 This rule warns when a `<head>` element is missing a viewport meta tag.
 
@@ -60,7 +60,7 @@ Examples of **correct** code:
 </html>
 ```
 
-## When Not to Use It
+## When not to use it
 
 You might disable this rule if:
 
@@ -70,8 +70,7 @@ You might disable this rule if:
 
 However, for any standalone web page, the viewport meta tag is essential for proper mobile display.
 
-## Prior Art
+## Prior art
 
 - [MDN - Viewport meta tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Viewport_meta_tag)
-- [Google - Responsive Web Design Basics](https://developers.google.com/search/mobile-sites/mobile-seo/responsive-design)
 - [Web.dev - Responsive web design basics](https://web.dev/responsive-web-design-basics/)

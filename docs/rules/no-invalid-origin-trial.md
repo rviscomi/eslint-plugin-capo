@@ -44,7 +44,7 @@ This rule accepts an options object with the following properties:
 }
 ```
 
-## Rule Details
+## Rule details
 
 This rule checks `<meta http-equiv="origin-trial">` tags and reports errors for:
 
@@ -170,7 +170,7 @@ With origin validation:
 </html>
 ```
 
-## When Not to Use It
+## When not to use it
 
 You might disable this rule if:
 
@@ -178,7 +178,7 @@ You might disable this rule if:
 - Your tokens are generated dynamically at build time or runtime
 - You're working with a token registration/management system that handles expiration
 
-## How to Fix Violations
+## How to fix violations
 
 1. **Missing or empty token**: Add a valid origin trial token from the [Chrome Origin Trials console](https://developer.chrome.com/origintrials/)
 
@@ -190,14 +190,12 @@ You might disable this rule if:
    - Copy the new token
    - Replace the expired token in your HTML
 
-## Origin Trial Resources
+## Origin trial resources
 
 - [Chrome Origin Trials Guide](https://developer.chrome.com/docs/web-platform/origin-trials/)
-- [Origin Trials Developer Console](https://developer.chrome.com/origintrials/)
 - [Origin Trial Token Decoder](https://glitch.com/~ot-decode) - Tool to inspect token contents
-- [capo.js validation rules](https://github.com/rviscomi/capo.js)
 
-## Token Structure
+## Token structure
 
 Origin trial tokens are base64-encoded and contain:
 

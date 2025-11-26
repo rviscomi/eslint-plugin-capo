@@ -11,7 +11,7 @@ The `<base>` element specifies the base URL for all relative URLs in a document.
 - Having multiple base elements can lead to confusion and maintenance issues
 - The presence of duplicate base elements often indicates a mistake
 
-## Rule Details
+## Rule details
 
 This rule warns when multiple `<base>` elements are found within the same `<head>` element.
 
@@ -62,10 +62,10 @@ Examples of **correct** code:
 </html>
 ```
 
-## When Not to Use It
+## When not to use it
 
 There is no valid reason to disable this rule as multiple base elements violate the HTML specification.
 
-## Prior Art
+## Prior art
 
 - [WHATWG HTML Standard - The base element](https://html.spec.whatwg.org/multipage/semantics.html#the-base-element)

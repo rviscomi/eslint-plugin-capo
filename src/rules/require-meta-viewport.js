@@ -3,7 +3,7 @@
  * Ensures a meta viewport element exists in the <head>
  */
 
-import { isMetaViewport } from '../utils/validation-helpers.js';
+import { getFindingsForRule } from '../analyzer.js';
 
 export default {
   meta: {
@@ -14,39 +14,25 @@ export default {
       recommended: true,
     },
     messages: {
-      missingViewport: 'The <head> element should contain a <meta name="viewport"> element for responsive design',
+      missingViewport: '{{message}}',
     },
     schema: [],
   },
 
   create(context) {
-    let viewportCount = 0;
-    let headNode = null;
-
     return {
       'Tag[name="head"]'(node) {
-        // Reset counter for each head element
-        viewportCount = 0;
-        headNode = node;
-      },
+        const findings = getFindingsForRule(context, node, 'require-meta-viewport');
 
-      'Tag[parent.name="head"][name="meta"]'(node) {
-        if (isMetaViewport(node)) {
-          viewportCount++;
-        }
-      },
-
-      'Tag[name="head"]:exit'(node) {
-        if (viewportCount === 0) {
+        findings.forEach((finding) => {
           context.report({
-            node: headNode?.openStart || headNode || node,
+            node: finding.node || node,
             messageId: 'missingViewport',
+            data: {
+              message: finding.message,
+            },
           });
-        }
-
-        // Reset for next head
-        viewportCount = 0;
-        headNode = null;
+        });
       },
     };
   },

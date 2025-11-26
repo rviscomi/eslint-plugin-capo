@@ -8,19 +8,19 @@ The order of elements in the `<head>` section significantly impacts page load pe
 
 Based on research from [capo.js](https://github.com/rviscomi/capo.js), elements should be ordered by their "weight" - how critical they are to initial page rendering and user experience:
 
-1. **Critical Metadata** (weight 11): `charset`, `viewport`, CSP, origin-trial
-2. **Document Title** (weight 10): `<title>` element
-3. **Preconnect** (weight 9): Early DNS/connection setup
-4. **Async Scripts** (weight 8): Non-blocking scripts with `async`
-5. **Import Styles** (weight 7): CSS `@import` (blocks rendering)
-6. **Sync Scripts** (weight 6): Blocking scripts without `async`/`defer`
-7. **Sync Styles** (weight 5): Regular `<link rel="stylesheet">`
-8. **Preload** (weight 4): Resource hints with `<link rel="preload">`
-9. **Defer Scripts** (weight 3): Scripts with `defer` or `type="module"`
-10. **Prefetch/Prerender** (weight 2): Low-priority hints
-11. **Other** (weight 1): Everything else
+1. **Critical Metadata** (weight 10): `charset`, `viewport`, CSP, origin-trial
+2. **Document Title** (weight 9): `<title>` element
+3. **Preconnect** (weight 8): Early DNS/connection setup
+4. **Async Scripts** (weight 7): Non-blocking scripts with `async`
+5. **Import Styles** (weight 6): CSS `@import` (blocks rendering)
+6. **Sync Scripts** (weight 5): Blocking scripts without `async`/`defer`
+7. **Sync Styles** (weight 4): Regular `<link rel="stylesheet">`
+8. **Preload** (weight 3): Resource hints with `<link rel="preload">`
+9. **Defer Scripts** (weight 2): Scripts with `defer` or `type="module"`
+10. **Prefetch/Prerender** (weight 1): Low-priority hints
+11. **Other** (weight 0): Everything else
 
-## Rule Details
+## Rule details
 
 This rule warns when head elements are not in optimal order according to the weight hierarchy. Elements with higher weights should appear before elements with lower weights.
 
@@ -34,15 +34,15 @@ Examples of **incorrect** code:
   <head>
     <!-- BAD: Elements out of order -->
     <script src="/app.js" defer></script>
-    <!-- weight 3, too early -->
+    <!-- weight 2, too early -->
     <title>Page</title>
-    <!-- weight 10, should be earlier -->
+    <!-- weight 9, should be earlier -->
     <link rel="preload" href="/font.woff2" as="font" />
-    <!-- weight 4 -->
+    <!-- weight 3 -->
     <meta charset="utf-8" />
-    <!-- weight 11, should be first -->
+    <!-- weight 10, should be first -->
     <link rel="stylesheet" href="/styles.css" />
-    <!-- weight 5 -->
+    <!-- weight 4 -->
   </head>
   <body>
     <h1>Hello World</h1>
@@ -58,9 +58,9 @@ Examples of **incorrect** code:
   <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="/styles.css" />
-    <!-- weight 5 -->
+    <!-- weight 4 -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- weight 11, should be earlier -->
+    <!-- weight 10, should be earlier -->
     <title>Page</title>
   </head>
   <body>
@@ -72,31 +72,31 @@ Examples of **incorrect** code:
 Examples of **correct** code:
 
 ```html
-<!-- eslint capo/head-element-order: "warn" -->
+<!-- eslint capo/require-order: "warn" -->
 
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- 1. Critical metadata (weight 11) -->
+    <!-- 1. Critical metadata (weight 10) -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- 2. Title (weight 10) -->
+    <!-- 2. Title (weight 9) -->
     <title>Page</title>
 
-    <!-- 3. Preconnect (weight 9) -->
+    <!-- 3. Preconnect (weight 8) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
 
-    <!-- 4. Async scripts (weight 8) -->
+    <!-- 4. Async scripts (weight 7) -->
     <script src="/analytics.js" async></script>
 
-    <!-- 5. Sync styles (weight 5) -->
+    <!-- 5. Sync styles (weight 4) -->
     <link rel="stylesheet" href="/styles.css" />
 
-    <!-- 6. Preload (weight 4) -->
+    <!-- 6. Preload (weight 3) -->
     <link rel="preload" href="/font.woff2" as="font" crossorigin />
 
-    <!-- 7. Defer scripts (weight 3) -->
+    <!-- 7. Defer scripts (weight 2) -->
     <script src="/app.js" defer></script>
 
     <!-- 8. Prefetch (weight 1) -->
@@ -108,7 +108,7 @@ Examples of **correct** code:
 </html>
 ```
 
-## Element Weight Reference
+## Element weight reference
 
 | Weight | Element Type       | Examples                                                                                                                      |
 | ------ | ------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
@@ -124,7 +124,7 @@ Examples of **correct** code:
 | 1      | PREFETCH_PRERENDER | `<link rel="prefetch">`, `<link rel="prerender">`                                                                             |
 | 0      | OTHER              | All other elements                                                                                                            |
 
-## Performance Impact
+## Performance impact
 
 Proper element ordering provides several benefits:
 
@@ -134,7 +134,7 @@ Proper element ordering provides several benefits:
 - **Optimized Critical Path**: Render-blocking resources load in correct order
 - **Better User Experience**: Content appears faster and more smoothly
 
-## When Not to Use It
+## When not to use it
 
 This rule is advisory and may be noisy for existing projects. You might disable it if:
 
@@ -145,8 +145,7 @@ This rule is advisory and may be noisy for existing projects. You might disable 
 
 However, following these ordering guidelines can provide measurable performance improvements.
 
-## Prior Art
+## Prior art
 
-- [capo.js - Get your `<head>` in order](https://github.com/rviscomi/capo.js)
-- [Harry Roberts - CSS Wizardry - The Importance of `@import`](https://csswizardry.com/2018/11/css-and-network-performance/)
+- [Harry Roberts - CSS Wizardry - CSS and Network Performance](https://csswizardry.com/2018/11/css-and-network-performance/)
 - [MDN - Optimizing your pages for speculative parsing](https://developer.mozilla.org/en-US/docs/Web/HTML/Optimizing_your_pages_for_speculative_parsing)

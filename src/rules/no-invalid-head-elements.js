@@ -3,7 +3,7 @@
  * Ensures only valid elements are used in the <head>
  */
 
-import { isValidHeadElement } from '../utils/validation-helpers.js';
+import { getFindingsForRule, removeNodeWithWhitespace } from '../analyzer.js';
 
 export default {
   meta: {
@@ -15,53 +15,38 @@ export default {
     },
     messages: {
       invalidElement: '{{tagName}} elements are not allowed in the <head>',
-      removeElement: 'Remove this {{tagName}} element from <head>',
+      removeElement: 'Remove invalid element',
     },
-    schema: [],
     hasSuggestions: true,
+    fixable: 'code',
+    schema: [],
   },
 
   create(context) {
     return {
-      'Tag[parent.name="head"]'(node) {
-        if (!isValidHeadElement(node.name)) {
+      'Tag[name="head"]'(node) {
+        const findings = getFindingsForRule(context, node, 'no-invalid-head-elements');
+
+        findings.forEach((finding) => {
+          // Extract tag name from the message (format: "<tagName> elements are not allowed...")
+          const tagName = finding.message.split(' ')[0];
+
           context.report({
-            node,
+            node: finding.node,
             messageId: 'invalidElement',
             data: {
-              tagName: node.name,
+              tagName,
             },
             suggest: [
               {
                 messageId: 'removeElement',
-                data: {
-                  tagName: node.name,
-                },
                 fix(fixer) {
-                  // Remove the entire element including surrounding whitespace
-                  const sourceCode = context.sourceCode || context.getSourceCode();
-                  const text = sourceCode.getText();
-                  const nodeStart = node.range[0];
-                  const nodeEnd = node.range[1];
-
-                  // Find the start of the line (including indentation)
-                  let lineStart = nodeStart;
-                  while (lineStart > 0 && text[lineStart - 1] !== '\n') {
-                    lineStart--;
-                  }
-
-                  // Find the end including the newline
-                  let lineEnd = nodeEnd;
-                  if (text[lineEnd] === '\n') {
-                    lineEnd++;
-                  }
-
-                  return fixer.removeRange([lineStart, lineEnd]);
+                  return removeNodeWithWhitespace(fixer, context, finding.node);
                 },
               },
             ],
           });
-        }
+        });
       },
     };
   },

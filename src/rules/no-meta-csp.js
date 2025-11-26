@@ -3,48 +3,46 @@
  * Disallows CSP meta tags (recommends using HTTP headers instead)
  */
 
-import { isMetaCSP, validateCSP, getAttributeValue } from '../utils/validation-helpers.js';
+import { getFindingsForRule, removeNodeWithWhitespace } from '../analyzer.js';
 
 export default {
   meta: {
     type: 'problem',
     docs: {
-      description: 'Disallow CSP meta tags that disable the preload scanner',
-      category: 'Performance',
+      description: 'Disallow meta CSP.',
+      category: 'Security',
       recommended: true,
+      url: 'https://github.com/rviscomi/eslint-plugin-capo/blob/main/docs/rules/no-meta-csp.md',
     },
-    hasSuggestions: true,
     messages: {
       metaCSP: '{{message}}',
-      removeTag: 'Remove this CSP meta tag (use HTTP headers instead)',
+      removeMetaCSP: 'Remove the meta CSP tag.',
     },
-    schema: [],
+    hasSuggestions: true,
   },
 
   create(context) {
     return {
-      'Tag[parent.name="head"][name="meta"]'(node) {
-        if (isMetaCSP(node)) {
-          const warnings = validateCSP(node, context);
+      'Tag[name="head"]'(node) {
+        const findings = getFindingsForRule(context, node, 'no-meta-csp');
 
-          warnings.forEach((warning) => {
-            context.report({
-              node,
-              messageId: 'metaCSP',
-              data: {
-                message: warning,
-              },
-              suggest: [
-                {
-                  messageId: 'removeTag',
-                  fix(fixer) {
-                    return fixer.remove(node);
-                  },
+        findings.forEach((finding) => {
+          context.report({
+            node: finding.node,
+            messageId: 'metaCSP',
+            data: {
+              message: finding.message,
+            },
+            suggest: [
+              {
+                messageId: 'removeMetaCSP',
+                fix: function (fixer) {
+                  return removeNodeWithWhitespace(fixer, context, finding.node);
                 },
-              ],
-            });
+              },
+            ],
           });
-        }
+        });
       },
     };
   },

@@ -23,7 +23,7 @@ The modern, recommended way to declare charset is:
 <meta charset="utf-8" />
 ```
 
-## Rule Details
+## Rule details
 
 This rule warns when:
 
@@ -83,11 +83,11 @@ Examples of **correct** code:
 </html>
 ```
 
-## When Not to Use It
+## When not to use it
 
 You might disable this rule if you're working with legacy systems that genuinely require a different character encoding. However, this is extremely rare in modern web development, and you should make every effort to migrate to UTF-8.
 
-## Prior Art
+## Prior art
 
 - [WHATWG HTML Standard - Specifying the document's character encoding](https://html.spec.whatwg.org/multipage/semantics.html#charset)
 - [MDN - Declaring character encodings in HTML](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta#charset)

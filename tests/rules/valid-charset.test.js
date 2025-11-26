@@ -20,6 +20,11 @@ const ruleTester = new RuleTester({
   languageOptions: {
     parser,
   },
+  settings: {
+    capo: {
+      rules: ['valid-charset'],
+    },
+  },
 });
 
 ruleTester.run('valid-charset', rule, {
@@ -123,6 +128,16 @@ ruleTester.run('valid-charset', rule, {
       errors: [
         {
           messageId: 'duplicateCharset',
+          suggestions: [
+            {
+              messageId: 'removeCharset',
+              output: dedent`
+                <head>
+                  <meta charset="utf-8">
+                </head>
+              `,
+            },
+          ],
         },
       ],
     },
@@ -137,6 +152,16 @@ ruleTester.run('valid-charset', rule, {
       errors: [
         {
           messageId: 'duplicateCharset',
+          suggestions: [
+            {
+              messageId: 'removeCharset',
+              output: dedent`
+                <head>
+                  <meta charset="utf-8">
+                </head>
+              `,
+            },
+          ],
         },
       ],
     },

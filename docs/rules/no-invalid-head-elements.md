@@ -22,7 +22,7 @@ Content elements (like `<div>`, `<span>`, `<p>`, etc.) should never appear in th
 - May cause parsing errors
 - Indicates a structural problem in the HTML document
 
-## Rule Details
+## Rule details
 
 This rule warns when elements other than the allowed metadata elements are found within the `<head>` element.
 
@@ -93,11 +93,11 @@ Examples of **correct** code:
 </html>
 ```
 
-## When Not to Use It
+## When not to use it
 
 There is no valid reason to disable this rule as only specific metadata elements are allowed in the `<head>` according to the HTML specification.
 
-## Prior Art
+## Prior art
 
 - [WHATWG HTML Standard - The head element](https://html.spec.whatwg.org/multipage/semantics.html#the-head-element)
 - [MDN - head element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head)

@@ -20,6 +20,11 @@ const ruleTester = new RuleTester({
   languageOptions: {
     parser,
   },
+  settings: {
+    capo: {
+      rules: ['require-order'],
+    },
+  },
 });
 
 ruleTester.run('require-order', rule, {
@@ -75,12 +80,18 @@ ruleTester.run('require-order', rule, {
           messageId: 'wrongOrder',
           data: {
             current: 'TITLE',
-            currentWeight: '10',
+            currentWeight: '9',
             next: 'META',
-            nextWeight: '11',
+            nextWeight: '10',
           },
         },
       ],
+      output: dedent`
+        <head>
+          <meta charset="utf-8">
+          <title>Title First</title>
+        </head>
+      `,
     },
     {
       name: 'defer script before preconnect',
@@ -95,12 +106,18 @@ ruleTester.run('require-order', rule, {
           messageId: 'wrongOrder',
           data: {
             current: 'DEFER_SCRIPT',
-            currentWeight: '3',
+            currentWeight: '2',
             next: 'PRECONNECT',
-            nextWeight: '9',
+            nextWeight: '8',
           },
         },
       ],
+      output: dedent`
+        <head>
+          <link rel="preconnect" href="https://api.example.com">
+          <script defer src="app.js"></script>
+        </head>
+      `,
     },
     {
       name: 'prefetch before async script before meta',
@@ -116,21 +133,28 @@ ruleTester.run('require-order', rule, {
           messageId: 'wrongOrder',
           data: {
             current: 'PREFETCH_PRERENDER',
-            currentWeight: '2',
+            currentWeight: '1',
             next: 'ASYNC_SCRIPT',
-            nextWeight: '8',
+            nextWeight: '7',
           },
         },
         {
           messageId: 'wrongOrder',
           data: {
             current: 'ASYNC_SCRIPT',
-            currentWeight: '8',
+            currentWeight: '7',
             next: 'META',
-            nextWeight: '11',
+            nextWeight: '10',
           },
         },
       ],
+      output: dedent`
+        <head>
+          <meta charset="utf-8">
+          <script async src="analytics.js"></script>
+          <link rel="prefetch" href="next.html">
+        </head>
+      `,
     },
     {
       name: 'preload before async script',
@@ -145,12 +169,18 @@ ruleTester.run('require-order', rule, {
           messageId: 'wrongOrder',
           data: {
             current: 'PRELOAD',
-            currentWeight: '4',
+            currentWeight: '3',
             next: 'ASYNC_SCRIPT',
-            nextWeight: '8',
+            nextWeight: '7',
           },
         },
       ],
+      output: dedent`
+        <head>
+          <script async src="analytics.js"></script>
+          <link rel="preload" href="font.woff2" as="font">
+        </head>
+      `,
     },
     {
       name: 'module script before preconnect',
@@ -165,12 +195,18 @@ ruleTester.run('require-order', rule, {
           messageId: 'wrongOrder',
           data: {
             current: 'DEFER_SCRIPT',
-            currentWeight: '3',
+            currentWeight: '2',
             next: 'PRECONNECT',
-            nextWeight: '9',
+            nextWeight: '8',
           },
         },
       ],
+      output: dedent`
+        <head>
+          <link rel="preconnect" href="https://example.com">
+          <script type="module" src="module.js"></script>
+        </head>
+      `,
     },
     {
       name: 'inline script before meta',
@@ -185,12 +221,18 @@ ruleTester.run('require-order', rule, {
           messageId: 'wrongOrder',
           data: {
             current: 'SYNC_SCRIPT',
-            currentWeight: '6',
+            currentWeight: '5',
             next: 'META',
-            nextWeight: '11',
+            nextWeight: '10',
           },
         },
       ],
+      output: dedent`
+        <head>
+          <meta charset="utf-8">
+          <script>console.log('inline');</script>
+        </head>
+      `,
     },
     {
       name: 'complex head with multiple issues',
@@ -208,12 +250,21 @@ ruleTester.run('require-order', rule, {
           messageId: 'wrongOrder',
           data: {
             current: 'DEFER_SCRIPT',
-            currentWeight: '3',
+            currentWeight: '2',
             next: 'META',
-            nextWeight: '11',
+            nextWeight: '10',
           },
         },
       ],
+      output: dedent`
+        <head>
+          <base href="/">
+          <meta name="viewport" content="width=device-width">
+          <title>Page</title>
+          <link rel="stylesheet" href="styles.css">
+          <script defer src="app.js"></script>
+        </head>
+      `,
     },
     {
       name: 'very complex head with many issues',
@@ -232,30 +283,108 @@ ruleTester.run('require-order', rule, {
           messageId: 'wrongOrder',
           data: {
             current: 'SYNC_STYLES',
-            currentWeight: '5',
+            currentWeight: '4',
             next: 'TITLE',
-            nextWeight: '10',
+            nextWeight: '9',
           },
         },
         {
           messageId: 'wrongOrder',
           data: {
             current: 'TITLE',
-            currentWeight: '10',
+            currentWeight: '9',
             next: 'META',
-            nextWeight: '11',
+            nextWeight: '10',
           },
         },
         {
           messageId: 'wrongOrder',
           data: {
             current: 'ASYNC_SCRIPT',
-            currentWeight: '8',
+            currentWeight: '7',
             next: 'META',
-            nextWeight: '11',
+            nextWeight: '10',
           },
         },
       ],
+      output: dedent`
+        <head>
+          <meta name="viewport" content="width=device-width">
+          <meta charset="utf-8">
+          <title>Late Title</title>
+          <link rel="preconnect" href="https://example.com">
+          <script async src="async.js"></script>
+          <link rel="stylesheet" href="1.css">
+        </head>
+      `,
+    },
+    {
+      name: 'with comments',
+      code: dedent`
+        <head>
+          <!-- Comment for title -->
+          <title>Title</title>
+          <!-- Comment for meta -->
+          <meta charset="utf-8">
+        </head>
+      `,
+      errors: [
+        {
+          messageId: 'wrongOrder',
+          data: {
+            current: 'TITLE',
+            currentWeight: '9',
+            next: 'META',
+            nextWeight: '10',
+          },
+        },
+      ],
+      output: dedent`
+        <head>
+          <!-- Comment for meta -->
+          <meta charset="utf-8">
+          <!-- Comment for title -->
+          <title>Title</title>
+        </head>
+      `,
+    },
+    {
+      name: 'with multiline and multiple comments',
+      code: dedent`
+        <head>
+          <!--
+            Multiline comment
+            for title
+          -->
+          <title>Title</title>
+          <!-- Comment 1 -->
+          <!-- Comment 2 -->
+          <meta charset="utf-8">
+        </head>
+      `,
+      errors: [
+        {
+          messageId: 'wrongOrder',
+          data: {
+            current: 'TITLE',
+            currentWeight: '9',
+            next: 'META',
+            nextWeight: '10',
+          },
+        },
+      ],
+      output: dedent`
+        <head>
+          <!-- Comment 1 -->
+          <!-- Comment 2 -->
+          <meta charset="utf-8">
+          <!--
+            Multiline comment
+            for title
+          -->
+          <title>Title</title>
+        </head>
+      `,
     },
   ],
 });

@@ -3,48 +3,47 @@
  * Discourages use of default-style meta tag
  */
 
-import { isDefaultStyle, validateDefaultStyle } from '../utils/validation-helpers.js';
+import { getFindingsForRule } from '../analyzer.js';
 
 export default {
   meta: {
-    type: 'suggestion',
+    type: 'problem',
     docs: {
       description: 'Disallow default-style meta tag (causes FOUC)',
       category: 'Best Practices',
       recommended: true,
     },
-    hasSuggestions: true,
     messages: {
       noDefaultStyle: '{{message}}',
-      removeTag: 'Remove this default-style meta tag',
+      removeTag: 'Remove the default-style meta tag',
     },
+    fixable: 'code',
     schema: [],
+    hasSuggestions: true,
   },
 
   create(context) {
     return {
-      'Tag[parent.name="head"][name="meta"]'(node) {
-        if (isDefaultStyle(node)) {
-          const warnings = validateDefaultStyle(node);
+      'Tag[name="head"]'(node) {
+        const findings = getFindingsForRule(context, node, 'no-default-style');
 
-          warnings.forEach((warning) => {
-            context.report({
-              node,
-              messageId: 'noDefaultStyle',
-              data: {
-                message: warning,
-              },
-              suggest: [
-                {
-                  messageId: 'removeTag',
-                  fix(fixer) {
-                    return fixer.remove(node);
-                  },
+        findings.forEach((finding) => {
+          context.report({
+            node: finding.node,
+            messageId: 'noDefaultStyle',
+            data: {
+              message: finding.message,
+            },
+            suggest: [
+              {
+                messageId: 'removeTag',
+                fix(fixer) {
+                  return fixer.remove(finding.node);
                 },
-              ],
-            });
+              },
+            ],
           });
-        }
+        });
       },
     };
   },

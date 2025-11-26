@@ -1,18 +1,4 @@
-/**
- * Rule: no-invalid-http-equiv
- * Validates http-equiv meta tags
- */
-
-import {
-  isHttpEquiv,
-  validateHttpEquiv,
-  isMetaCSP,
-  isOriginTrial,
-  isDefaultStyle,
-  isContentType,
-  getAttributeValue,
-  isValidHttpEquiv,
-} from '../utils/validation-helpers.js';
+import { getFindingsForRule, removeNodeWithWhitespace } from '../analyzer.js';
 
 export default {
   meta: {
@@ -24,69 +10,34 @@ export default {
     },
     messages: {
       invalidHttpEquiv: '{{message}}',
-      removeTag: 'Remove this deprecated meta tag',
+      removeMetaTag: 'Remove invalid meta tag',
     },
-    schema: [],
     hasSuggestions: true,
+    fixable: 'code',
+    schema: [],
   },
 
   create(context) {
     return {
-      'Tag[parent.name="head"][name="meta"]'(node) {
-        if (!isHttpEquiv(node)) return;
+      'Tag[name="head"]'(node) {
+        const findings = getFindingsForRule(context, node, 'no-invalid-http-equiv');
 
-        // Skip if it's handled by more specific rules
-        if (isMetaCSP(node) || isOriginTrial(node) || isDefaultStyle(node) || isContentType(node)) {
-          return;
-        }
-
-        const warnings = validateHttpEquiv(node);
-
-        warnings.forEach((warning) => {
-          const httpEquiv = getAttributeValue(node, 'http-equiv');
-
-          // If it's not a valid value, suggest removal
-          const shouldSuggestRemoval = httpEquiv && !isValidHttpEquiv(httpEquiv);
-
-          const report = {
-            node,
+        findings.forEach((finding) => {
+          context.report({
+            node: finding.node,
             messageId: 'invalidHttpEquiv',
             data: {
-              message: warning,
+              message: finding.message,
             },
-          };
-
-          // Suggest removing invalid/deprecated tags
-          if (shouldSuggestRemoval) {
-            report.suggest = [
+            suggest: [
               {
-                messageId: 'removeTag',
+                messageId: 'removeMetaTag',
                 fix(fixer) {
-                  // Remove the entire meta tag including surrounding whitespace/newline
-                  const sourceCode = context.sourceCode || context.getSourceCode();
-                  const text = sourceCode.getText();
-                  const nodeStart = node.range[0];
-                  const nodeEnd = node.range[1];
-
-                  // Find the start of the line (including indentation)
-                  let lineStart = nodeStart;
-                  while (lineStart > 0 && text[lineStart - 1] !== '\n') {
-                    lineStart--;
-                  }
-
-                  // Find the end including the newline
-                  let lineEnd = nodeEnd;
-                  if (text[lineEnd] === '\n') {
-                    lineEnd++;
-                  }
-
-                  return fixer.removeRange([lineStart, lineEnd]);
+                  return removeNodeWithWhitespace(fixer, context, finding.node);
                 },
               },
-            ];
-          }
-
-          context.report(report);
+            ],
+          });
         });
       },
     };

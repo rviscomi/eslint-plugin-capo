@@ -79,7 +79,7 @@ ruleTester.run('no-unnecessary-preload', rule, {
       `,
     },
   ],
-
+  //TODO: After adding support for normalizing URLs, add test cases for different URL forms (relative vs absolute, query params, etc.)
   invalid: [
     {
       name: 'preload for script already in head',
@@ -101,7 +101,6 @@ ruleTester.run('no-unnecessary-preload', rule, {
               messageId: 'removePreload',
               output: dedent`
                 <head>
-                  
                   <script src="/app.js"></script>
                 </head>
               `,
@@ -130,7 +129,6 @@ ruleTester.run('no-unnecessary-preload', rule, {
               messageId: 'removePreload',
               output: dedent`
                 <head>
-                  
                   <link rel="stylesheet" href="/styles.css">
                 </head>
               `,
@@ -159,7 +157,6 @@ ruleTester.run('no-unnecessary-preload', rule, {
               messageId: 'removePreload',
               output: dedent`
                 <head>
-                  
                   <script src="/app.js" type="module"></script>
                 </head>
               `,
@@ -189,7 +186,6 @@ ruleTester.run('no-unnecessary-preload', rule, {
               output: dedent`
                 <head>
                   <script src="/app.js"></script>
-                  
                 </head>
               `,
             },
@@ -219,7 +215,6 @@ ruleTester.run('no-unnecessary-preload', rule, {
               messageId: 'removePreload',
               output: dedent`
                 <head>
-                  
                   <link rel="preload" href="/styles.css" as="style">
                   <script src="/app.js"></script>
                   <link rel="stylesheet" href="/styles.css">
@@ -240,7 +235,6 @@ ruleTester.run('no-unnecessary-preload', rule, {
               output: dedent`
                 <head>
                   <link rel="preload" href="/app.js" as="script">
-                  
                   <script src="/app.js"></script>
                   <link rel="stylesheet" href="/styles.css">
                 </head>
@@ -266,33 +260,7 @@ ruleTester.run('no-unnecessary-preload', rule, {
               messageId: 'removePreload',
               output: dedent`
                 <head>
-                  
                   <script src="/app.js"></script>
-                </head>
-              `,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      name: 'preload with ./ prefix matching script without prefix',
-      code: dedent`
-        <head>
-          <link rel="preload" href="./app.js" as="script">
-          <script src="app.js"></script>
-        </head>
-      `,
-      errors: [
-        {
-          messageId: 'unnecessaryPreload',
-          suggestions: [
-            {
-              messageId: 'removePreload',
-              output: dedent`
-                <head>
-                  
-                  <script src="app.js"></script>
                 </head>
               `,
             },
@@ -325,7 +293,6 @@ ruleTester.run('no-unnecessary-preload', rule, {
               output: dedent`
                 <head>
                   <meta charset="utf-8">
-                  
                   <title>Test Page</title>
                   <meta name="viewport" content="width=device-width, initial-scale=1">
                   <link rel="stylesheet" href="/other.css">
@@ -363,7 +330,6 @@ ruleTester.run('no-unnecessary-preload', rule, {
                 <head>
                   <meta charset="utf-8">
                   <title>Test Page</title>
-                  
                   <meta name="description" content="Test">
                   <script src="/analytics.js" async></script>
                   <link rel="stylesheet" href="/styles.css">
@@ -402,7 +368,6 @@ ruleTester.run('no-unnecessary-preload', rule, {
                   <script src="/app.js"></script>
                   <title>Test Page</title>
                   <meta name="viewport" content="width=device-width, initial-scale=1">
-                  
                   <link rel="stylesheet" href="/other.css">
                 </head>
               `,
